@@ -10,14 +10,14 @@ import java.util.List;
 @Setter
 public class MoviePosterResponseDto {
 
-    @JsonProperty("Search")
-    private List<MovieSearchResult> search;
+    @JsonProperty("results")
+    private List<MovieSearchResult> results;
 
     @Getter
     @Setter
     public static class MovieSearchResult {
 
-        @JsonProperty("Poster")
+        @JsonProperty("poster_path")
         private String poster;
     }
 }

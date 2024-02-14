@@ -1,24 +1,25 @@
 package com.move.move.controller;
 
-import com.move.move.adapter.MovieImageAdapter;
-import jakarta.persistence.metamodel.SetAttribute;
+import com.move.move.adapter.MoviePosterAdapter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
+@Slf4j
 public class TestController {
 
-    private final MovieImageAdapter movieImageAdapter;
+    private final MoviePosterAdapter moviePosterAdapter;
 
-    public TestController(MovieImageAdapter movieImageAdapter) {
-        this.movieImageAdapter = movieImageAdapter;
+    public TestController(MoviePosterAdapter moviePosterAdapter) {
+        this.moviePosterAdapter = moviePosterAdapter;
     }
 
     @GetMapping("/test")
     String test(Model model){
 
-        String aa = movieImageAdapter.searchMoviePoster("dwar");
+        String aa = moviePosterAdapter.searchMoviePoster("노량");
         model.addAttribute("posterUrl",aa);
 
         return "test";
