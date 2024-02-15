@@ -87,7 +87,7 @@ public class DailyBoxOfficeResponseDto {
         @JsonProperty("showCnt")
         private String showCnt;
 
-
+        private String imageUrl;
     }
 
     public void printDetails() {
@@ -118,6 +118,7 @@ public class DailyBoxOfficeResponseDto {
             System.out.println("      audiAcc: " + dailyBoxOffice.getAudiAcc());
             System.out.println("      scrnCnt: " + dailyBoxOffice.getScrnCnt());
             System.out.println("      showCnt: " + dailyBoxOffice.getShowCnt());
+            System.out.println("      imageUrl: " + dailyBoxOffice.getImageUrl());
         }
     }
 }

@@ -34,7 +34,6 @@ public class DailyBoxOfficeAdapterImpl implements DailyBoxOfficeAdapter {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("key", apiKey)
                 .queryParam("targetDt", dailyBoxOfficeRequestDto.getTargetDt());
-        System.out.println(builder.toUriString());
         ResponseEntity<String> responseEntity = restTemplate.exchange(
                 builder.toUriString(),
                 HttpMethod.GET,

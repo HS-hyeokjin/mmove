@@ -19,8 +19,9 @@ public class BoxOfficeController {
     public String getDailyBoxOffice(Model model) {
         DailyBoxOfficeResponseDto dailyBoxOffice = dailyBoxOfficeService.getDailyBoxOffice();
         dailyBoxOffice.printDetails();
-        model.addAttribute("dailyBoxOffice", dailyBoxOffice);
-        return "index";
+
+        model.addAttribute("dailyBoxOfficeData", dailyBoxOffice);
+        return "test";
     }
 }
 

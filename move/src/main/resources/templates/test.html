@@ -1,15 +1,34 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Poster</title>
+    <title>Daily Box Office</title>
 </head>
 <body>
-<h2>Movie Poster</h2>
-
-<!-- 이미지를 띄우는 부분 -->
-<img th:src="${posterUrl}" alt="Movie Poster">
-
+<h2>Daily Box Office</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>순위</th>
+        <th>영화 제목</th>
+        <th>개봉일</th>
+        <th>매출액</th>
+        <th>관객 수</th>
+        <th>포스터 이미지</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="boxOffice : ${dailyBoxOfficeData.boxOfficeResult.dailyBoxOfficeList}">
+        <td th:text="${boxOffice.rank}"></td>
+        <td th:text="${boxOffice.movieNm}"></td>
+        <td th:text="${boxOffice.openDt}"></td>
+        <td th:text="${boxOffice.salesAmt}"></td>
+        <td th:text="${boxOffice.audiCnt}"></td>
+        <td>
+            <img th:src="${boxOffice.imageUrl}" alt="포스터 이미지" width="100">
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
