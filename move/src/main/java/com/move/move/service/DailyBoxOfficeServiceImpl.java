@@ -25,7 +25,8 @@ public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService{
 
     public DailyBoxOfficeResponseDto getDailyBoxOffice(){
 
-        String yesterdayDate = yesterdayStringDate();
+        String yesterdayDate = "20240215";
+        //String yesterdayDate = yesterdayStringDate();
 
         DailyBoxOfficeRequestDto dailyBoxOfficeRequestDto = new DailyBoxOfficeRequestDto();
         dailyBoxOfficeRequestDto.setTargetDt(yesterdayDate);

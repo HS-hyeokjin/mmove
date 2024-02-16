@@ -21,7 +21,7 @@ public class BoxOfficeController {
         dailyBoxOffice.printDetails();
 
         model.addAttribute("dailyBoxOfficeData", dailyBoxOffice);
-        return "test";
+        return "daily-box-office";
     }
 }
 
