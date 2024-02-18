@@ -11,7 +11,7 @@ import lombok.Setter;
 public class DailyBoxOfficeRequestDto {
     private String key;
     private String targetDt;
-    private String itemPerPage = "10";
+    private String itemPerPage;
     private String multiMovieYn;
     private String repNationCd;
     private String wideAreaCd;
