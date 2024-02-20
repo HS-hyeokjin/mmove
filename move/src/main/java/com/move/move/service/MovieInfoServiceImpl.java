@@ -1,31 +1,58 @@
 package com.move.move.service;
 
+import com.move.move.adapter.MovieDetailAdapter;
 import com.move.move.adapter.MovieInfoAdapter;
-import com.move.move.adapter.MoviePosterAdapter;
+import com.move.move.adapter.PersonDetailAdapter;
+import com.move.move.dto.MovieDetailResponseDto;
 import com.move.move.dto.MovieInfoResponseDto;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class MovieInfoServiceImpl implements MovieInfoService{
 
+    @Value("${tmdb.image.url}")
+    String imageUrl;
+
     private final MovieInfoAdapter movieInfoAdapter;
-    private final MoviePosterAdapter moviePosterAdapter;
+    private final MovieDetailAdapter movieDetailAdapter;
+    private final PersonDetailAdapter personDetailAdapter;
 
-    public MovieInfoServiceImpl(MovieInfoAdapter movieInfoAdapter, MoviePosterAdapter moviePosterAdapter) {
+
+    public MovieInfoServiceImpl(MovieInfoAdapter movieInfoAdapter, MovieDetailAdapter movieDetailAdapter, PersonDetailAdapter personDetailAdapter) {
         this.movieInfoAdapter = movieInfoAdapter;
-        this.moviePosterAdapter = moviePosterAdapter;
+        this.movieDetailAdapter = movieDetailAdapter;
+        this.personDetailAdapter = personDetailAdapter;
     }
-
 
 
     @Override
     public MovieInfoResponseDto getMovieInfo(String movieCode) {
 
         MovieInfoResponseDto movieInfoResponseDto = movieInfoAdapter.getMovieInfo(movieCode);
-        movieInfoResponseDto.
-                getMovieInfoResult().
-                getMovieInfo().
-                setImageUrl(moviePosterAdapter.searchMoviePoster(movieInfoResponseDto.getMovieInfoResult().getMovieInfo().getMovieNm()));
+        MovieDetailResponseDto movieDetailResponseDto = movieDetailAdapter.searchMovieDetail(movieInfoResponseDto.getMovieInfoResult().getMovieInfo().getMovieNm());
+
+
+        List<MovieInfoResponseDto.Actor> actors = movieInfoResponseDto.getMovieInfoResult().getMovieInfo().getActors();
+        for (MovieInfoResponseDto.Actor actor : actors) {
+            String actorImageUrl;
+
+            if ("한국".equals(movieInfoResponseDto.getMovieInfoResult().getMovieInfo().getNations().get(0).getNationNm())) {
+                actorImageUrl = personDetailAdapter.personImageUrl(actor.getPeopleNm());
+            } else {
+                actorImageUrl = personDetailAdapter.personImageUrl(actor.getPeopleNmEn());
+            }
+            actor.setPeopleImageUrl(actorImageUrl);
+        }
+
+        movieInfoResponseDto.getMovieInfoResult().getMovieInfo().
+                setImageUrl(imageUrl + movieDetailResponseDto.getMovieDetailsResultDto().getPosterPath());
+        movieInfoResponseDto.getMovieInfoResult().getMovieInfo().
+                setOverview(movieDetailResponseDto.getMovieDetailsResultDto().getOverview());
+
+
         return movieInfoResponseDto;
     }
 }

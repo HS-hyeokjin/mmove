@@ -81,7 +81,7 @@ public class MovieInfoResponseDto {
         @JsonProperty("staffs")
         private List<Staff> staffs;
 
-
+        private String overview;
     }
 
     @Getter
@@ -108,6 +108,7 @@ public class MovieInfoResponseDto {
     public static class Actor {
         private String peopleNm;
         private String peopleNmEn;
+        private String peopleImageUrl;
         private String cast;
         private String castEn;
     }
@@ -143,48 +144,4 @@ public class MovieInfoResponseDto {
         private String staffRoleNm;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder result = new StringBuilder();
-
-        MovieInfoResult movieInfoResult = this.getMovieInfoResult();
-        if (movieInfoResult != null) {
-            MovieInfo movieInfo = movieInfoResult.getMovieInfo();
-            if (movieInfo != null) {
-                result.append("Movie Code: ").append(movieInfo.getMovieCd()).append("\n");
-                result.append("Movie Name: ").append(movieInfo.getMovieNm()).append("\n");
-                result.append("Movie Name (English): ").append(movieInfo.getMovieNmEn()).append("\n");
-                result.append("Movie Name (Original): ").append(movieInfo.getMovieNmOg()).append("\n");
-                result.append("Show Time: ").append(movieInfo.getShowTm()).append("\n");
-                result.append("Production Year: ").append(movieInfo.getPrdtYear()).append("\n");
-                result.append("Open Date: ").append(movieInfo.getOpenDt()).append("\n");
-                result.append("Production Status: ").append(movieInfo.getPrdtStatNm()).append("\n");
-                result.append("Type: ").append(movieInfo.getTypeNm()).append("\n");
-
-                // Print Nations
-                List<Nation> nations = movieInfo.getNations();
-                result.append("Nations: ");
-                appendList(result, nations, Nation::getNationNm);
-
-                // Print Genres
-                List<Genre> genres = movieInfo.getGenres();
-                result.append("Genres: ");
-                appendList(result, genres, Genre::getGenreNm);
-
-                // ... (다른 리스트 필드들에 대한 출력)
-
-                // Print Source
-                result.append("Source: ").append(movieInfoResult.getSource()).append("\n");
-            }
-        }
-
-        return result.toString();
-    }
-
-    private <T> void appendList(StringBuilder result, List<T> list, java.util.function.Function<T, String> mapper) {
-        if (list != null) {
-            list.forEach(item -> result.append(mapper.apply(item)).append(", "));
-        }
-        result.append("\n");
-    }
 }
