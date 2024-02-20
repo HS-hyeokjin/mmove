@@ -12,10 +12,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class MoviePosterAdapterImpl implements MoviePosterAdapter {
 
-    @Value("${tmdb.api.url}")
+    @Value("${tmdb.movie.api.url}")
     private String apiUrl;
 
-    @Value("${image.api.key}")
+    @Value("${tmdb.api.key}")
     private String apiKey;
 
     @Value("${tmdb.image.url}")
@@ -32,7 +32,6 @@ public class MoviePosterAdapterImpl implements MoviePosterAdapter {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(apiUrl)
                 .queryParam("api_key", apiKey)
                 .queryParam("query", movieTitle);
-        System.out.println(builder.toUriString());
         ResponseEntity<MoviePosterResponseDto> responseEntity = restTemplate.exchange(
                 builder.toUriString(),
                 HttpMethod.GET,
@@ -40,7 +39,6 @@ public class MoviePosterAdapterImpl implements MoviePosterAdapter {
                 MoviePosterResponseDto.class
         );
 
-        System.out.println(responseEntity.getStatusCode().toString());
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             MoviePosterResponseDto moviePosterResponseDto = responseEntity.getBody();
             if (moviePosterResponseDto != null && moviePosterResponseDto.getResults() != null && !moviePosterResponseDto.getResults().isEmpty()) {

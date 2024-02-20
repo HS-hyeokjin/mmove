@@ -6,15 +6,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+@Component
 public class PersonDetailAdapterImpl implements PersonDetailAdapter {
 
     @Value("${tmdb.person.api.url}")
     private String apiUrl;
 
-    @Value("${image.api.key}")
+    @Value("${tmdb.api.key}")
     private String apiKey;
 
     @Value("${tmdb.image.url}")

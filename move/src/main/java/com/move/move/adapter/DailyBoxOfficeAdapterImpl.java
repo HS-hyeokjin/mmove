@@ -20,7 +20,7 @@ public class DailyBoxOfficeAdapterImpl implements DailyBoxOfficeAdapter {
     @Value("${daily-box-office.api.url}")
     private String url;
 
-    @Value("${movie.api.key}")
+    @Value("${kofic.api.key}")
     private String apiKey;
 
     private final RestTemplate restTemplate;

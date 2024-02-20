@@ -19,7 +19,7 @@ public class MovieInfoAdapterImpl implements MovieInfoAdapter {
     @Value("${movie-info.api.url}")
     private String url;
 
-    @Value("${movie.api.key}")
+    @Value("${kofic.api.key}")
     private String apiKey;
 
     private final RestTemplate restTemplate;
