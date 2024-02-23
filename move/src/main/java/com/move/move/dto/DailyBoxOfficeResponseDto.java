@@ -29,6 +29,7 @@ public class DailyBoxOfficeResponseDto {
         private List<DailyBoxOffice> dailyBoxOfficeList;
 
     }
+
     @Getter
     @Setter
     public static class DailyBoxOffice {
@@ -90,35 +91,4 @@ public class DailyBoxOfficeResponseDto {
         private String imageUrl;
     }
 
-    public void printDetails() {
-        System.out.println("BoxOfficeResult:");
-        System.out.println("  boxofficeType: " + boxOfficeResult.getBoxofficeType());
-        System.out.println("  showRange: " + boxOfficeResult.getShowRange());
-
-        List<DailyBoxOffice> dailyBoxOfficeList = boxOfficeResult.getDailyBoxOfficeList();
-        System.out.println("  dailyBoxOfficeList:");
-
-        for (DailyBoxOffice dailyBoxOffice : dailyBoxOfficeList) {
-            System.out.println("    DailyBoxOffice:");
-            System.out.println("      rnum: " + dailyBoxOffice.getRnum());
-            System.out.println("      rank: " + dailyBoxOffice.getRank());
-            System.out.println("      rankInten: " + dailyBoxOffice.getRankInten());
-            System.out.println("      rankOldAndNew: " + dailyBoxOffice.getRankOldAndNew());
-            System.out.println("      movieCd: " + dailyBoxOffice.getMovieCd());
-            System.out.println("      movieNm: " + dailyBoxOffice.getMovieNm());
-            System.out.println("      openDt: " + dailyBoxOffice.getOpenDt());
-            System.out.println("      salesAmt: " + dailyBoxOffice.getSalesAmt());
-            System.out.println("      salesShare: " + dailyBoxOffice.getSalesShare());
-            System.out.println("      salesInten: " + dailyBoxOffice.getSalesInten());
-            System.out.println("      salesChange: " + dailyBoxOffice.getSalesChange());
-            System.out.println("      salesAcc: " + dailyBoxOffice.getSalesAcc());
-            System.out.println("      audiCnt: " + dailyBoxOffice.getAudiCnt());
-            System.out.println("      audiInten: " + dailyBoxOffice.getAudiInten());
-            System.out.println("      audiChange: " + dailyBoxOffice.getAudiChange());
-            System.out.println("      audiAcc: " + dailyBoxOffice.getAudiAcc());
-            System.out.println("      scrnCnt: " + dailyBoxOffice.getScrnCnt());
-            System.out.println("      showCnt: " + dailyBoxOffice.getShowCnt());
-            System.out.println("      imageUrl: " + dailyBoxOffice.getImageUrl());
-        }
-    }
 }
