@@ -46,7 +46,7 @@ public class MovieDetailAdapterImpl implements MovieDetailAdapter{
         if (responseEntity.getStatusCode() == HttpStatus.OK && responseEntity.getBody() != null
                 && !responseEntity.getBody().getResults().isEmpty()) {
             MovieDetailResponseDto movieDetailResponseDto = new MovieDetailResponseDto();
-            movieDetailResponseDto.setMovieDetailsResultDto(responseEntity.getBody().getResults().get(0));
+            movieDetailResponseDto.setMovieDetailResultDto(responseEntity.getBody().getResults().get(0));
             return movieDetailResponseDto;
         } else {
             return null;

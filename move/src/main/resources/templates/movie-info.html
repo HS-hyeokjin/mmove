@@ -14,8 +14,7 @@
         <div class="col-md-10">
             <div class="row">
                 <div class="col-md-3" th:style="'background-image: url(' + ${movieInfoData.movieInfoResult.movieInfo.imageUrl} + '); background-repeat: no-repeat; background-position: center center; background-size: cover; opacity: 1;'">
-                    <img th:src="${movieInfoData.movieInfoResult.movieInfo.imageUrl}" alt="Movie Poster"
-                         class="img-fluid">
+                    <img th:src="${movieInfoData.movieInfoResult.movieInfo.imageUrl}" alt="Movie Poster" class="img-fluid">
                 </div>
                 <div class="col-md-8">
                     <h1 class="mb-4"
@@ -38,15 +37,17 @@
             <hr>
             <div class="row">
                 <div th:each="actor : ${movieInfoData.movieInfoResult.movieInfo.actors}" class="col-md-1 mb-4">
-                    <div class="card border-dark">
-                        <img th:src="${actor.peopleImageUrl}" class="card-img-top" alt="Actor Image" width="200">
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${actor.peopleNm}"></h5>
-                            <p class="card-text">
-                                <span th:text="${actor.cast}"></span>
-                            </p>
+                    <a th:href="@{/person-detail/{actorName}(actorName=${actor.peopleNmEn})}" class="text-decoration-none">
+                        <div class="card border-dark">
+                            <img th:src="${#strings.isEmpty(actor.peopleImageUrl) ? '/images/default-person-image.jpg' : actor.peopleImageUrl}" class="card-img-top" alt="Actor Image" width="200">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${actor.peopleNm}"></h5>
+                                <p class="card-text">
+                                    <span th:text="${actor.cast}"></span>
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
             <div th:replace="fragments/footer :: footer"></div>

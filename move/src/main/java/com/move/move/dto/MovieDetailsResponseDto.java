@@ -9,7 +9,7 @@ import java.util.List;
 @Setter
 public class MovieDetailsResponseDto {
 
-    private List<MovieDetailsResultDto> results;
+    private List<MovieDetailResultDto> results;
 
 }
 

@@ -1,7 +1,7 @@
 package com.move.move.service;
 
 import com.move.move.adapter.DailyBoxOfficeAdapter;
-import com.move.move.adapter.MoviePosterAdapter;
+import com.move.move.adapter.MovieDetailAdapter;
 import com.move.move.dto.DailyBoxOfficeRequestDto;
 import com.move.move.dto.DailyBoxOfficeResponseDto;
 import org.springframework.stereotype.Service;
@@ -16,17 +16,16 @@ import java.util.stream.Stream;
 public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService{
 
     private final DailyBoxOfficeAdapter dailyBoxOfficeAdapter;
-    private final MoviePosterAdapter moviePosterAdapter;
+    private final MovieDetailAdapter movieDetailAdapter;
 
-    public DailyBoxOfficeServiceImpl(DailyBoxOfficeAdapter dailyBoxOfficeAdapter, MoviePosterAdapter moviePosterAdapter) {
+    public DailyBoxOfficeServiceImpl(DailyBoxOfficeAdapter dailyBoxOfficeAdapter, MovieDetailAdapter movieDetailAdapter) {
         this.dailyBoxOfficeAdapter = dailyBoxOfficeAdapter;
-        this.moviePosterAdapter = moviePosterAdapter;
+        this.movieDetailAdapter = movieDetailAdapter;
     }
 
     public DailyBoxOfficeResponseDto getDailyBoxOffice(){
 
-        String yesterdayDate = "20240215";
-        //String yesterdayDate = yesterdayStringDate();
+        String yesterdayDate = yesterdayStringDate();
 
         DailyBoxOfficeRequestDto dailyBoxOfficeRequestDto = new DailyBoxOfficeRequestDto();
         dailyBoxOfficeRequestDto.setTargetDt(yesterdayDate);
@@ -36,11 +35,9 @@ public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService{
         for (DailyBoxOfficeResponseDto.DailyBoxOffice dailyBoxOffice : dailyBoxOfficeList) {
             String movieTitle = dailyBoxOffice.getMovieNm();
 
-            String posterUrl = moviePosterAdapter.searchMoviePoster(movieTitle);
-
+            String posterUrl = movieDetailAdapter.searchMoviePoster(movieTitle);
             dailyBoxOffice.setImageUrl(posterUrl);
         }
-
         return dailyBoxOfficeData;
     }
 
@@ -51,5 +48,4 @@ public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService{
         return Stream.of(formattedDate)
                 .collect(Collectors.joining());
     }
-
 }

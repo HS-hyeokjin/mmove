@@ -1,6 +1,6 @@
 package com.move.move.adapter;
 
-import com.move.move.dto.PersonImageResponseDto;
+import com.move.move.dto.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
-public class PersonImageAdapterImpl implements PersonImageAdapter {
+public class PersonDetailAdapterImpl implements PersonDetailAdapter {
 
     @Value("${tmdb.person.api.url}")
     private String apiUrl;
@@ -23,9 +23,35 @@ public class PersonImageAdapterImpl implements PersonImageAdapter {
 
     private final RestTemplate restTemplate;
 
-    public PersonImageAdapterImpl(RestTemplate restTemplate) {
+    public PersonDetailAdapterImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
+
+    @Override
+    public PersonDetailResponseDto getPersonDetail(PersonDetailRequestDto personDetailRequestDto) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(apiUrl)
+                .queryParam("api_key", apiKey)
+                .queryParam("query", personDetailRequestDto.getPersonEnNm())
+                .queryParam("language", "ko");
+
+        ResponseEntity<PersonDetailsResponseDto> responseEntity = restTemplate.exchange(
+                builder.toUriString(),
+                HttpMethod.GET,
+                null,
+                PersonDetailsResponseDto.class
+        );
+
+
+        if (responseEntity.getStatusCode() == HttpStatus.OK && responseEntity.getBody() != null
+                && !responseEntity.getBody().getResults().isEmpty()) {
+            PersonDetailResponseDto personDetailResponseDto = new PersonDetailResponseDto();
+            personDetailResponseDto.setPersonDetailResultDto(responseEntity.getBody().getResults().get(0));
+            return personDetailResponseDto;
+        } else {
+            return null;
+        }
+    }
+
 
     @Override
     public String personImageUrl(String personName) {

@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MovieDetailResponseDto {
 
-    private MovieDetailsResultDto movieDetailsResultDto;
+    private MovieDetailResultDto movieDetailResultDto;
 
 }

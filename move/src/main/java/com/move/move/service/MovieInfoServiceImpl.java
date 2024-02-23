@@ -48,9 +48,9 @@ public class MovieInfoServiceImpl implements MovieInfoService{
         }
 
         movieInfoResponseDto.getMovieInfoResult().getMovieInfo().
-                setImageUrl(imageUrl + movieDetailResponseDto.getMovieDetailsResultDto().getPosterPath());
+                setImageUrl(imageUrl + movieDetailResponseDto.getMovieDetailResultDto().getPosterPath());
         movieInfoResponseDto.getMovieInfoResult().getMovieInfo().
-                setOverview(movieDetailResponseDto.getMovieDetailsResultDto().getOverview());
+                setOverview(movieDetailResponseDto.getMovieDetailResultDto().getOverview());
 
 
         return movieInfoResponseDto;

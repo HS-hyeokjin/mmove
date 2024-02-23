@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class MovieDetailsResultDto {
+public class MovieDetailResultDto {
 
     private boolean adult;
 
