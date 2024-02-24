@@ -33,7 +33,8 @@ public class DailyBoxOfficeAdapterImpl implements DailyBoxOfficeAdapter {
     public DailyBoxOfficeResponseDto getDailyBoxOfficeData(DailyBoxOfficeRequestDto dailyBoxOfficeRequestDto) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("key", apiKey)
-                .queryParam("targetDt", dailyBoxOfficeRequestDto.getTargetDt());
+                .queryParam("targetDt", dailyBoxOfficeRequestDto.getTargetDt())
+                .queryParam("repNationCd", dailyBoxOfficeRequestDto.getRepNationCd());
         ResponseEntity<String> responseEntity = restTemplate.exchange(
                 builder.toUriString(),
                 HttpMethod.GET,

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -23,12 +24,14 @@ public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService{
         this.movieDetailAdapter = movieDetailAdapter;
     }
 
-    public DailyBoxOfficeResponseDto getDailyBoxOffice(){
+    @Override
+    public DailyBoxOfficeResponseDto getDailyBoxOffice(String nationCd){
 
         String yesterdayDate = yesterdayStringDate();
 
         DailyBoxOfficeRequestDto dailyBoxOfficeRequestDto = new DailyBoxOfficeRequestDto();
         dailyBoxOfficeRequestDto.setTargetDt(yesterdayDate);
+        dailyBoxOfficeRequestDto.setRepNationCd(nationCd);
         DailyBoxOfficeResponseDto dailyBoxOfficeData = dailyBoxOfficeAdapter.getDailyBoxOfficeData(dailyBoxOfficeRequestDto);
 
         List<DailyBoxOfficeResponseDto.DailyBoxOffice> dailyBoxOfficeList = dailyBoxOfficeData.getBoxOfficeResult().getDailyBoxOfficeList();
@@ -41,6 +44,7 @@ public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService{
         return dailyBoxOfficeData;
     }
 
+
     private String yesterdayStringDate(){
         LocalDate date = LocalDate.now().minusDays(1);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
@@ -48,4 +52,5 @@ public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService{
         return Stream.of(formattedDate)
                 .collect(Collectors.joining());
     }
+
 }
