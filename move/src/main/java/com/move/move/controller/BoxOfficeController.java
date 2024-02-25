@@ -7,6 +7,7 @@ import com.move.move.service.WeeklyBoxOfficeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class BoxOfficeController {
@@ -20,10 +21,11 @@ public class BoxOfficeController {
     }
 
     @GetMapping("/daily-box-office")
-    public String getDailyBoxOffice(Model model) {
-        DailyBoxOfficeResponseDto dailyBoxOfficeData = dailyBoxOfficeService.getDailyBoxOffice(null);
-        DailyBoxOfficeResponseDto koDailyBoxOfficeData = dailyBoxOfficeService.getDailyBoxOffice("K");
-        DailyBoxOfficeResponseDto foDailyBoxOfficeData = dailyBoxOfficeService.getDailyBoxOffice("F");
+    public String getDailyBoxOffice(Model model, @RequestParam(required = false) String date) {
+
+        DailyBoxOfficeResponseDto dailyBoxOfficeData = dailyBoxOfficeService.getDailyBoxOffice(null,date);
+        DailyBoxOfficeResponseDto koDailyBoxOfficeData = dailyBoxOfficeService.getDailyBoxOffice("K",date);
+        DailyBoxOfficeResponseDto foDailyBoxOfficeData = dailyBoxOfficeService.getDailyBoxOffice("F",date);
 
         model.addAttribute("dailyBoxOfficeData", dailyBoxOfficeData);
         model.addAttribute("koDailyBoxOfficeData", koDailyBoxOfficeData);

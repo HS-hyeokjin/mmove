@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Getter
@@ -28,6 +30,10 @@ public class DailyBoxOfficeResponseDto {
         @JsonProperty("dailyBoxOfficeList")
         private List<DailyBoxOffice> dailyBoxOfficeList;
 
+        public void setShowRange(String showRange) {
+            LocalDate startDate = LocalDate.parse(showRange.substring(0, 8), DateTimeFormatter.BASIC_ISO_DATE);
+            this.showRange = startDate.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
+        }
     }
 
     @Getter

@@ -4,5 +4,5 @@ import com.move.move.dto.DailyBoxOfficeResponseDto;
 
 public interface DailyBoxOfficeService {
 
-    DailyBoxOfficeResponseDto getDailyBoxOffice(String nationCd);
+    DailyBoxOfficeResponseDto getDailyBoxOffice(String nationCd, String date);
 }

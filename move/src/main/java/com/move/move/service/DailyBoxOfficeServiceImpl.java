@@ -25,12 +25,13 @@ public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService{
     }
 
     @Override
-    public DailyBoxOfficeResponseDto getDailyBoxOffice(String nationCd){
+    public DailyBoxOfficeResponseDto getDailyBoxOffice(String nationCd,String date){
 
-        String yesterdayDate = yesterdayStringDate();
-
+        if(date == null) {
+            date = yesterdayStringDate();
+        }
         DailyBoxOfficeRequestDto dailyBoxOfficeRequestDto = new DailyBoxOfficeRequestDto();
-        dailyBoxOfficeRequestDto.setTargetDt(yesterdayDate);
+        dailyBoxOfficeRequestDto.setTargetDt(date);
         dailyBoxOfficeRequestDto.setRepNationCd(nationCd);
         DailyBoxOfficeResponseDto dailyBoxOfficeData = dailyBoxOfficeAdapter.getDailyBoxOfficeData(dailyBoxOfficeRequestDto);
 
