@@ -3,67 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://bootswatch.com/4/slate/bootstrap.min.css">
-    <title>Title</title>
+
 </head>
 <body>
-
-<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/daily-box-office">M . O . V . E</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02"
-                aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarColor02">
-            <ul class="navbar-nav me-auto">
-            </ul>
-            <form class="d-flex">
-                <input class="form-control me-sm-2" type="search" placeholder="Search">
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </div>
+<nav class="col-md-1 sidebar" style="background-color: #1d2126;">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+            <br>
+            <li class="nav-item active">
+                <a class="nav-link" onclick="toggleBoxOfficeSections()">
+                    박스오피스 <span class="visually-hidden">(current)</span>
+                </a>
+                <ul id="boxOfficeSections" style="display: none;">
+                    <li><a class="nav-link" href="/daily-box-office">일간 박스 오피스</a></li>
+                    <li><a class="nav-link" href="/weekly-box-office">주간 박스 오피스</a></li>
+                </ul>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" onclick="toggleBoxOfficeSections()">
+                    영화 상세 <span class="visually-hidden">(current)</span>
+                </a>
+                <ul id="movieDetailSections" style="display: none;">
+                    <li><a class="nav-link" href="/daily-box-office">영화 검색</a></li>
+                </ul>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#" onclick="toggleBoxOfficeSections()">
+                    영화 상세 <span class="visually-hidden">(current)</span>
+                </a>
+                <ul id="personDetailSections" style="display: none;">
+                    <li><a class="nav-link" href="/daily-box-office">영화인 검색</a></li>
+                </ul>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#movieStudioSection">영화사</a>
+            </li>
+        </ul>
     </div>
 </nav>
 
-<div class="container-fluid">
-    <div class="row">
-        <nav class="col-md-2 d-none d-md-block sidebar">
-            <div class="sidebar-sticky">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">
-                            박스오피스 <span class="visually-hidden">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">영화 상세</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">영화인</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">영화사</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
