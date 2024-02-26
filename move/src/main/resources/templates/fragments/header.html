@@ -5,33 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOVE Daily Box Office</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="/js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <style>
-        .card:hover {
-            transform: scale(1.05);
-            transition: transform 0.3s ease-in-out;
-        }
-        .card-container {
-            display: flex;
-        }
 
-        .card {
-            flex: 0 0 auto;
-            margin-right: 10px;
-        }
-
-    </style>
-    <script>
-        function toggleBoxOfficeSections() {
-            var boxOfficeSections = document.getElementById("boxOfficeSections");
-            boxOfficeSections.style.display = (boxOfficeSections.style.display === "none") ? "block" : "none";
-        }
-    </script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" data-bs-theme="dark">
     <div class="container-fluid" style="background-color:#1d2126">
         <a class="navbar-brand" href="/daily-box-office">m. m . o . v . e</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02"
@@ -40,6 +24,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/HS-hyeokjin/mmove">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </li>
             </ul>
             <form class="d-flex">
                 <input class="form-control me-sm-2" type="search" placeholder="Search">
@@ -48,6 +37,5 @@
         </div>
     </div>
 </nav>
-
 </body>
 </html>

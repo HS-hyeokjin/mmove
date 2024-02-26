@@ -206,7 +206,8 @@ body {
     text-align: var(--bs-body-text-align);
     background-color: var(--bs-body-bg);
     -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: transparent
+    -webkit-tap-highlight-color: transparent;
+    padding-top: 69px;
 }
 
 hr {
@@ -1297,7 +1298,7 @@ progress {
     }
 
     .offset-md-2 {
-        margin-left: 16.66666667%
+        margin-left: 12.8%
     }
 
     .offset-md-3 {
@@ -13940,3 +13941,25 @@ legend {
 }
 
 /*# sourceMappingURL=bootstrap.min.css.map */
+
+ .card:hover {
+     transform: scale(1.05);
+     transition: transform 0.3s ease-in-out;
+ }
+.card-container {
+    display: flex;
+}
+
+.card {
+    flex: 0 0 auto;
+    margin-right: 10px;
+}
+.scrollable-row {
+     overflow-x: hidden;
+     white-space: nowrap;
+ }
+
+.card-container {
+    display: flex;
+    transition: transform 0s ease-in-out;
+}
