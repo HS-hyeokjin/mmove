@@ -34,7 +34,6 @@ public class MovieInfoServiceImpl implements MovieInfoService{
         MovieInfoResponseDto movieInfoResponseDto = movieInfoAdapter.getMovieInfo(movieCode);
         MovieDetailResponseDto movieDetailResponseDto = movieDetailAdapter.searchMovieDetail(movieInfoResponseDto.getMovieInfoResult().getMovieInfo().getMovieNm());
 
-
         List<MovieInfoResponseDto.Actor> actors = movieInfoResponseDto.getMovieInfoResult().getMovieInfo().getActors();
         for (MovieInfoResponseDto.Actor actor : actors) {
             String actorImageUrl;
@@ -48,10 +47,13 @@ public class MovieInfoServiceImpl implements MovieInfoService{
         }
 
         movieInfoResponseDto.getMovieInfoResult().getMovieInfo().
-                setImageUrl(imageUrl + movieDetailResponseDto.getMovieDetailResultDto().getPosterPath());
+                setPosterImageUrl(imageUrl + movieDetailResponseDto.getMovieDetailResultDto().getPosterPath());
+        movieInfoResponseDto.getMovieInfoResult().getMovieInfo().
+                setBackDropImageUrl(imageUrl + movieDetailResponseDto.getMovieDetailResultDto().getBackdropPath());
         movieInfoResponseDto.getMovieInfoResult().getMovieInfo().
                 setOverview(movieDetailResponseDto.getMovieDetailResultDto().getOverview());
-
+        movieInfoResponseDto.getMovieInfoResult().getMovieInfo().
+                setPopularity(movieDetailResponseDto.getMovieDetailResultDto().getPopularity());
 
         return movieInfoResponseDto;
     }

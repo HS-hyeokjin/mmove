@@ -31,7 +31,11 @@ public class MovieInfoResponseDto {
         @JsonProperty("movieCd")
         private String movieCd;
 
-        private String imageUrl;
+        private String posterImageUrl;
+
+        private String backDropImageUrl;
+
+        private Double popularity;
 
         @JsonProperty("movieNm")
         private String movieNm;

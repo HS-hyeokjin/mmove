@@ -3,7 +3,6 @@ package com.move.move.service;
 import com.move.move.adapter.PersonDetailAdapter;
 import com.move.move.dto.PersonDetailRequestDto;
 import com.move.move.dto.PersonDetailResponseDto;
-import com.move.move.dto.PersonDetailsResponseDto;
 import org.springframework.stereotype.Service;
 
 @Service
