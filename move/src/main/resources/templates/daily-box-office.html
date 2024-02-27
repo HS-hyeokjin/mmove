@@ -7,30 +7,29 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div th:replace="fragments/sidebar :: nav"></div>
+        <div th:replace="fragments/offcanvas :: offcanvas"></div>
         <div class="col-md-10 offset-md-2">
             <br>
             <div class="row">
                 <div class="col-md-8 ">
-                    <h1>일간 박스 오피스 Top10 <small style="font-size: 25px;" th:text="'['+ ${dailyBoxOfficeData.boxOfficeResult.showRange} +']'"></small>
-                    </h1>
+                    <h1>일간 박스 오피스 Top10 <small style="font-size: 25px;" th:text="'['+ ${dailyBoxOfficeData.boxOfficeResult.showRange} +']'"></small></h1>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control datepicker" placeholder="날짜 선택">
+                    <input type="text" class="form-control datepicker" id="dailyDatePicker" placeholder="날짜 선택">
                 </div>
                 <br>
             </div>
             <br>
-            <div class="row" style="overflow-x: auto; white-space: nowrap;">
-                <div class="card-container scrollable-row">
+            <div class="row scrollable-row col-md-10" style="overflow-x: hidden; overflow-y: hidden; white-space: nowrap;">
+                <div class="card-container">
                     <div th:each="boxOffice, iterStat : ${dailyBoxOfficeData.boxOfficeResult.dailyBoxOfficeList}"
-                         th:if="${iterStat.index le 9}" class="col-md-2 mb-4 card border`-dark">
+                         th:if="${iterStat.index le 9}" class="col-md-2 card border`-dark">
                         <a th:href="@{'/movie-info/' + ${boxOffice.movieCd}}">
                             <img th:src="${boxOffice.imageUrl}" class="card-img-top" alt="포스터 이미지">
                         </a>
                         <div class="card-body">
                             <h5 class="card-title">
-                                <span th:utext="${#strings.length(boxOffice.movieNm) &gt; 16 ? #strings.substring(boxOffice.movieNm, 0, 16) + '...' : boxOffice.movieNm}"></span>
+                                <span th:utext="${#strings.length(boxOffice.movieNm) &gt; 10 ? #strings.substring(boxOffice.movieNm, 0, 10) + '...' : boxOffice.movieNm}"></span>
                             </h5>
                             <p class="card-text">개봉일: <span th:text="${boxOffice.openDt}"></span></p>
                         </div>
@@ -42,16 +41,16 @@
 
             <h1>한국 영화 순위</h1>
             <br>
-            <div class="row" style="overflow-x: auto; white-space: nowrap;">
-                <div class="card-container scrollable-row">
+            <div class="row scrollable-row col-md-10" style="overflow-x: hidden; overflow-y: hidden; white-space: nowrap;">
+                <div class="card-container">
                     <div th:each="boxOffice, iterStat : ${koDailyBoxOfficeData.boxOfficeResult.dailyBoxOfficeList}"
-                         th:if="${iterStat.index le 9}" class="col-md-2 mb-4 card border`-dark">
+                         th:if="${iterStat.index le 9}" class="col-md-2 card border`-dark">
                         <a th:href="@{'/movie-info/' + ${boxOffice.movieCd}}">
                             <img th:src="${boxOffice.imageUrl}" class="card-img-top" alt="포스터 이미지">
                         </a>
                         <div class="card-body">
                             <h5 class="card-title">
-                                <span th:utext="${#strings.length(boxOffice.movieNm) &gt; 16 ? #strings.substring(boxOffice.movieNm, 0, 16) + '...' : boxOffice.movieNm}"></span>
+                                <span th:utext="${#strings.length(boxOffice.movieNm) &gt; 10 ? #strings.substring(boxOffice.movieNm, 0, 10) + '...' : boxOffice.movieNm}"></span>
                             </h5>
                             <p class="card-text">개봉일: <span th:text="${boxOffice.openDt}"></span></p>
                         </div>
@@ -61,23 +60,27 @@
             <hr>
             <h1>해외 영화 순위</h1>
             <br>
-            <div class="row">
-                <div th:each="boxOffice, iterStat : ${foDailyBoxOfficeData.boxOfficeResult.dailyBoxOfficeList}"
-                     th:if="${iterStat.index le 4}" class="col-md-2 mb-4">
-                    <div class="card border`-dark h-100">
+            <div class="row scrollable-row col-md-10" style="overflow-x: hidden; overflow-y: hidden; white-space: nowrap;">
+                <div class="card-container">
+                    <div th:each="boxOffice, iterStat : ${foDailyBoxOfficeData.boxOfficeResult.dailyBoxOfficeList}"
+                         th:if="${iterStat.index le 9}" class="col-md-2 card border`-dark">
                         <a th:href="@{'/movie-info/' + ${boxOffice.movieCd}}">
                             <img th:src="${boxOffice.imageUrl}" class="card-img-top" alt="포스터 이미지">
                         </a>
                         <div class="card-body">
                             <h5 class="card-title">
-                                <span th:utext="${#strings.length(boxOffice.movieNm) &gt; 16 ? #strings.substring(boxOffice.movieNm, 0, 16) + '...' : boxOffice.movieNm}"></span>
+                                <span th:utext="${#strings.length(boxOffice.movieNm) &gt; 10 ? #strings.substring(boxOffice.movieNm, 0, 10) + '...' : boxOffice.movieNm}"></span>
                             </h5>
                             <p class="card-text">개봉일: <span th:text="${boxOffice.openDt}"></span></p>
                         </div>
                     </div>
                 </div>
             </div>
+            <hr>
             <div class="col-md-10">
+                <br>
+                <h1 th:text="'['+ ${dailyBoxOfficeData.boxOfficeResult.showRange} + ' 박스 오피스]'"> </h1>
+                <br>
                 <table class="table table-hover table-bordered">
                     <thead>
                     <tr>
@@ -90,7 +93,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="boxOffice : ${dailyBoxOfficeData.boxOfficeResult.dailyBoxOfficeList}">
+                    <tr th:each="boxOffice, iterStat : ${dailyBoxOfficeData.boxOfficeResult.dailyBoxOfficeList}"
+                        th:class="${iterStat.odd}? odd-row : even-row"
+                        th:classappend="${iterStat.odd}? table-active : ''">
                         <td>
                             <a th:href="@{'/movie-info/' + ${boxOffice.movieCd}}">
                                 <img th:src="${boxOffice.imageUrl}" alt="포스터 이미지" width="100">
@@ -108,5 +113,6 @@
         </div>
     </div>
 </div>
+<div th:insert="fragments/footer :: footer"></div>
 </body>
 </html>
