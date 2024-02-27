@@ -34,8 +34,8 @@ public class BoxOfficeController {
     }
 
     @GetMapping("/weekly-box-office")
-    public String getWeeklyBoxOffice(Model model) {
-        WeeklyBoxOfficeResponseDto weeklyBoxOfficeData = weeklyBoxOfficeService.getWeekBoxOffice("20240212");
+    public String getWeeklyBoxOffice(Model model,@RequestParam(required = false) String date) {
+        WeeklyBoxOfficeResponseDto weeklyBoxOfficeData = weeklyBoxOfficeService.getWeekBoxOffice(date);
         model.addAttribute("weeklyBoxOfficeData", weeklyBoxOfficeData);
         return "weekly-box-office";
     }

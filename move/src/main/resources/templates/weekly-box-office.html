@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head th:include="fragments/header :: head"></head>
+    <div th:replace="fragments/header :: nav" class="col-md-2"></div>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="fragments/sidebar :: nav"></div>
+        <div class="col-md-10 offset-md-2">
+            <br>
+            <div class="row">
+                <div class="col-md-8 ">
+                    <h1>주간 박스 오피스 Top5</h1>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control datepicker" id="weeklyDatePicker" placeholder="날짜 선택">
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div th:each="boxOffice, iterStat : ${weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList}"
+                     th:if="${iterStat.index le 4}" class="col-md-2 mb-4">
+                    <div class="card border`-dark">
+                        <a th:href="@{'/movie-info/' + ${boxOffice.movieCd}}">
+                            <img th:src="${boxOffice.imageUrl}" class="card-img-top" alt="포스터 이미지">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <span th:utext="${#strings.length(boxOffice.movieNm) &gt; 16 ? #strings.substring(boxOffice.movieNm, 0, 16) + '...' : boxOffice.movieNm}"></span>
+                            </h5>
+                            <p class="card-text">개봉일: <span th:text="${boxOffice.openDt}"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h1>주간 박스 오피스 통계</h1>
+            <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    <canvas id="boxOfficeDoughnutChart"></canvas>
+                </div>
+                <div class="col-md-7">
+                    <canvas id="boxOfficeChart" width="200" height="100"></canvas>
+                </div>
+            </div>
+            <hr>
+
+            <div class="col-md-10">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    <tr>
+                        <th>포스터 이미지</th>
+                        <th>순위</th>
+                        <th>영화 제목</th>
+                        <th>개봉일</th>
+                        <th>매출액</th>
+                        <th>관객 수</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="boxOffice : ${weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList}">
+                        <td>
+                            <a th:href="@{'/movie-info/' + ${boxOffice.movieCd}}">
+                                <img th:src="${boxOffice.imageUrl}" alt="포스터 이미지" width="100">
+                            </a>
+                        </td>
+                        <td th:text="${boxOffice.rank}"></td>
+                        <td th:text="${boxOffice.movieNm}"></td>
+                        <td th:text="${boxOffice.openDt}"></td>
+                        <td th:text="${boxOffice.salesAmt}"></td>
+                        <td th:text="${boxOffice.audiCnt}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div th:insert="fragments/footer :: footer"></div>
+
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            var movieNames = /*[[${weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList.![movieNm]}]]*/ [];
+            var salesAmts = /*[[${weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList.![audiCnt]}]]*/ [];
+            var slicedMovieNames = movieNames.slice(0, 5);
+            var slicedSalesAmts = salesAmts.slice(0, 5);
+
+            var ctx = document.getElementById('boxOfficeDoughnutChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: slicedMovieNames,
+                    datasets: [{
+                        data: slicedSalesAmts,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.4)',
+                            'rgba(54, 162, 235, 0.4)',
+                            'rgba(255, 206, 86, 0.4)',
+                            'rgba(75, 192, 192, 0.4)',
+                            'rgba(153, 102, 255, 0.4)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        title: {
+                            display: true,
+                            text: '영화별 매출액 비율'
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true
+            });
+            var movieNames = /*[[${#strings.arrayJoin(weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList.![rank],"")}]]*/ [];
+            var salesAmts = /*[[${weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList.![salesAmt]}]]*/ [];
+            var ctx = document.getElementById('boxOfficeChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: movieNames,
+                    datasets: [{
+                        label: '매출액',
+                        data: salesAmts,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
