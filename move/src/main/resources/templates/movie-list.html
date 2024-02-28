@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search List</title>
+</head>
+
+<body>
+<h2>Movie Search List</h2>
+
+<p>Total Count: <span th:text="${movieSearchListResponseDto.movieListResult.totCnt}"></span></p>
+<p>Source: <span th:text="${movieSearchListResponseDto.movieListResult.source}"></span></p>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Movie Code</th>
+        <th>Movie Name</th>
+        <th>English Name</th>
+        <th>Production Year</th>
+        <th>Open Date</th>
+        <th>Type</th>
+        <th>Production Status</th>
+        <th>Nation</th>
+        <th>Genre</th>
+        <th>Representative Nation</th>
+        <th>Representative Genre</th>
+        <th>Directors</th>
+        <th>Companies</th>
+    </tr>
+    </thead>
+    <tbody th:each="movie : ${movieSearchListResponseDto.movieListResult.movieList}">
+    <tr>
+        <td th:text="${movie.movieCd}"></td>
+        <td th:text="${movie.movieNm}"></td>
+        <td th:text="${movie.movieNmEn}"></td>
+        <td th:text="${movie.prdtYear}"></td>
+        <td th:text="${movie.openDt}"></td>
+        <td th:text="${movie.typeNm}"></td>
+        <td th:text="${movie.prdtStatNm}"></td>
+        <td th:text="${movie.nationAlt}"></td>
+        <td th:text="${movie.genreAlt}"></td>
+        <td th:text="${movie.repNationNm}"></td>
+        <td th:text="${movie.repGenreNm}"></td>
+        <td>
+            <ul>
+                <li th:each="director : ${movie.directors}" th:text="${director.peopleNm}"></li>
+            </ul>
+        </td>
+        <td>
+            <ul>
+                <li th:each="company : ${movie.companys}" th:text="${company.companyNm}"></li>
+            </ul>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+
+</html>

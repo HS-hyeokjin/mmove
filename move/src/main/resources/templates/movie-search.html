@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search</title>
+    <head th:include="fragments/header :: head"></head>
+    <div th:replace="fragments/header :: nav" class="col-md-2"></div>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 600px;
+        }
+
+        .input-container {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .input-container input[type="text"] {
+            border: none;
+            border-bottom: 1px solid #495057;
+            outline: none;
+            text-align: center;
+        }
+
+        .search-button {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <form th:action="@{movie-search/movie-list}" method="get">
+        <h1>영화 이름</h1>
+        <div class="input-container">
+            <input type="text" class="form-control" th:placeholder="'Enter movie name'" name="movieName">
+        </div>
+        <br>
+        <h1>감독 이름</h1>
+        <div class="input-container">
+            <input type="text" class="form-control" th:placeholder="'Enter director name'" name="directorName">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary search-button">검색</button>
+    </form>
+</div>
+</body>
+
+</html>
