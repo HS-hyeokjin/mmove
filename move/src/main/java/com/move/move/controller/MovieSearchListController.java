@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.UnsupportedEncodingException;
+
 @Controller
 @RequestMapping("/movie-search")
 public class MovieSearchListController {
@@ -25,7 +27,7 @@ public class MovieSearchListController {
     }
 
     @GetMapping("/movie-list")
-    public String getMovieList(Model model, @RequestParam(required = false) String movieName, @RequestParam(required = false) String directorName){
+    public String getMovieList(Model model, @RequestParam(required = false) String movieName, @RequestParam(required = false) String directorName) throws UnsupportedEncodingException {
         MovieSearchListResponseDto movieSearchListResponseDto = movieSearchListService.getMovieSearchList(movieName, directorName);
         model.addAttribute("movieSearchListResponseDto",movieSearchListResponseDto);
         System.out.println(movieSearchListResponseDto.getMovieListResult().getTotCnt());

@@ -5,6 +5,8 @@ import com.move.move.dto.MovieSearchListRequestDto;
 import com.move.move.dto.MovieSearchListResponseDto;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+
 @Service
 public class MovieSearchListServiceImpl implements MovieSearchListService {
 
@@ -15,7 +17,7 @@ public class MovieSearchListServiceImpl implements MovieSearchListService {
     }
 
     @Override
-    public MovieSearchListResponseDto getMovieSearchList(String movieName, String directorName) {
+    public MovieSearchListResponseDto getMovieSearchList(String movieName, String directorName) throws UnsupportedEncodingException {
         MovieSearchListRequestDto movieSearchListRequestDto = new MovieSearchListRequestDto();
         movieSearchListRequestDto.setMovieNm(movieName);
         movieSearchListRequestDto.setDirectorNm(directorName);
