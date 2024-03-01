@@ -20,7 +20,6 @@ public class MovieSearchListController {
         this.movieSearchListService = movieSearchListService;
     }
 
-
     @GetMapping
     public String getMovieSearch(){
         return "movie-search";
@@ -30,7 +29,6 @@ public class MovieSearchListController {
     public String getMovieList(Model model, @RequestParam(required = false) String movieName, @RequestParam(required = false) String directorName) throws UnsupportedEncodingException {
         MovieSearchListResponseDto movieSearchListResponseDto = movieSearchListService.getMovieSearchList(movieName, directorName);
         model.addAttribute("movieSearchListResponseDto",movieSearchListResponseDto);
-        System.out.println(movieSearchListResponseDto.getMovieListResult().getTotCnt());
         return "movie-list";
     }
 }
