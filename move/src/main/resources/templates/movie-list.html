@@ -5,17 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Search List</title>
+    <head th:include="fragments/header :: head"></head>
+    <div th:replace="fragments/header :: nav" class="col-md-2"></div>
 </head>
 
 <body>
-<h2>Movie Search List</h2>
+<h2>영화 검색</h2>
 
-<p>Total Count: <span th:text="${movieSearchListResponseDto.movieListResult.totCnt}"></span></p>
-<p>Source: <span th:text="${movieSearchListResponseDto.movieListResult.source}"></span></p>
+<p>총 <span th:text="${movieSearchListResponseDto.movieListResult.totCnt}"></span>건</p>
 
 <table border="1">
     <thead>
     <tr>
+        <th>poster</th>
         <th>Movie Code</th>
         <th>Movie Name</th>
         <th>English Name</th>
@@ -33,6 +35,7 @@
     </thead>
     <tbody th:each="movie : ${movieSearchListResponseDto.movieListResult.movieList}">
     <tr>
+        <td><img th:src="${movie.posterUrl}" calt="포스터 이미지"> </td>
         <td th:text="${movie.movieCd}"></td>
         <td th:text="${movie.movieNm}"></td>
         <td th:text="${movie.movieNmEn}"></td>

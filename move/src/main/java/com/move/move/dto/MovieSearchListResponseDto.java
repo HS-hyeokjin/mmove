@@ -38,6 +38,7 @@ public class MovieSearchListResponseDto {
         private String genreAlt;
         private String repNationNm;
         private String repGenreNm;
+        private String posterUrl;
         private List<DirectorDTO> directors;
         private List<CompanyDTO> companys;
 
