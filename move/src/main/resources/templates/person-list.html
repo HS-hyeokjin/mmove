@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Person Search List</title>
+    <head th:include="fragments/header :: head"></head>
+    <div th:replace="fragments/header :: nav" class="col-md-2"></div>
+</head>
+
+<body>
+<h2>People Search</h2>
+
+<p>총 <span th:text="${personSearchListResponseDto.peopleListResult.totCnt}"></span> 건</p>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>People Code</th>
+        <th>People Name</th>
+        <th>English Name</th>
+        <th>Role</th>
+        <th>Filmo Names</th>
+        <th>Profile Image</th>
+    </tr>
+    </thead>
+    <tbody th:each="person : ${personSearchListResponseDto.peopleListResult.peopleList}">
+    <tr>
+        <td th:text="${person.peopleCd}"></td>
+        <td th:text="${person.peopleNm}"></td>
+        <td th:text="${person.peopleNmEn}"></td>
+        <td th:text="${person.repRoleNm}"></td>
+        <td th:text="${person.filmoNames}"></td>
+        <td>
+            <img th:if="${person.profileImg}" th:src="${person.profileImg}" alt="Profile Image" style="max-width: 50px; max-height: 50px;">
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+
+</html>
