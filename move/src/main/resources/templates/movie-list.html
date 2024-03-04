@@ -7,59 +7,60 @@
     <title>Movie Search List</title>
     <head th:include="fragments/header :: head"></head>
     <div th:replace="fragments/header :: nav" class="col-md-2"></div>
+
+
 </head>
 
 <body>
-<h2>영화 검색</h2>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9 offset-md-2 mt-5">
+            <h2 class="text-center display-3">검색 결과</h2>
 
-<p>총 <span th:text="${movieSearchListResponseDto.movieListResult.totCnt}"></span>건</p>
+            <p class="mt-5">총 <span th:text="${movieSearchListResponseDto.movieListResult.totCnt}"></span>건</p>
 
-<table border="1">
-    <thead>
-    <tr>
-        <th>poster</th>
-        <th>Movie Code</th>
-        <th>Movie Name</th>
-        <th>English Name</th>
-        <th>Production Year</th>
-        <th>Open Date</th>
-        <th>Type</th>
-        <th>Production Status</th>
-        <th>Nation</th>
-        <th>Genre</th>
-        <th>Representative Nation</th>
-        <th>Representative Genre</th>
-        <th>Directors</th>
-        <th>Companies</th>
-    </tr>
-    </thead>
-    <tbody th:each="movie : ${movieSearchListResponseDto.movieListResult.movieList}">
-    <tr>
-        <td><img th:src="${movie.posterUrl}" calt="포스터 이미지"> </td>
-        <td th:text="${movie.movieCd}"></td>
-        <td th:text="${movie.movieNm}"></td>
-        <td th:text="${movie.movieNmEn}"></td>
-        <td th:text="${movie.prdtYear}"></td>
-        <td th:text="${movie.openDt}"></td>
-        <td th:text="${movie.typeNm}"></td>
-        <td th:text="${movie.prdtStatNm}"></td>
-        <td th:text="${movie.nationAlt}"></td>
-        <td th:text="${movie.genreAlt}"></td>
-        <td th:text="${movie.repNationNm}"></td>
-        <td th:text="${movie.repGenreNm}"></td>
-        <td>
-            <ul>
-                <li th:each="director : ${movie.directors}" th:text="${director.peopleNm}"></li>
-            </ul>
-        </td>
-        <td>
-            <ul>
-                <li th:each="company : ${movie.companys}" th:text="${company.companyNm}"></li>
-            </ul>
-        </td>
-    </tr>
-    </tbody>
-</table>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>포스터</th>
+                    <th>영화 이름</th>
+                    <th>개봉상태</th>
+                    <th>장르</th>
+                    <th>감독</th>
+                    <th>영화사</th>
+                </tr>
+                </thead>
+                <tbody th:each="movie : ${movieSearchListResponseDto.movieListResult.movieList}">
+                <tr>
+                    <td><img th:src="${movie.posterUrl}" class="img-fluid" style="max-width: 80px; max-height: 100px;">
+                    </td>
+                    <td>
+                        <a th:href="@{'/movie-info/' + ${movie.movieCd}}">
+                            <span th:text="${movie.movieNm}" class="fw-bold"></span><br>
+                            <span th:text="${movie.movieNmEn}"></span>
+                        </a>
+                        <br>
+                        <span th:text="${movie.prdtYear} + ' | ' + ${movie.typeNm} + ' | ' + ${movie.repNationNm}"></span>
+                    </td>
+                    <td th:text="${movie.prdtStatNm}"></td>
+                    <td th:text="${movie.genreAlt}"></td>
+                    <td>
+                        <ul>
+                            <li th:each="director : ${movie.directors}" th:text="${director.peopleNm}"></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li th:each="company : ${movie.companys}" th:text="${company.companyNm}"></li>
+                        </ul>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>
