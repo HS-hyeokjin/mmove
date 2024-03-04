@@ -21,10 +21,11 @@ public class MovieSearchListServiceImpl implements MovieSearchListService {
     }
 
     @Override
-    public MovieSearchListResponseDto getMovieSearchList(String movieName, String directorName) throws UnsupportedEncodingException {
+    public MovieSearchListResponseDto getMovieSearchList(String movieName, String directorName, String curPage) throws UnsupportedEncodingException {
         MovieSearchListRequestDto movieSearchListRequestDto = new MovieSearchListRequestDto();
         movieSearchListRequestDto.setMovieNm(movieName);
         movieSearchListRequestDto.setDirectorNm(directorName);
+        movieSearchListRequestDto.setCurPage(curPage);
 
         MovieSearchListResponseDto movieSearchListResponseDto = movieSearchListAdapter.getMovieSearchList(movieSearchListRequestDto);
 

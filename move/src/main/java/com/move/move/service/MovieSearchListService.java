@@ -6,5 +6,5 @@ import java.io.UnsupportedEncodingException;
 
 public interface MovieSearchListService {
 
-    MovieSearchListResponseDto getMovieSearchList(String movieName, String directorName) throws UnsupportedEncodingException;
+    MovieSearchListResponseDto getMovieSearchList(String movieName, String directorName, String curPage) throws UnsupportedEncodingException;
 }

@@ -32,7 +32,9 @@
                 </thead>
                 <tbody th:each="movie : ${movieSearchListResponseDto.movieListResult.movieList}">
                 <tr>
-                    <td><img th:src="${movie.posterUrl}" class="img-fluid" style="max-width: 80px; max-height: 100px;">
+                    <td>
+                        <img th:src="${movie.posterUrl != ''} ? ${movie.posterUrl} : '/images/no_poerson_image.png'"
+                             class="img-fluid" style="max-width: 80px; max-height: 100px;">
                     </td>
                     <td>
                         <a th:href="@{'/movie-info/' + ${movie.movieCd}}">
@@ -58,6 +60,14 @@
 
                 </tbody>
             </table>
+            <div>
+                <ul class="pagination mt-1">
+                    <li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" class="page-item" th:class="${pageNumber == page} ? 'active' : ''">
+                        <a class="page-link" th:href="@{/movie-search/movie-list(movieName=${searchMovieName}, directorName=${searchDirectorName}, page=${pageNumber})}" th:text="${pageNumber}"></a>
+                    </li>
+
+                </ul>
+            </div>
         </div>
     </div>
 </div>

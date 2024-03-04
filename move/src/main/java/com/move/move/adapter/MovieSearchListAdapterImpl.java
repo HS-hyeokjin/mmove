@@ -40,7 +40,8 @@ public class MovieSearchListAdapterImpl implements MovieSearchListAdapter {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                     .queryParam("key", apiKey)
                     .queryParam("movieNm", encodedMovieName)
-                    .queryParam("directorNm", encodedDirectorName);
+                    .queryParam("directorNm", encodedDirectorName)
+                    .queryParam("curPage", movieSearchListRequestDto.getCurPage());
 
             ResponseEntity<String> responseEntity = restTemplate.exchange(
                     builder.toUriString(),

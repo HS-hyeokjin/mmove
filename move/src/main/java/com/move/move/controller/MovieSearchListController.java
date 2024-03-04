@@ -21,14 +21,23 @@ public class MovieSearchListController {
     }
 
     @GetMapping
-    public String getMovieSearch(){
+    public String getMovieSearch() {
         return "movie-search";
     }
 
     @GetMapping("/movie-list")
-    public String getMovieList(Model model, @RequestParam(required = false) String movieName, @RequestParam(required = false) String directorName) throws UnsupportedEncodingException {
-        MovieSearchListResponseDto movieSearchListResponseDto = movieSearchListService.getMovieSearchList(movieName, directorName);
-        model.addAttribute("movieSearchListResponseDto",movieSearchListResponseDto);
+    public String getMovieList(Model model,
+                               @RequestParam(required = false) String movieName,
+                               @RequestParam(required = false) String directorName,
+                               @RequestParam(required = false) String page) throws UnsupportedEncodingException {
+        MovieSearchListResponseDto movieSearchListResponseDto = movieSearchListService.getMovieSearchList(movieName, directorName, page);
+        model.addAttribute("movieSearchListResponseDto", movieSearchListResponseDto);
+        model.addAttribute("searchMovieName", movieName);
+        model.addAttribute("searchDirectorName", directorName);
+
+        int totalCnt = Integer.parseInt(movieSearchListResponseDto.getMovieListResult().getTotCnt());
+        int totalPages = (int) Math.ceil((double) totalCnt / 10);
+        model.addAttribute("totalPages", totalPages);
         return "movie-list";
     }
 }
