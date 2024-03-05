@@ -43,7 +43,7 @@
                 <div th:each="actor : ${movieInfoData.movieInfoResult.movieInfo.actors}" class="col-md-1 mb-4">
                     <a th:href="@{/person-detail/{actorName}(actorName=${actor.peopleNmEn})}" class="text-decoration-none">
                         <div class="card border-dark">
-                            <img th:src="${#strings.isEmpty(actor.peopleImageUrl) ? '/images/no_person_image.jpg' : actor.peopleImageUrl}" class="card-img-top" alt="Actor Image" width="200">
+                            <img th:src="${#strings.isEmpty(actor.peopleImageUrl) ? '/images/no_person_image.png' : actor.peopleImageUrl}" class="card-img-top" alt="Actor Image" width="200">
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${actor.peopleNm}"></h5>
                                 <p class="card-text">

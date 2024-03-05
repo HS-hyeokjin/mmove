@@ -73,6 +73,6 @@ public class MovieDetailAdapterImpl implements MovieDetailAdapter{
             }
         }
 
-        return "1";
+        return null;
     }
 }

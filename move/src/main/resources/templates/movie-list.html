@@ -33,7 +33,7 @@
                 <tbody th:each="movie : ${movieSearchListResponseDto.movieListResult.movieList}">
                 <tr>
                     <td>
-                        <img th:src="${movie.posterUrl != ''} ? ${movie.posterUrl} : '/images/no_poerson_image.png'"
+                        <img th:src="${movie.posterUrl != null} ? ${movie.posterUrl} : '/images/no_movie_image.jpg'"
                              class="img-fluid" style="max-width: 80px; max-height: 100px;">
                     </td>
                     <td>

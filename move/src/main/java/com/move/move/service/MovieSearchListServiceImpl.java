@@ -32,7 +32,6 @@ public class MovieSearchListServiceImpl implements MovieSearchListService {
         List<MovieSearchListResponseDto.MovieDTO> movieDTOList = movieSearchListResponseDto.getMovieListResult().getMovieList();
         for (MovieSearchListResponseDto.MovieDTO movieDTO : movieDTOList) {
             String movieTitle = movieDTO.getMovieNm();
-
             String posterUrl = movieDetailAdapter.searchMoviePoster(movieTitle);
             movieDTO.setPosterUrl(posterUrl);
         }

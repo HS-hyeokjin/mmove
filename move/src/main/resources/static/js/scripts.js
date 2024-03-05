@@ -57,28 +57,21 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    // 스크롤 속도 및 카드의 너비 설정
     var scrollSpeed = 1;
     var cardWidth = 0.25;
 
-    // 스크롤을 시작하는 함수
-    function startScrolling() {
-        // 카드 컨테이너 선택
-        var $cardContainer = $('.card-container');
-
-        // 카드를 왼쪽으로 이동하는 애니메이션 적용
+    function startScrolling($cardContainer) {
         $cardContainer.animate({
             marginLeft: '-=' + cardWidth + 'px'
         }, scrollSpeed, 'linear', function () {
-            // 만약 컨테이너가 왼쪽 끝을 벗어났다면 초기 위치로 되돌아감
-            if ($cardContainer.offset().left <= -($cardContainer.width())) {
+            if ($cardContainer.offset().left <= -700) {
                 $cardContainer.css('margin-left', 0);
             }
-            // 애니메이션이 끝난 후에 다시 시작
-            startScrolling();
+            startScrolling($cardContainer);
         });
     }
 
-    // 초기에 스크롤 시작
-    startScrolling();
+    $('.scrollable-row').each(function () {
+        startScrolling($(this).find('.card-container'));
+    });
 });

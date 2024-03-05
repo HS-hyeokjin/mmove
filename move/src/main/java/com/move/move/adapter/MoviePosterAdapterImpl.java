@@ -43,11 +43,9 @@ public class MoviePosterAdapterImpl implements MoviePosterAdapter {
             MoviePosterResponseDto moviePosterResponseDto = responseEntity.getBody();
             if (moviePosterResponseDto != null && moviePosterResponseDto.getResults() != null && !moviePosterResponseDto.getResults().isEmpty()) {
                 String posterUrl = imageUrl + moviePosterResponseDto.getResults().get(0).getPoster();
-                System.out.println(posterUrl);
                 return posterUrl;
             }
         }
-
-        return "1";
+        return null;
     }
 }

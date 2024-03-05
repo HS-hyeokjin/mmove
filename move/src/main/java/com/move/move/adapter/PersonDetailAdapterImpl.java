@@ -69,9 +69,12 @@ public class PersonDetailAdapterImpl implements PersonDetailAdapter {
             PersonImageResponseDto personImageResponseDto = responseEntity.getBody();
             if (personImageResponseDto != null && personImageResponseDto.getResults() != null && !personImageResponseDto.getResults().isEmpty()) {
                 String posterUrl = imageUrl + personImageResponseDto.getResults().get(0).getProfileUrl();
+                if(posterUrl.equals("https://image.tmdb.org/t/p/w500null")){
+                    return null;
+                }
                 return posterUrl;
             }
         }
-        return "1";
+        return null;
     }
 }
