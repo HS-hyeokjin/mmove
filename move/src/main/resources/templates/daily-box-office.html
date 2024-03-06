@@ -3,11 +3,13 @@
 <head>
     <head th:include="fragments/header :: head"></head>
     <div th:replace="fragments/header :: nav" class="col-md-2"></div>
+
 </head>
 <body>
+
 <div class="container-fluid">
     <div class="row">
-        <div th:replace="fragments/offcanvas :: offcanvas"></div>
+        <span th:replace="fragments/offcanvas :: offcanvas"></span>
         <div class="col-md-10 offset-md-2">
             <br>
             <div class="row">

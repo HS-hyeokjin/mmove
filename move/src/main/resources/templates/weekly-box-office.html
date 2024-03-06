@@ -24,7 +24,7 @@
                      th:if="${iterStat.index le 4}" class="col-md-2 mb-4">
                     <div class="card border`-dark">
                         <a th:href="@{'/movie-info/' + ${boxOffice.movieCd}}">
-                            <img th:src="${boxOffice.imageUrl}" class="card-img-top" alt="포스터 이미지">
+                            <img th:src="${boxOffice.imageUrl} ?: '/images/no_movie_image.jpg'" class="card-img-top" alt="포스터 이미지">
                         </a>
                         <div class="card-body">
                             <h5 class="card-title">
@@ -64,7 +64,7 @@
                     <tr th:each="boxOffice : ${weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList}">
                         <td>
                             <a th:href="@{'/movie-info/' + ${boxOffice.movieCd}}">
-                                <img th:src="${boxOffice.imageUrl}" alt="포스터 이미지" width="100">
+                                <img th:src="${boxOffice.imageUrl} ?: '/images/no_movie_image.jpg'" alt="포스터 이미지" width="100">
                             </a>
                         </td>
                         <td th:text="${boxOffice.rank}"></td>
