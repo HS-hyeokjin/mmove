@@ -7,9 +7,8 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div th:replace="fragments/sidebar :: nav"></div>
+        <span th:replace="fragments/offcanvas :: offcanvas"></span>
         <div class="col-md-10 offset-md-2">
-            <br>
             <div class="row">
                 <div class="col-md-8 ">
                     <h1>주간 박스 오피스 Top5</h1>
@@ -24,11 +23,11 @@
                      th:if="${iterStat.index le 4}" class="col-md-2 mb-4">
                     <div class="card border`-dark">
                         <a th:href="@{'/movie-info/' + ${boxOffice.movieCd}}">
-                            <img th:src="${boxOffice.imageUrl} ?: '/images/no_movie_image.jpg'" class="card-img-top" alt="포스터 이미지">
+                            <img th:src="${boxOffice.imageUrl} ?: '/images/no_movie_image.jpg'" class="card-img-top" alt="포스터 이미지" style="height: 290px;">
                         </a>
                         <div class="card-body">
                             <h5 class="card-title">
-                                <span th:utext="${#strings.length(boxOffice.movieNm) &gt; 16 ? #strings.substring(boxOffice.movieNm, 0, 16) + '...' : boxOffice.movieNm}"></span>
+                                <span th:utext="${boxOffice.rank} + '. ' + ${#strings.length(boxOffice.movieNm) &gt; 8 ? #strings.substring(boxOffice.movieNm, 0, 8) + '...' : boxOffice.movieNm}"></span>
                             </h5>
                             <p class="card-text">개봉일: <span th:text="${boxOffice.openDt}"></span></p>
                         </div>
