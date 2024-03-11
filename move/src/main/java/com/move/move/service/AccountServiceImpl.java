@@ -1,10 +1,12 @@
 package com.move.move.service;
 
 import com.move.move.config.security.JwtTokenProvider;
-import com.move.move.dto.SignInResponseDto;
-import com.move.move.dto.SignUpResponseDto;
+import com.move.move.dto.SignResponseDto;
 import com.move.move.entity.User;
 import com.move.move.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ public class AccountServiceImpl implements AccountService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
+    @Autowired
     public AccountServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -24,7 +27,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public SignUpResponseDto signUp(String id, String password, String name, String role) {
+    public SignResponseDto signUp(String id, String password, String name, String role) {
         User user;
         if (role.equalsIgnoreCase("admin")) {
             user = User.builder()
@@ -43,45 +46,33 @@ public class AccountServiceImpl implements AccountService {
         }
 
         User savedUser = userRepository.save(user);
-        SignUpResponseDto signUpResponseDto = new SignUpResponseDto();
+        SignResponseDto signResponseDto = new SignResponseDto();
 
         if (!savedUser.getName().isEmpty()) {
-            setSuccessResult(signUpResponseDto);
+            signResponseDto.setSuccess(true);
         } else {
-            setFailResult(signUpResponseDto);
+            signResponseDto.setSuccess(false);
         }
-        return signUpResponseDto;
+        return signResponseDto;
     }
 
     @Override
-    public SignInResponseDto signIn(String id, String password) throws RuntimeException {
+    public SignResponseDto signIn(String id, String password) throws RuntimeException {
         User user = userRepository.getByUid(id);
 
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException();
+        if (user == null) {
+            throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
         }
 
-        SignInResponseDto signInResponseDto = SignInResponseDto.builder()
-                .token(jwtTokenProvider.createToken(String.valueOf(user.getUid()),
-                        user.getRoles()))
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new AuthenticationException("비밀번호가 일치하지 않습니다.") {};
+        }
+
+        SignResponseDto signInResponseDto = SignResponseDto.builder()
+                .success(true)
+                .token(jwtTokenProvider.createToken(String.valueOf(user.getUid()), user.getRoles()))
                 .build();
 
-        signInResponseDto.setSuccess(true);
-        signInResponseDto.setCode(1);
-        signInResponseDto.setSuccess(true);
-
         return signInResponseDto;
-    }
-
-    private void setSuccessResult(SignUpResponseDto signUpResponseDto) {
-        signUpResponseDto.setSuccess(true);
-        signUpResponseDto.setCode(1);
-        signUpResponseDto.setMsg("성공");
-    }
-
-    private void setFailResult(SignUpResponseDto signUpResponseDto) {
-        signUpResponseDto.setSuccess(false);
-        signUpResponseDto.setCode(0);
-        signUpResponseDto.setMsg("실패");
     }
 }

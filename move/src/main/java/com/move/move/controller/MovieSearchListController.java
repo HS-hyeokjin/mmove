@@ -35,7 +35,6 @@ public class MovieSearchListController {
         model.addAttribute("searchMovieName", movieName);
         model.addAttribute("searchDirectorName", directorName);
 
-        System.out.println(movieSearchListResponseDto.getMovieListResult().getMovieList().get(0).getPosterUrl());
         int totalCnt = Integer.parseInt(movieSearchListResponseDto.getMovieListResult().getTotCnt());
         int totalPages = (int) Math.ceil((double) totalCnt / 10);
         model.addAttribute("totalPages", totalPages);
