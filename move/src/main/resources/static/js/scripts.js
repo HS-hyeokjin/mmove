@@ -13,6 +13,11 @@ function togglePersonDetailSections() {
     personDetailSections.style.display = (personDetailSections.style.display === "none") ? "block" : "none";
 }
 
+function toggleAccountDetailSections() {
+    var accountDetailSections = document.getElementById("accountDetailSections");
+    accountDetailSections.style.display = (accountDetailSections.style.display === "none") ? "block" : "none";
+}
+
 $(document).ready(function () {
     var navbar = $(".navbar");
     var offset = navbar.offset().top;
