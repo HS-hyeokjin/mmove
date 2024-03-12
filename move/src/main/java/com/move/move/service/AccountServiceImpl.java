@@ -4,6 +4,7 @@ import com.move.move.config.security.JwtTokenProvider;
 import com.move.move.dto.SignResponseDto;
 import com.move.move.entity.User;
 import com.move.move.repository.UserRepository;
+import jakarta.servlet.http.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -68,9 +69,16 @@ public class AccountServiceImpl implements AccountService {
             throw new AuthenticationException("비밀번호가 일치하지 않습니다.") {};
         }
 
+        Cookie cookie = new Cookie("Authorization",
+                jwtTokenProvider.createToken(String.valueOf(user.getUid()), user.getRoles()));
+        cookie.setMaxAge(7 * 24 * 60 * 60);
+        cookie.setPath("/");
+        cookie.setDomain("localhost");
+        cookie.setSecure(false);
+
         SignResponseDto signInResponseDto = SignResponseDto.builder()
                 .success(true)
-                .token(jwtTokenProvider.createToken(String.valueOf(user.getUid()), user.getRoles()))
+                .cookie(cookie)
                 .build();
 
         return signInResponseDto;

@@ -1,5 +1,6 @@
 package com.move.move.dto;
 
+import jakarta.servlet.http.Cookie;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,12 +15,12 @@ public class SignResponseDto {
 
     private String msg;
 
-    private String token;
+    private Cookie cookie;
 
     @Builder
-    public SignResponseDto(boolean success, String msg, String token){
+    public SignResponseDto(boolean success,Cookie cookie ,String msg){
         this.success = success;
+        this.cookie = cookie;
         this.msg = msg;
-        this.token = token;
     }
 }

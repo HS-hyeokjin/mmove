@@ -2,11 +2,10 @@ package com.move.move.controller;
 
 import com.move.move.dto.SignResponseDto;
 import com.move.move.service.AccountService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/account")
@@ -41,12 +40,23 @@ public class AccountController {
     }
 
     @PostMapping("/sign-in")
-    public String signIn(@RequestParam String id, @RequestParam String password) {
+    public String signIn(@RequestParam String id, @RequestParam String password, HttpServletResponse response) {
         SignResponseDto signResponseDto = accountService.signIn(id, password);
         if (signResponseDto.isSuccess()) {
+            response.addCookie(signResponseDto.getCookie());
             return "redirect:/daily-box-office";
         } else {
             return "account/sign-in";
         }
+    }
+
+    @GetMapping("/logout")
+    public String logout(@CookieValue(value = "Authorization", defaultValue = "", required = false) Cookie cookie,
+                         HttpServletResponse response) {
+        cookie.setValue(null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        return "redirect:/account/sign-in";
     }
 }
