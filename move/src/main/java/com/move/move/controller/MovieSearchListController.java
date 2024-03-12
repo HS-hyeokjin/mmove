@@ -22,7 +22,7 @@ public class MovieSearchListController {
 
     @GetMapping
     public String getMovieSearch() {
-        return "movie-search";
+        return "movie/movie-search";
     }
 
     @GetMapping("/movie-list")
@@ -38,6 +38,6 @@ public class MovieSearchListController {
         int totalCnt = Integer.parseInt(movieSearchListResponseDto.getMovieListResult().getTotCnt());
         int totalPages = (int) Math.ceil((double) totalCnt / 10);
         model.addAttribute("totalPages", totalPages);
-        return "movie-list";
+        return "movie/movie-list";
     }
 }

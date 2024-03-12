@@ -20,7 +20,7 @@ public class PersonDetailController {
     public String personDetail(@PathVariable String personName, Model model){
         PersonDetailResponseDto personDetailResponseDto = personDetailService.getPersonDetail(personName);
         model.addAttribute("personDetailData", personDetailResponseDto);
-        return "person-detail";
+        return "person/person-detail";
     }
 
 }

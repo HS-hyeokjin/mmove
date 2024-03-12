@@ -20,13 +20,13 @@ public class PersonSearchListController {
 
     @GetMapping
     public String getPersonSearch(){
-        return "person-search";
+        return "person/person-search";
     }
 
     @GetMapping("/person-list")
     public String getMovieList(Model model, @RequestParam(required = false) String personName, @RequestParam(required = false) String filmoName) {
         PersonSearchListResponseDto personSearchListResponseDto = personSearchListService.getPersonSearchList(personName,filmoName);
         model.addAttribute("personSearchListResponseDto",personSearchListResponseDto);
-        return "person-list";
+        return "person/person-list";
     }
 }

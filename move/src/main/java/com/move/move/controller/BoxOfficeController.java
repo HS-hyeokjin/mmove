@@ -30,14 +30,14 @@ public class BoxOfficeController {
         model.addAttribute("dailyBoxOfficeData", dailyBoxOfficeData);
         model.addAttribute("koDailyBoxOfficeData", koDailyBoxOfficeData);
         model.addAttribute("foDailyBoxOfficeData", foDailyBoxOfficeData);
-        return "daily-box-office";
+        return "box-office/daily-box-office";
     }
 
     @GetMapping("/weekly-box-office")
     public String getWeeklyBoxOffice(Model model,@RequestParam(required = false) String date) {
         WeeklyBoxOfficeResponseDto weeklyBoxOfficeData = weeklyBoxOfficeService.getWeekBoxOffice(date);
         model.addAttribute("weeklyBoxOfficeData", weeklyBoxOfficeData);
-        return "weekly-box-office";
+        return "box-office/weekly-box-office";
     }
 }
 

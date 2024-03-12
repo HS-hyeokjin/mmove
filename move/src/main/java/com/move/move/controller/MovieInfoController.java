@@ -20,6 +20,6 @@ public class MovieInfoController {
         MovieInfoResponseDto movieInfo = movieInfoService.getMovieInfo(movieCode);
         model.addAttribute("movieInfoData", movieInfo);
 
-        return "movie-info";
+        return "movie/movie-info";
     }
 }

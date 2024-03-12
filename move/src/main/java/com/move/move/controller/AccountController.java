@@ -20,7 +20,7 @@ public class AccountController {
 
     @GetMapping("/sign-up")
     String signUp() {
-        return "sign-up";
+        return "/account/sign-up";
     }
 
 
@@ -36,7 +36,7 @@ public class AccountController {
 
     @GetMapping("/sign-in")
     String singIn() {
-        return "sign-in";
+        return "account/sign-in";
     }
 
     @PostMapping("/sign-in")
