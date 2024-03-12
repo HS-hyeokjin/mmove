@@ -1,9 +1,10 @@
-package com.move.move.service;
+package com.move.move.service.impl;
 
 import com.move.move.config.security.JwtTokenProvider;
 import com.move.move.dto.SignResponseDto;
 import com.move.move.entity.User;
 import com.move.move.repository.UserRepository;
+import com.move.move.service.AccountService;
 import jakarta.servlet.http.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;

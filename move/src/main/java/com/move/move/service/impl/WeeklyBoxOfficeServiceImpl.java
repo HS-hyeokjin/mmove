@@ -1,8 +1,9 @@
-package com.move.move.service;
+package com.move.move.service.impl;
 
 import com.move.move.adapter.MovieDetailAdapter;
 import com.move.move.adapter.WeeklyBoxOfficeAdapter;
 import com.move.move.dto.WeeklyBoxOfficeResponseDto;
+import com.move.move.service.WeeklyBoxOfficeService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

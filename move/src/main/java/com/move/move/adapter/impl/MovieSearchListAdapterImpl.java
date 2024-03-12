@@ -1,7 +1,9 @@
-package com.move.move.adapter;
+package com.move.move.adapter.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.move.move.dto.WeeklyBoxOfficeResponseDto;
+import com.move.move.adapter.MovieSearchListAdapter;
+import com.move.move.dto.MovieSearchListRequestDto;
+import com.move.move.dto.MovieSearchListResponseDto;
 import com.move.move.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -12,33 +14,34 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 @Component
-public class WeeklyBoxOfficeAdapterImpl implements WeeklyBoxOfficeAdapter {
+public class MovieSearchListAdapterImpl implements MovieSearchListAdapter {
 
-
-    @Value("${weekly-box-office.api.url}")
+    @Value("${movie-search-list.api.url}")
     private String url;
 
     @Value("${kofic.api.key}")
     private String apiKey;
 
-
     private final RestTemplate restTemplate;
 
-    public WeeklyBoxOfficeAdapterImpl(RestTemplate restTemplate) {
+    public MovieSearchListAdapterImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
     @Override
-    public WeeklyBoxOfficeResponseDto getWeekBoxOffice(String date) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
-                .queryParam("key", apiKey)
-                .queryParam("targetDt", date)
-                .queryParam("WeekGb","0");
+    public MovieSearchListResponseDto getMovieSearchList(MovieSearchListRequestDto movieSearchListRequestDto) {
+        String requestUrl = url +
+                "?key=" + apiKey +
+                "&movieNm=" + movieSearchListRequestDto.getMovieNm() +
+                "&directorNm=" + movieSearchListRequestDto.getDirectorNm() +
+                "&curPage=" + movieSearchListRequestDto.getCurPage();
 
         ResponseEntity<String> responseEntity = restTemplate.exchange(
-                builder.toUriString(),
+                requestUrl,
                 HttpMethod.GET,
                 null,
                 String.class
@@ -48,8 +51,8 @@ public class WeeklyBoxOfficeAdapterImpl implements WeeklyBoxOfficeAdapter {
             ObjectMapper objectMapper = new ObjectMapper();
             try {
                 String responseBody = responseEntity.getBody();
-                WeeklyBoxOfficeResponseDto weeklyBoxOfficeResponseDto = objectMapper.readValue(responseBody, WeeklyBoxOfficeResponseDto.class);
-                return weeklyBoxOfficeResponseDto;
+                MovieSearchListResponseDto movieSearchListResponseDto = objectMapper.readValue(responseBody, MovieSearchListResponseDto.class);
+                return movieSearchListResponseDto;
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new ApiRequestException("API 응답 매핑 실패", e);

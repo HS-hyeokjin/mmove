@@ -1,5 +1,8 @@
-package com.move.move.adapter;
+package com.move.move.adapter.impl;
 
+import com.move.move.adapter.MovieDetailAdapter;
+import com.move.move.dto.MovieDetailResponseDto;
+import com.move.move.dto.MovieDetailsResponseDto;
 import com.move.move.dto.MoviePosterResponseDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -10,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
-public class MoviePosterAdapterImpl implements MoviePosterAdapter {
+public class MovieDetailAdapterImpl implements MovieDetailAdapter {
 
     @Value("${tmdb.movie.api.url}")
     private String apiUrl;
@@ -23,8 +26,32 @@ public class MoviePosterAdapterImpl implements MoviePosterAdapter {
 
     private final RestTemplate restTemplate;
 
-    public MoviePosterAdapterImpl(RestTemplate restTemplate) {
+    public MovieDetailAdapterImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
+    }
+
+
+    @Override
+    public MovieDetailResponseDto searchMovieDetail(String movieTitle) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(apiUrl)
+                .queryParam("api_key", apiKey)
+                .queryParam("query", movieTitle)
+                .queryParam("language","ko");
+        ResponseEntity<MovieDetailsResponseDto> responseEntity = restTemplate.exchange(
+                builder.toUriString(),
+                HttpMethod.GET,
+                null,
+                MovieDetailsResponseDto.class
+        );
+
+        if (responseEntity.getStatusCode() == HttpStatus.OK && responseEntity.getBody() != null
+                && !responseEntity.getBody().getResults().isEmpty()) {
+            MovieDetailResponseDto movieDetailResponseDto = new MovieDetailResponseDto();
+            movieDetailResponseDto.setMovieDetailResultDto(responseEntity.getBody().getResults().get(0));
+            return movieDetailResponseDto;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -46,6 +73,7 @@ public class MoviePosterAdapterImpl implements MoviePosterAdapter {
                 return posterUrl;
             }
         }
+
         return null;
     }
 }

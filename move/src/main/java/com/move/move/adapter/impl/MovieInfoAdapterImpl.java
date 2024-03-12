@@ -1,8 +1,8 @@
-package com.move.move.adapter;
+package com.move.move.adapter.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.move.move.dto.PersonSearchListRequestDto;
-import com.move.move.dto.PersonSearchListResponseDto;
+import com.move.move.adapter.MovieInfoAdapter;
+import com.move.move.dto.MovieInfoResponseDto;
 import com.move.move.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -15,27 +15,25 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.io.IOException;
 
 @Component
-public class PersonSearchListAdapterImpl implements PersonSearchListAdapter {
+public class MovieInfoAdapterImpl implements MovieInfoAdapter {
 
-    @Value("person-search-list.api.url")
+    @Value("${movie-info.api.url}")
     private String url;
 
-    @Value("kofic.api.key")
+    @Value("${kofic.api.key}")
     private String apiKey;
 
     private final RestTemplate restTemplate;
 
-    public PersonSearchListAdapterImpl(RestTemplate restTemplate) {
+    public MovieInfoAdapterImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
     @Override
-    public PersonSearchListResponseDto getPersonSearchList(PersonSearchListRequestDto personSearchListRequestDto) {
+    public MovieInfoResponseDto getMovieInfo(String movieCode) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("key", apiKey)
-                .queryParam("peopleNm", personSearchListRequestDto.getPeopleNm())
-                .queryParam("filmoNames", personSearchListRequestDto.getFilmoNames());
-
+                .queryParam("movieCd", movieCode);
         ResponseEntity<String> responseEntity = restTemplate.exchange(
                 builder.toUriString(),
                 HttpMethod.GET,
@@ -47,8 +45,8 @@ public class PersonSearchListAdapterImpl implements PersonSearchListAdapter {
             ObjectMapper objectMapper = new ObjectMapper();
             try {
                 String responseBody = responseEntity.getBody();
-                PersonSearchListResponseDto personSearchListResponseDto = objectMapper.readValue(responseBody, PersonSearchListResponseDto.class);
-                return personSearchListResponseDto;
+                MovieInfoResponseDto movieInfoResponseDto = objectMapper.readValue(responseBody, MovieInfoResponseDto.class);
+                return movieInfoResponseDto;
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new ApiRequestException("API 응답 매핑 실패", e);

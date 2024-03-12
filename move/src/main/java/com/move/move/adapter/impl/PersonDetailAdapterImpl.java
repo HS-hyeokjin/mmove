@@ -1,5 +1,6 @@
-package com.move.move.adapter;
+package com.move.move.adapter.impl;
 
+import com.move.move.adapter.PersonDetailAdapter;
 import com.move.move.dto.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;

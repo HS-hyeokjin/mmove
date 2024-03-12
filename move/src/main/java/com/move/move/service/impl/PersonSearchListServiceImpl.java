@@ -1,8 +1,9 @@
-package com.move.move.service;
+package com.move.move.service.impl;
 
 import com.move.move.adapter.PersonSearchListAdapter;
 import com.move.move.dto.PersonSearchListRequestDto;
 import com.move.move.dto.PersonSearchListResponseDto;
+import com.move.move.service.PersonSearchListService;
 import org.springframework.stereotype.Service;
 
 @Service

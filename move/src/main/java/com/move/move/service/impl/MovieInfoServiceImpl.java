@@ -1,17 +1,18 @@
-package com.move.move.service;
+package com.move.move.service.impl;
 
 import com.move.move.adapter.MovieDetailAdapter;
 import com.move.move.adapter.MovieInfoAdapter;
 import com.move.move.adapter.PersonDetailAdapter;
 import com.move.move.dto.MovieDetailResponseDto;
 import com.move.move.dto.MovieInfoResponseDto;
+import com.move.move.service.MovieInfoService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class MovieInfoServiceImpl implements MovieInfoService{
+public class MovieInfoServiceImpl implements MovieInfoService {
 
     @Value("${tmdb.image.url}")
     String imageUrl;

@@ -1,9 +1,10 @@
-package com.move.move.service;
+package com.move.move.service.impl;
 
 import com.move.move.adapter.DailyBoxOfficeAdapter;
 import com.move.move.adapter.MovieDetailAdapter;
 import com.move.move.dto.DailyBoxOfficeRequestDto;
 import com.move.move.dto.DailyBoxOfficeResponseDto;
+import com.move.move.service.DailyBoxOfficeService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService{
+public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService {
 
     private final DailyBoxOfficeAdapter dailyBoxOfficeAdapter;
     private final MovieDetailAdapter movieDetailAdapter;

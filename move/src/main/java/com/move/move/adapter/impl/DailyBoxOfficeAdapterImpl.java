@@ -1,7 +1,9 @@
-package com.move.move.adapter;
+package com.move.move.adapter.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.move.move.dto.MovieInfoResponseDto;
+import com.move.move.adapter.DailyBoxOfficeAdapter;
+import com.move.move.dto.DailyBoxOfficeRequestDto;
+import com.move.move.dto.DailyBoxOfficeResponseDto;
 import com.move.move.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -14,9 +16,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.io.IOException;
 
 @Component
-public class MovieInfoAdapterImpl implements MovieInfoAdapter {
+public class DailyBoxOfficeAdapterImpl implements DailyBoxOfficeAdapter {
 
-    @Value("${movie-info.api.url}")
+    @Value("${daily-box-office.api.url}")
     private String url;
 
     @Value("${kofic.api.key}")
@@ -24,15 +26,16 @@ public class MovieInfoAdapterImpl implements MovieInfoAdapter {
 
     private final RestTemplate restTemplate;
 
-    public MovieInfoAdapterImpl(RestTemplate restTemplate) {
+    public DailyBoxOfficeAdapterImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
     @Override
-    public MovieInfoResponseDto getMovieInfo(String movieCode) {
+    public DailyBoxOfficeResponseDto getDailyBoxOfficeData(DailyBoxOfficeRequestDto dailyBoxOfficeRequestDto) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("key", apiKey)
-                .queryParam("movieCd", movieCode);
+                .queryParam("targetDt", dailyBoxOfficeRequestDto.getTargetDt())
+                .queryParam("repNationCd", dailyBoxOfficeRequestDto.getRepNationCd());
         ResponseEntity<String> responseEntity = restTemplate.exchange(
                 builder.toUriString(),
                 HttpMethod.GET,
@@ -44,8 +47,8 @@ public class MovieInfoAdapterImpl implements MovieInfoAdapter {
             ObjectMapper objectMapper = new ObjectMapper();
             try {
                 String responseBody = responseEntity.getBody();
-                MovieInfoResponseDto movieInfoResponseDto = objectMapper.readValue(responseBody, MovieInfoResponseDto.class);
-                return movieInfoResponseDto;
+                DailyBoxOfficeResponseDto dailyBoxOfficeResponseDto = objectMapper.readValue(responseBody, DailyBoxOfficeResponseDto.class);
+                return dailyBoxOfficeResponseDto;
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new ApiRequestException("API 응답 매핑 실패", e);

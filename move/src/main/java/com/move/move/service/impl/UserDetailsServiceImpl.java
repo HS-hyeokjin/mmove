@@ -1,4 +1,4 @@
-package com.move.move.service;
+package com.move.move.service.impl;
 
 import com.move.move.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

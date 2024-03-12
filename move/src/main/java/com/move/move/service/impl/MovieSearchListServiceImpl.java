@@ -1,9 +1,10 @@
-package com.move.move.service;
+package com.move.move.service.impl;
 
 import com.move.move.adapter.MovieDetailAdapter;
 import com.move.move.adapter.MovieSearchListAdapter;
 import com.move.move.dto.MovieSearchListRequestDto;
 import com.move.move.dto.MovieSearchListResponseDto;
+import com.move.move.service.MovieSearchListService;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;

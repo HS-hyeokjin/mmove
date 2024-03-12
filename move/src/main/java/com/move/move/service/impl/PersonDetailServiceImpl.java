@@ -1,12 +1,13 @@
-package com.move.move.service;
+package com.move.move.service.impl;
 
 import com.move.move.adapter.PersonDetailAdapter;
 import com.move.move.dto.PersonDetailRequestDto;
 import com.move.move.dto.PersonDetailResponseDto;
+import com.move.move.service.PersonDetailService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PersonDetailServiceImpl implements PersonDetailService{
+public class PersonDetailServiceImpl implements PersonDetailService {
 
     private final PersonDetailAdapter personDetailAdapter;
 
