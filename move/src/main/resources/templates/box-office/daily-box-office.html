@@ -3,10 +3,8 @@
 <head>
     <head th:include="~{fragments/header :: head}"></head>
     <div th:replace="fragments/header :: nav" class="col-md-2"></div>
-
 </head>
 <body>
-
 <div class="container-fluid">
     <div class="row">
         <span th:replace="fragments/offcanvas :: offcanvas"></span>
@@ -33,7 +31,7 @@
                                  alt="포스터 이미지" style="height: 290px;">
                         </a>
                         <div class="card-body">
-                            <h5 class="card-title">
+                            <h5 class="card-title text-light">
                                 <span th:utext="${boxOffice.rank} + '. ' + ${#strings.length(boxOffice.movieNm) &gt; 8 ? #strings.substring(boxOffice.movieNm, 0, 8) + '...' : boxOffice.movieNm}"></span>
                             </h5>
                             <p class="card-text">개봉일: <span th:text="${boxOffice.openDt}"></span></p>
@@ -41,9 +39,7 @@
                     </div>
                 </div>
             </div>
-
             <hr>
-
             <h1>한국 영화 순위</h1>
             <br>
             <div class="row scrollable-row col-md-10"
@@ -56,7 +52,7 @@
                                  alt="포스터 이미지" style="height: 300px;">
                         </a>
                         <div class="card-body">
-                            <h5 class="card-title">
+                            <h5 class="card-title text-light">
                                 <span th:utext="${boxOffice.rank} + '. ' + ${#strings.length(boxOffice.movieNm) &gt; 8 ? #strings.substring(boxOffice.movieNm, 0, 8) + '...' : boxOffice.movieNm}"></span>
                             </h5>
                             <p class="card-text">개봉일: <span th:text="${boxOffice.openDt}"></span></p>
@@ -77,7 +73,7 @@
                                  alt="포스터 이미지" style="height: 300px;">
                         </a>
                         <div class="card-body">
-                            <h5 class="card-title">
+                            <h5 class="card-title text-light">
                                 <span th:utext="${boxOffice.rank} + '. ' + ${#strings.length(boxOffice.movieNm) &gt; 8 ? #strings.substring(boxOffice.movieNm, 0, 8) + '...' : boxOffice.movieNm}"></span>
                             </h5>
                             <p class="card-text">개봉일: <span th:text="${boxOffice.openDt}"></span></p>
@@ -115,25 +111,28 @@
                         </td>
                         <td>
                             <span th:text="${boxOffice.rank}"></span>
-                            <span th:if="${boxOffice.rankInten != null && boxOffice.rankInten != '' && boxOffice.rankInten.startsWith('-')}" style="color: blue;" th:text="'(↓'+ ${boxOffice.rankInten.substring(1)} + ')'"></span>
-                            <span th:if="${boxOffice.rankInten != null && boxOffice.rankInten != '' && !boxOffice.rankInten.startsWith('-') && boxOffice.rankInten != '0'}" style="color: red;" th:text="'(↑'+ ${boxOffice.rankInten} + ')'"></span>
+                            <span th:if="${boxOffice.rankInten != null && boxOffice.rankInten != '' && boxOffice.rankInten.startsWith('-')}"
+                                  style="color: blue;" th:text="'(↓'+ ${boxOffice.rankInten.substring(1)} + ')'"></span>
+                            <span th:if="${boxOffice.rankInten != null && boxOffice.rankInten != '' && !boxOffice.rankInten.startsWith('-') && boxOffice.rankInten != '0'}"
+                                  style="color: red;" th:text="'(↑'+ ${boxOffice.rankInten} + ')'"></span>
                         </td>
-
                         <td>
                             <span th:text="${boxOffice.movieNm}"></span>
-                            <span th:if="${boxOffice.rankOldAndNew == 'NEW'}"  class="badge bg-warning">NEW</span>
+                            <span th:if="${boxOffice.rankOldAndNew == 'NEW'}" class="badge bg-warning">NEW</span>
                         </td>
                         <td th:text="${boxOffice.openDt}"></td>
                         <td>
-                            <div th:text="'일일 : '+ ${boxOffice.salesAmt}+'원'"></div>
-                            <div th:text="'총 : '+ ${boxOffice.salesAcc}+'원'"></div>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" th:style="'width: ' + ${boxOffice.salesShare} + '%;'"></div>
+                            <div th:text="'일일 : '+ ${#numbers.formatInteger(boxOffice.salesAmt, 3, 'COMMA') + '원'}"></div>
+                            <div th:text="'누적 : '+ ${#numbers.formatInteger(boxOffice.salesAcc, 3, 'COMMA') +'원'}"></div>
+                            <div class="progress col-md-10">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                     aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
+                                     th:style="'width: ' + ${boxOffice.salesShare} + '%;'"></div>
                             </div>
                         </td>
                         <td>
-                            <div th:text="'일일 : '+ ${boxOffice.audiCnt}+'명'"></div>
-                            <div th:text="'누적 : '+ ${boxOffice.audiAcc}+'명'"></div>
+                            <div th:text="'일일 : '+ ${#numbers.formatInteger(boxOffice.audiCnt, 3, 'COMMA') + '명'}"></div>
+                            <div th:text="'누적 : '+ ${#numbers.formatInteger(boxOffice.audiAcc, 3, 'COMMA') + '명'}"></div>
                         </td>
                     </tr>
                     </tbody>
@@ -144,5 +143,7 @@
     </div>
 </div>
 <div th:insert="fragments/footer :: footer"></div>
+<script src="js/auto-scroll-script.js"></script>
+<script src="js/datepicker-script.js"></script>
 </body>
 </html>

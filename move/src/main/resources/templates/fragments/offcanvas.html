@@ -1,68 +1,71 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-
     <meta charset="UTF-8">
 </head>
 <body>
 <offcanvas>
 <span class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvas" role="button"
-   aria-controls="offcanvas">
+      aria-controls="offcanvas">
     <i class="fas fa-bars"></i> 카테고리
 </span>
-<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasLabel">M. m . o . v .e </h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        <div>
-            M. M. O. V. E 입니다.
-            최신 영화의 박스오피스 정보를 한눈에 제공하는 플랫폼입니다.
-            영화 팬들을 위한 서비스를 제공하고자 노력하고 있습니다.
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasLabel">M. m . o . v .e </h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <ul class="nav flex-column">
-            <br>
-            <li class="nav-item active">
-                <a class="nav-link" onclick="toggleBoxOfficeSections()">
-                    박스오피스 <span class="visually-hidden">(current)</span>
-                </a>
-                <ul id="boxOfficeSections" style="display: none;">
-                    <li><a class="nav-link" href="/daily-box-office">일간 박스 오피스</a></li>
-                    <li><a class="nav-link" href="/weekly-box-office">주간 박스 오피스</a></li>
-                </ul>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" onclick="toggleMovieDetailSections()">
-                    영화 상세 <span class="visually-hidden">(current)</span>
-                </a>
-                <ul id="movieDetailSections" style="display: none;">
-                    <li><a class="nav-link" href="/movie-search">영화 검색</a></li>
-                </ul>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" onclick="togglePersonDetailSections()">
-                    영화인 <span class="visually-hidden">(current)</span>
-                </a>
-                <ul id="personDetailSections" style="display: none;">
-                    <li><a class="nav-link" href="/person-search">영화인 검색</a></li>
-                </ul>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" onclick="toggleAccountDetailSections()">
-                    계정 <span class="visually-hidden">(current)</span>
-                </a>
-                <ul id="accountDetailSections" style="display: none;">
-                    <li sec:authorize="!isAuthenticated()"><a class="nav-link" href="/account/sign-in">로그인</a></li>
-                    <li sec:authorize="!isAuthenticated()"><a class="nav-link" href="/account/sign-up">회원가입</a></li>
-                    <li sec:authorize="isAuthenticated()"><a class="nav-link" href="/account/logout">로그아웃</a></li>
-                </ul>
+        <div class="offcanvas-body">
+            <div>
+                M. M. O. V. E 입니다.
+                최신 영화의 박스오피스 정보를 한눈에 제공하는 플랫폼입니다.
+                영화 팬들을 위한 서비스를 제공하고자 노력하고 있습니다.
+            </div>
+            <ul class="nav flex-column">
+                <br>
+                <li class="nav-item active">
+                    <a class="nav-link" onclick="toggleBoxOfficeSections()">
+                        박스오피스 <span class="visually-hidden">(current)</span>
+                    </a>
+                    <ul id="boxOfficeSections" style="display: none;">
+                        <li><a class="nav-link" href="/daily-box-office">일간 박스 오피스</a></li>
+                        <li><a class="nav-link" href="/weekly-box-office">주간 박스 오피스</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" onclick="toggleMovieDetailSections()">
+                        영화 상세 <span class="visually-hidden">(current)</span>
+                    </a>
+                    <ul id="movieDetailSections" style="display: none;">
+                        <li><a class="nav-link" href="/movie-search">영화 검색</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" onclick="togglePersonDetailSections()">
+                        영화인 <span class="visually-hidden">(current)</span>
+                    </a>
+                    <ul id="personDetailSections" style="display: none;">
+                        <li><a class="nav-link" href="/person-search">영화인 검색</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" onclick="toggleAccountDetailSections()">
+                        계정 <span class="visually-hidden">(current)</span>
+                    </a>
+                    <ul id="accountDetailSections" style="display: none;">
+                        <li sec:authorize="!isAuthenticated()"><a class="nav-link" href="/account/sign-in">로그인</a></li>
+                        <li sec:authorize="!isAuthenticated()"><a class="nav-link" href="/account/sign-up">회원가입</a></li>
+                        <li sec:authorize="isAuthenticated()"><a class="nav-link" href="/account/logout">로그아웃</a></li>
+                    </ul>
 
 
-            </li>
-        </ul>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
+    
+    <script src="/js/offcanvas-script.js"></script>
+
 </offcanvas>
 </body>
 </html>

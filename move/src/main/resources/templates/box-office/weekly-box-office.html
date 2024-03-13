@@ -23,7 +23,8 @@
                      th:if="${iterStat.index le 4}" class="col-md-2 mb-4">
                     <div class="card border`-dark">
                         <a th:href="@{'/movie-info/' + ${boxOffice.movieCd}}">
-                            <img th:src="${boxOffice.imageUrl} ?: '/images/no_movie_image.jpg'" class="card-img-top" alt="포스터 이미지" style="height: 290px;">
+                            <img th:src="${boxOffice.imageUrl} ?: '/images/no_movie_image.jpg'" class="card-img-top"
+                                 alt="포스터 이미지" style="height: 290px;">
                         </a>
                         <div class="card-body">
                             <h5 class="card-title">
@@ -63,7 +64,8 @@
                     <tr th:each="boxOffice : ${weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList}">
                         <td>
                             <a th:href="@{'/movie-info/' + ${boxOffice.movieCd}}">
-                                <img th:src="${boxOffice.imageUrl} ?: '/images/no_movie_image.jpg'" alt="포스터 이미지" width="100">
+                                <img th:src="${boxOffice.imageUrl} ?: '/images/no_movie_image.jpg'" alt="포스터 이미지"
+                                     width="100">
                             </a>
                         </td>
                         <td th:text="${boxOffice.rank}"></td>
@@ -77,85 +79,88 @@
             </div>
         </div>
     </div>
-    <div th:insert="fragments/footer :: footer"></div>
+</div>
 
-    <script th:inline="javascript">
-        $(document).ready(function () {
-            var movieNames = /*[[${weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList.![movieNm]}]]*/ [];
-            var salesAmts = /*[[${weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList.![audiCnt]}]]*/ [];
-            var slicedMovieNames = movieNames.slice(0, 5);
-            var slicedSalesAmts = salesAmts.slice(0, 5);
+<div th:insert="fragments/footer :: footer"></div>
 
-            var ctx = document.getElementById('boxOfficeDoughnutChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: slicedMovieNames,
-                    datasets: [{
-                        data: slicedSalesAmts,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.4)',
-                            'rgba(54, 162, 235, 0.4)',
-                            'rgba(255, 206, 86, 0.4)',
-                            'rgba(75, 192, 192, 0.4)',
-                            'rgba(153, 102, 255, 0.4)',
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                        },
-                        title: {
-                            display: true,
-                            text: '영화별 매출액 비율'
-                        }
+<script th:inline="javascript">
+    $(document).ready(function () {
+        var movieNames = /*[[${weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList.![movieNm]}]]*/ [];
+        var salesAmts = /*[[${weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList.![audiCnt]}]]*/ [];
+        var slicedMovieNames = movieNames.slice(0, 5);
+        var slicedSalesAmts = salesAmts.slice(0, 5);
+
+        var ctx = document.getElementById('boxOfficeDoughnutChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: slicedMovieNames,
+                datasets: [{
+                    data: slicedSalesAmts,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.4)',
+                        'rgba(54, 162, 235, 0.4)',
+                        'rgba(255, 206, 86, 0.4)',
+                        'rgba(75, 192, 192, 0.4)',
+                        'rgba(153, 102, 255, 0.4)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: '영화별 매출액 비율'
                     }
                 }
-            });
+            }
         });
-    </script>
+    });
+</script>
 
-    <script th:inline="javascript">
-        $(document).ready(function () {
-            $('.datepicker').datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true
-            });
-            var movieNames = /*[[${#strings.arrayJoin(weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList.![rank],"")}]]*/ [];
-            var salesAmts = /*[[${weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList.![salesAmt]}]]*/ [];
-            var ctx = document.getElementById('boxOfficeChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: movieNames,
-                    datasets: [{
-                        label: '매출액',
-                        data: salesAmts,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
+<script th:inline="javascript">
+    $(document).ready(function () {
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true
+        });
+        var movieNames = /*[[${#strings.arrayJoin(weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList.![rank],"")}]]*/ [];
+        var salesAmts = /*[[${weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList.![salesAmt]}]]*/ [];
+        var ctx = document.getElementById('boxOfficeChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: movieNames,
+                datasets: [{
+                    label: '매출액',
+                    data: salesAmts,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 }
-            });
+            }
         });
-    </script>
+    });
+</script>
+<script src="js/datepicker-script.js"></script>
 </body>
 </html>
