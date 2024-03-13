@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+
     <meta charset="UTF-8">
 </head>
 <body>
@@ -52,8 +53,12 @@
                     계정 <span class="visually-hidden">(current)</span>
                 </a>
                 <ul id="accountDetailSections" style="display: none;">
-                    <li><a class="nav-link" href="/account/sign-in">로그인</a></li>
+                    <li sec:authorize="!isAuthenticated()"><a class="nav-link" href="/account/sign-in">로그인</a></li>
+                    <li sec:authorize="!isAuthenticated()"><a class="nav-link" href="/account/sign-up">회원가입</a></li>
+                    <li sec:authorize="isAuthenticated()"><a class="nav-link" href="/account/logout">로그아웃</a></li>
                 </ul>
+
+
             </li>
         </ul>
     </div>
