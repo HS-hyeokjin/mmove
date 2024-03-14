@@ -64,9 +64,66 @@
                     </a>
                 </div>
             </div>
+            <div class="col-md-5 offset-md-1">
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <h2>리뷰 목록</h2>
+                        <ul class="list-group">
+                            <li class="list-group-item">리뷰 내용 1</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <h2>리뷰 작성</h2>
+                        <form th:action="@{/submit-review}" method="post">
+                            <div class="form-group">
+                                <label for="reviewContent">리뷰 내용</label>
+                                <textarea class="form-control" id="reviewContent" rows="3" name="reviewContent"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>평점</label>
+                                <div class="rating">
+                                    <span class="star" data-value="1">&#9733;</span>
+                                    <span class="star" data-value="2">&#9733;</span>
+                                    <span class="star" data-value="3">&#9733;</span>
+                                    <span class="star" data-value="4">&#9733;</span>
+                                    <span class="star" data-value="5">&#9733;</span>
+                                </div>
+                                <input type="hidden" id="rating" name="rating" value="0">
+                            </div>
+                            <button type="submit" class="btn btn-primary">리뷰 작성</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
+
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const stars = document.querySelectorAll(".star");
+        const ratingInput = document.getElementById("rating");
+
+        stars.forEach(function (star) {
+            star.addEventListener("click", function () {
+                const value = parseInt(this.getAttribute("data-value"));
+                ratingInput.value = value;
+                stars.forEach(function (s) {
+                    if (parseInt(s.getAttribute("data-value")) <= value) {
+                        s.classList.add("selected");
+                    } else {
+                        s.classList.remove("selected");
+                    }
+                });
+            });
+        });
+    });
+</script>
 <div th:insert="fragments/footer :: footer"></div>
 </body>
 </html>
