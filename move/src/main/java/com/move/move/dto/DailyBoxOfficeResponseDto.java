@@ -19,10 +19,8 @@ public class DailyBoxOfficeResponseDto {
 
     @Getter
     @Setter
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class BoxOfficeResult {
-
-        @JsonProperty("boxofficeType")
-        private String boxofficeType;
 
         @JsonProperty("showRange")
         private String showRange;
@@ -38,10 +36,8 @@ public class DailyBoxOfficeResponseDto {
 
     @Getter
     @Setter
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class DailyBoxOffice {
-
-        @JsonProperty("rnum")
-        private String rnum;
 
         @JsonProperty("rank")
         private String rank;

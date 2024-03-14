@@ -57,6 +57,6 @@ public class AccountController {
         cookie.setMaxAge(0);
         cookie.setPath("/");
         response.addCookie(cookie);
-        return "/daily-box-office";
+        return "account/sign-in";
     }
 }

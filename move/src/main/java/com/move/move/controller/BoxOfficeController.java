@@ -40,4 +40,3 @@ public class BoxOfficeController {
         return "box-office/weekly-box-office";
     }
 }
-

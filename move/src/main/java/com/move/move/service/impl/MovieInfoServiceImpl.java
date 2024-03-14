@@ -5,6 +5,9 @@ import com.move.move.adapter.MovieInfoAdapter;
 import com.move.move.adapter.PersonDetailAdapter;
 import com.move.move.dto.MovieDetailResponseDto;
 import com.move.move.dto.MovieInfoResponseDto;
+import com.move.move.entity.Movie;
+import com.move.move.repository.MovieRepository;
+import com.move.move.repository.ReviewRepository;
 import com.move.move.service.MovieInfoService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,12 +23,15 @@ public class MovieInfoServiceImpl implements MovieInfoService {
     private final MovieInfoAdapter movieInfoAdapter;
     private final MovieDetailAdapter movieDetailAdapter;
     private final PersonDetailAdapter personDetailAdapter;
+    private final MovieRepository movieRepository;
+    private final ReviewRepository reviewRepository;
 
-
-    public MovieInfoServiceImpl(MovieInfoAdapter movieInfoAdapter, MovieDetailAdapter movieDetailAdapter, PersonDetailAdapter personDetailAdapter) {
+    public MovieInfoServiceImpl(MovieInfoAdapter movieInfoAdapter, MovieDetailAdapter movieDetailAdapter, PersonDetailAdapter personDetailAdapter, MovieRepository movieRepository, ReviewRepository reviewRepository) {
         this.movieInfoAdapter = movieInfoAdapter;
         this.movieDetailAdapter = movieDetailAdapter;
         this.personDetailAdapter = personDetailAdapter;
+        this.movieRepository = movieRepository;
+        this.reviewRepository = reviewRepository;
     }
 
 
@@ -34,6 +40,7 @@ public class MovieInfoServiceImpl implements MovieInfoService {
 
         MovieInfoResponseDto movieInfoResponseDto = movieInfoAdapter.getMovieInfo(movieCode);
         MovieDetailResponseDto movieDetailResponseDto = movieDetailAdapter.searchMovieDetail(movieInfoResponseDto.getMovieInfoResult().getMovieInfo().getMovieNm());
+        Movie movie = movieRepository.findByMovieCode(movieCode);
 
         List<MovieInfoResponseDto.Actor> actors = movieInfoResponseDto.getMovieInfoResult().getMovieInfo().getActors();
         for (MovieInfoResponseDto.Actor actor : actors) {
@@ -55,6 +62,11 @@ public class MovieInfoServiceImpl implements MovieInfoService {
                 setOverview(movieDetailResponseDto.getMovieDetailResultDto().getOverview());
         movieInfoResponseDto.getMovieInfoResult().getMovieInfo().
                 setPopularity(movieDetailResponseDto.getMovieDetailResultDto().getPopularity());
+
+        if(movie != null) {
+            movieInfoResponseDto.getMovieInfoResult().getMovieInfo()
+                    .setReivews(reviewRepository.findByMovie(movie));
+        }
 
         return movieInfoResponseDto;
     }

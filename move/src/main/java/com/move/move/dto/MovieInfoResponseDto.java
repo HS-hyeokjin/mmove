@@ -2,6 +2,7 @@ package com.move.move.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.move.move.entity.Review;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +28,7 @@ public class MovieInfoResponseDto {
 
     @Getter
     @Setter
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class MovieInfo {
         @JsonProperty("movieCd")
         private String movieCd;
@@ -86,6 +88,8 @@ public class MovieInfoResponseDto {
         private List<Staff> staffs;
 
         private String overview;
+
+        private List<Review> reivews;
     }
 
     @Getter

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class MovieInfoController {
+
     private final MovieInfoService movieInfoService;
 
     public MovieInfoController(MovieInfoService movieInfoService) {
@@ -22,4 +23,5 @@ public class MovieInfoController {
 
         return "movie/movie-info";
     }
+
 }
