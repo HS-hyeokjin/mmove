@@ -29,8 +29,10 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.disable())
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/daily-box-office","/weekly-box-office","/account/**","/movie-search").permitAll()
-                        .anyRequest().authenticated())
+//                        .requestMatchers("/daily-box-office","/weekly-box-office","/account/**").permitAll()
+//                        .requestMatchers("/movie-info/**","/movie/**","/person/**").permitAll()
+//                        .requestMatchers("/movie-info/**","/movie/**","/person-detail/**").permitAll()
+                        .anyRequest().permitAll())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .getOrBuild();
