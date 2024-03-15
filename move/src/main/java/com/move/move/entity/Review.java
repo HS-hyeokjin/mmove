@@ -13,9 +13,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uid")
-    private User user;
+    private String userName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mid")

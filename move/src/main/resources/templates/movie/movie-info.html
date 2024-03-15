@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <head th:include="fragments/header :: head"></head>
@@ -47,8 +47,9 @@
                 </div>
             </div>
             <hr>
-            <div class="row overflow-x-auto flex-nowrap">
-                <div th:each="actor : ${movieInfoData.movieInfoResult.movieInfo.actors}" class="col-md-1 mb-4">
+            <div class="row overflow-x-hidden flex-nowrap">
+                <div th:each="actor, iterStat : ${movieInfoData.movieInfoResult.movieInfo.actors}" class="col-md-1 mb-4"
+                     th:if="${iterStat.index < 8}">
                     <a th:href="@{/person-detail/{actorName}(actorName=${actor.peopleNmEn})}"
                        class="text-decoration-none">
                         <div class="card border-dark">
@@ -64,24 +65,33 @@
                     </a>
                 </div>
             </div>
-            <div class="col-md-5 offset-md-1">
-                <div class="row mt-4">
-                    <div class="col-md-12">
-                        <h2>리뷰 목록</h2>
-                        <ul class="list-group">
-                            <li class="list-group-item">리뷰 내용 1</li>
-                        </ul>
-                    </div>
+
+            <div class="row mt-4">
+                <div class="col-md-7">
+                    <img th:if="${movieInfoData.movieInfoResult.movieInfo.backDropImageUrl != null}"
+                         th:src="${movieInfoData.movieInfoResult.movieInfo.backDropImageUrl}" class="img-fluid">
+                    <img th:unless="${movieInfoData.movieInfoResult.movieInfo.backDropImageUrl != null}"
+                         src="/images/no-movie-image.jpg" alt="No Image" class="img-fluid">
                 </div>
 
-                <div class="row mt-4">
-                    <div class="col-md-12">
-                        <h2>리뷰 작성</h2>
-                        <form th:action="@{/submit-review}" method="post">
-                            <div class="form-group">
-                                <label for="reviewContent">리뷰 내용</label>
-                                <textarea class="form-control" id="reviewContent" rows="3" name="reviewContent"></textarea>
-                            </div>
+
+                <div class="col-md-5">
+                    <h2>리뷰</h2>
+                    <ul class="list-group">
+                        <li class="list-group-item" th:if="${reviews.empty}">
+                            작성된 리뷰가 없습니다.
+                        </li>
+                        <li class="list-group-item" th:each="review : ${reviews}">
+                            <p th:text="${review.content + ' - ' + review.userName}"></p>
+                            <p>평점: <span th:text="${review.rating}"></span></p>
+                        </li>
+                    </ul>
+                    <div sec:authorize="!isAuthenticated()" class="row mt-4">
+                        <p> 로그인 후 작성 가능합니다. </p>
+                    </div>
+                    <div sec:authorize="isAuthenticated()" class="row mt-4">
+                        <form th:action="@{'/movie-info/' + ${movieInfoData.movieInfoResult.movieInfo.movieCd} + '/reviews'}"
+                              method="post">
                             <div class="form-group">
                                 <label>평점</label>
                                 <div class="rating">
@@ -93,15 +103,15 @@
                                 </div>
                                 <input type="hidden" id="rating" name="rating" value="0">
                             </div>
-                            <button type="submit" class="btn btn-primary">리뷰 작성</button>
+                            <div class="form-group">
+                                <textarea class="form-control" id="content" rows="3" name="content"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">리뷰 작성</button>
                         </form>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 </div>
 <script>
@@ -114,7 +124,7 @@
                 const value = parseInt(this.getAttribute("data-value"));
                 ratingInput.value = value;
                 stars.forEach(function (s) {
-                    if (parseInt(s.getAttribute("data-value")) <= value) {
+                    if (parseInt(s.getAttribute("data-value")) >= value) {
                         s.classList.add("selected");
                     } else {
                         s.classList.remove("selected");

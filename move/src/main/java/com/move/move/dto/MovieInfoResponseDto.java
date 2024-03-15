@@ -89,7 +89,6 @@ public class MovieInfoResponseDto {
 
         private String overview;
 
-        private List<Review> reivews;
     }
 
     @Getter

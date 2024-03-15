@@ -5,7 +5,6 @@ import com.move.move.adapter.MovieInfoAdapter;
 import com.move.move.adapter.PersonDetailAdapter;
 import com.move.move.dto.MovieDetailResponseDto;
 import com.move.move.dto.MovieInfoResponseDto;
-import com.move.move.entity.Movie;
 import com.move.move.repository.MovieRepository;
 import com.move.move.repository.ReviewRepository;
 import com.move.move.service.MovieInfoService;
@@ -20,18 +19,17 @@ public class MovieInfoServiceImpl implements MovieInfoService {
     @Value("${tmdb.image.url}")
     String imageUrl;
 
+    @Value("${tmdb.image.url.w780}")
+    String imageUrl2;
+
     private final MovieInfoAdapter movieInfoAdapter;
     private final MovieDetailAdapter movieDetailAdapter;
     private final PersonDetailAdapter personDetailAdapter;
-    private final MovieRepository movieRepository;
-    private final ReviewRepository reviewRepository;
 
-    public MovieInfoServiceImpl(MovieInfoAdapter movieInfoAdapter, MovieDetailAdapter movieDetailAdapter, PersonDetailAdapter personDetailAdapter, MovieRepository movieRepository, ReviewRepository reviewRepository) {
+    public MovieInfoServiceImpl(MovieInfoAdapter movieInfoAdapter, MovieDetailAdapter movieDetailAdapter, PersonDetailAdapter personDetailAdapter) {
         this.movieInfoAdapter = movieInfoAdapter;
         this.movieDetailAdapter = movieDetailAdapter;
         this.personDetailAdapter = personDetailAdapter;
-        this.movieRepository = movieRepository;
-        this.reviewRepository = reviewRepository;
     }
 
 
@@ -40,7 +38,6 @@ public class MovieInfoServiceImpl implements MovieInfoService {
 
         MovieInfoResponseDto movieInfoResponseDto = movieInfoAdapter.getMovieInfo(movieCode);
         MovieDetailResponseDto movieDetailResponseDto = movieDetailAdapter.searchMovieDetail(movieInfoResponseDto.getMovieInfoResult().getMovieInfo().getMovieNm());
-        Movie movie = movieRepository.findByMovieCode(movieCode);
 
         List<MovieInfoResponseDto.Actor> actors = movieInfoResponseDto.getMovieInfoResult().getMovieInfo().getActors();
         for (MovieInfoResponseDto.Actor actor : actors) {
@@ -57,16 +54,11 @@ public class MovieInfoServiceImpl implements MovieInfoService {
         movieInfoResponseDto.getMovieInfoResult().getMovieInfo().
                 setPosterImageUrl(imageUrl + movieDetailResponseDto.getMovieDetailResultDto().getPosterPath());
         movieInfoResponseDto.getMovieInfoResult().getMovieInfo().
-                setBackDropImageUrl(imageUrl + movieDetailResponseDto.getMovieDetailResultDto().getBackdropPath());
+                setBackDropImageUrl(imageUrl2 + movieDetailResponseDto.getMovieDetailResultDto().getBackdropPath());
         movieInfoResponseDto.getMovieInfoResult().getMovieInfo().
                 setOverview(movieDetailResponseDto.getMovieDetailResultDto().getOverview());
         movieInfoResponseDto.getMovieInfoResult().getMovieInfo().
                 setPopularity(movieDetailResponseDto.getMovieDetailResultDto().getPopularity());
-
-        if(movie != null) {
-            movieInfoResponseDto.getMovieInfoResult().getMovieInfo()
-                    .setReivews(reviewRepository.findByMovie(movie));
-        }
 
         return movieInfoResponseDto;
     }

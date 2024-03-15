@@ -13963,3 +13963,15 @@ legend {
     display: flex;
     transition: transform 0s ease-in-out;
 }
+.rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: left;
+}
+.star {
+    cursor: pointer;
+    color: grey;
+}
+
+.star.selected {
+    color: gold;
