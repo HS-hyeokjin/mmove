@@ -4,6 +4,7 @@ import com.move.move.adapter.DailyBoxOfficeAdapter;
 import com.move.move.adapter.MovieDetailAdapter;
 import com.move.move.dto.DailyBoxOfficeRequestDto;
 import com.move.move.dto.DailyBoxOfficeResponseDto;
+import com.move.move.exception.ApiRequestException;
 import com.move.move.service.DailyBoxOfficeService;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +26,8 @@ public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService {
     }
 
     @Override
-    public DailyBoxOfficeResponseDto getDailyBoxOffice(String nationCd,String date){
-
-        if(date == null) {
+    public DailyBoxOfficeResponseDto getDailyBoxOffice(String nationCd, String date) {
+        if (date == null) {
             date = yesterdayStringDate();
         }
         DailyBoxOfficeRequestDto dailyBoxOfficeRequestDto = new DailyBoxOfficeRequestDto();
@@ -38,20 +38,17 @@ public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService {
         List<DailyBoxOfficeResponseDto.DailyBoxOffice> dailyBoxOfficeList = dailyBoxOfficeData.getBoxOfficeResult().getDailyBoxOfficeList();
         for (DailyBoxOfficeResponseDto.DailyBoxOffice dailyBoxOffice : dailyBoxOfficeList) {
             String movieTitle = dailyBoxOffice.getMovieNm();
-
             String posterUrl = movieDetailAdapter.searchMoviePoster(movieTitle);
             dailyBoxOffice.setImageUrl(posterUrl);
         }
         return dailyBoxOfficeData;
     }
 
-
-    private String yesterdayStringDate(){
+    private String yesterdayStringDate() {
         LocalDate date = LocalDate.now().minusDays(1);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String formattedDate = date.format(formatter);
         return Stream.of(formattedDate)
                 .collect(Collectors.joining());
     }
-
 }

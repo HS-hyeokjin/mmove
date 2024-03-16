@@ -5,6 +5,7 @@ import com.move.move.adapter.DailyBoxOfficeAdapter;
 import com.move.move.dto.DailyBoxOfficeRequestDto;
 import com.move.move.dto.DailyBoxOfficeResponseDto;
 import com.move.move.exception.ApiRequestException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 
+@Slf4j
 @Component
 public class DailyBoxOfficeAdapterImpl implements DailyBoxOfficeAdapter {
 
@@ -43,18 +45,21 @@ public class DailyBoxOfficeAdapterImpl implements DailyBoxOfficeAdapter {
                 String.class
         );
 
-        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
             ObjectMapper objectMapper = new ObjectMapper();
             try {
                 String responseBody = responseEntity.getBody();
                 DailyBoxOfficeResponseDto dailyBoxOfficeResponseDto = objectMapper.readValue(responseBody, DailyBoxOfficeResponseDto.class);
                 return dailyBoxOfficeResponseDto;
             } catch (IOException e) {
-                e.printStackTrace();
-                throw new ApiRequestException("API 응답 매핑 실패", e);
+                String errorMessage = "API 응답 매핑 실패: " + e.getMessage();
+                log.error(errorMessage, e);
+                throw new ApiRequestException(errorMessage, e);
             }
         } else {
-            throw new ApiRequestException("API 요청 실패. 상태 코드: " + responseEntity.getStatusCodeValue());
+            String errorMessage = "API 요청 실패. 상태 코드: " + responseEntity.getStatusCode().value();
+            log.error(errorMessage);
+            throw new ApiRequestException(errorMessage);
         }
     }
 }
