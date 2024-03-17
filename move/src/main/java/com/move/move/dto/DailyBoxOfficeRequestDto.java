@@ -9,10 +9,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class DailyBoxOfficeRequestDto {
+
     private String key;
+
     private String targetDt;
+
     private String itemPerPage;
+
     private String multiMovieYn;
+
     private String repNationCd;
+
     private String wideAreaCd;
 }

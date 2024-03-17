@@ -10,25 +10,20 @@ import java.util.List;
 @Setter
 public class PersonDetailResultDto {
 
-    @JsonProperty("adult")
     private boolean adult;
 
-    @JsonProperty("gender")
     private int gender;
 
-    @JsonProperty("id")
     private int id;
 
     @JsonProperty("known_for_department")
     private String knownForDepartment;
 
-    @JsonProperty("name")
     private String name;
 
     @JsonProperty("original_name")
     private String originalName;
 
-    @JsonProperty("popularity")
     private double popularity;
 
     @JsonProperty("profile_path")
@@ -41,16 +36,12 @@ public class PersonDetailResultDto {
     @Setter
     public static class KnownFor {
 
-        @JsonProperty("adult")
         private boolean adult;
 
-        @JsonProperty("backdrop_path")
         private String backdropPath;
 
-        @JsonProperty("id")
         private int id;
 
-        @JsonProperty("title")
         private String title;
 
         @JsonProperty("original_language")
@@ -59,7 +50,6 @@ public class PersonDetailResultDto {
         @JsonProperty("original_title")
         private String originalTitle;
 
-        @JsonProperty("overview")
         private String overview;
 
         @JsonProperty("poster_path")

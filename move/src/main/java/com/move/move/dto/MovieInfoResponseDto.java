@@ -30,7 +30,6 @@ public class MovieInfoResponseDto {
     @Setter
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class MovieInfo {
-        @JsonProperty("movieCd")
         private String movieCd;
 
         private String posterImageUrl;
@@ -39,52 +38,37 @@ public class MovieInfoResponseDto {
 
         private Double popularity;
 
-        @JsonProperty("movieNm")
         private String movieNm;
 
-        @JsonProperty("movieNmEn")
         private String movieNmEn;
 
-        @JsonProperty("movieNmOg")
         private String movieNmOg;
 
-        @JsonProperty("showTm")
         private String showTm;
 
-        @JsonProperty("prdtYear")
         private String prdtYear;
 
-        @JsonProperty("openDt")
         private String openDt;
 
-        @JsonProperty("prdtStatNm")
         private String prdtStatNm;
 
-        @JsonProperty("typeNm")
         private String typeNm;
 
-        @JsonProperty("nations")
         private List<Nation> nations;
 
-        @JsonProperty("genres")
         private List<Genre> genres;
 
-        @JsonProperty("directors")
         private List<Director> directors;
 
-        @JsonProperty("actors")
         private List<Actor> actors;
 
-        @JsonProperty("showTypes")
         private List<ShowType> showTypes;
 
         @JsonProperty("companys")
         private List<Company> companies;
 
-        @JsonProperty("audits")
         private List<Audit> audits;
 
-        @JsonProperty("staffs")
         private List<Staff> staffs;
 
         private String overview;

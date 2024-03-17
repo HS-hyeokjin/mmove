@@ -12,7 +12,6 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MovieSearchListResponseDto {
 
-    @JsonProperty("movieListResult")
     private MovieListResult movieListResult;
 
     @Getter

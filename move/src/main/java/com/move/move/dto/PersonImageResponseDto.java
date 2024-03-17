@@ -10,7 +10,6 @@ import java.util.List;
 @Setter
 public class PersonImageResponseDto {
 
-    @JsonProperty("results")
     private List<PersonSearchResult> results;
 
     @Getter
