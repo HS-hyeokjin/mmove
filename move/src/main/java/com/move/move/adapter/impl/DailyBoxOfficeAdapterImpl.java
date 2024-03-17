@@ -53,12 +53,10 @@ public class DailyBoxOfficeAdapterImpl implements DailyBoxOfficeAdapter {
                 return dailyBoxOfficeResponseDto;
             } catch (IOException e) {
                 String errorMessage = "API 응답 매핑 실패: " + e.getMessage();
-                log.error(errorMessage, e);
                 throw new ApiRequestException(errorMessage, e);
             }
         } else {
             String errorMessage = "API 요청 실패. 상태 코드: " + responseEntity.getStatusCode().value();
-            log.error(errorMessage);
             throw new ApiRequestException(errorMessage);
         }
     }

@@ -29,4 +29,11 @@ public class GlobalExceptionHandler {
         model.addAttribute("errorMessage", "에러 : " + ex.getMessage());
         return "error";
     }
+
+    @ExceptionHandler(DuplicateIdException.class)
+    public String handleDuplicateIdException(DuplicateIdException  ex, Model model){
+        log.error("이미 존재하는 아이디", ex);
+        model.addAttribute("errorMessage", "에러 : " + ex.getMessage());
+        return "error";
+    }
 }

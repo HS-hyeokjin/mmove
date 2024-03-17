@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.move.move.adapter.MovieInfoAdapter;
 import com.move.move.dto.MovieInfoResponseDto;
 import com.move.move.exception.ApiRequestException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 
+@Slf4j
 @Component
 public class MovieInfoAdapterImpl implements MovieInfoAdapter {
 
@@ -41,18 +43,17 @@ public class MovieInfoAdapterImpl implements MovieInfoAdapter {
                 String.class
         );
 
-        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
             ObjectMapper objectMapper = new ObjectMapper();
             try {
                 String responseBody = responseEntity.getBody();
                 MovieInfoResponseDto movieInfoResponseDto = objectMapper.readValue(responseBody, MovieInfoResponseDto.class);
                 return movieInfoResponseDto;
             } catch (IOException e) {
-                e.printStackTrace();
                 throw new ApiRequestException("API 응답 매핑 실패", e);
             }
         } else {
-            throw new ApiRequestException("API 요청 실패. 상태 코드: " + responseEntity.getStatusCodeValue());
+            throw new ApiRequestException("API 요청 실패. 상태 코드: " + responseEntity.getStatusCode().value());
         }
     }
 }

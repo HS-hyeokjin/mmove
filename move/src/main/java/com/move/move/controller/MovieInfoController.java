@@ -2,7 +2,6 @@ package com.move.move.controller;
 
 import com.move.move.dto.MovieInfoResponseDto;
 import com.move.move.dto.ReviewResponseDto;
-import com.move.move.entity.Review;
 import com.move.move.service.MovieInfoService;
 import com.move.move.service.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;

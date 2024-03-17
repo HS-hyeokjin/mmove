@@ -35,13 +35,9 @@ public class BoxOfficeController {
                 throw new InvalidDateException("전일 이후는 불가능 합니다.");
             }
         }
-        DailyBoxOfficeResponseDto dailyBoxOfficeData = dailyBoxOfficeService.getDailyBoxOffice(null,date);
-        DailyBoxOfficeResponseDto koDailyBoxOfficeData = dailyBoxOfficeService.getDailyBoxOffice("K",date);
-        DailyBoxOfficeResponseDto foDailyBoxOfficeData = dailyBoxOfficeService.getDailyBoxOffice("F",date);
-
-        model.addAttribute("dailyBoxOfficeData", dailyBoxOfficeData);
-        model.addAttribute("koDailyBoxOfficeData", koDailyBoxOfficeData);
-        model.addAttribute("foDailyBoxOfficeData", foDailyBoxOfficeData);
+        model.addAttribute("dailyBoxOfficeData", dailyBoxOfficeService.getDailyBoxOffice(null,date));
+        model.addAttribute("koDailyBoxOfficeData", dailyBoxOfficeService.getDailyBoxOffice("K",date));
+        model.addAttribute("foDailyBoxOfficeData", dailyBoxOfficeService.getDailyBoxOffice("F",date));
         return "box-office/daily-box-office";
     }
 

@@ -47,18 +47,17 @@ public class MovieSearchListAdapterImpl implements MovieSearchListAdapter {
                 String.class
         );
 
-        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+        if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
             ObjectMapper objectMapper = new ObjectMapper();
             try {
                 String responseBody = responseEntity.getBody();
                 MovieSearchListResponseDto movieSearchListResponseDto = objectMapper.readValue(responseBody, MovieSearchListResponseDto.class);
                 return movieSearchListResponseDto;
             } catch (IOException e) {
-                e.printStackTrace();
                 throw new ApiRequestException("API 응답 매핑 실패", e);
             }
         } else {
-            throw new ApiRequestException("API 요청 실패. 상태 코드: " + responseEntity.getStatusCodeValue());
+            throw new ApiRequestException("API 요청 실패. 상태 코드: " + responseEntity.getStatusCode().value());
         }
     }
 }

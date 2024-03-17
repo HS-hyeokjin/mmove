@@ -5,6 +5,7 @@ import com.move.move.adapter.MovieInfoAdapter;
 import com.move.move.adapter.PersonDetailAdapter;
 import com.move.move.dto.MovieDetailResponseDto;
 import com.move.move.dto.MovieInfoResponseDto;
+import com.move.move.exception.ApiRequestException;
 import com.move.move.repository.MovieRepository;
 import com.move.move.repository.ReviewRepository;
 import com.move.move.service.MovieInfoService;
@@ -35,31 +36,39 @@ public class MovieInfoServiceImpl implements MovieInfoService {
 
     @Override
     public MovieInfoResponseDto getMovieInfo(String movieCode) {
-
         MovieInfoResponseDto movieInfoResponseDto = movieInfoAdapter.getMovieInfo(movieCode);
-        MovieDetailResponseDto movieDetailResponseDto = movieDetailAdapter.searchMovieDetail(movieInfoResponseDto.getMovieInfoResult().getMovieInfo().getMovieNm());
+        MovieDetailResponseDto movieDetailResponseDto = searchMovieDetail(movieInfoResponseDto);
+        if (movieDetailResponseDto == null) {
+            throw new ApiRequestException("영화 상세 정보를 가져올 수 없습니다.");
+        }
+        setActorImages(movieInfoResponseDto, movieDetailResponseDto);
+        setAdditionalMovieInfo(movieInfoResponseDto, movieDetailResponseDto);
+        return movieInfoResponseDto;
+    }
 
+    private MovieDetailResponseDto searchMovieDetail(MovieInfoResponseDto movieInfoResponseDto) {
+        String movieName = movieInfoResponseDto.getMovieInfoResult().getMovieInfo().getMovieNm();
+        return movieDetailAdapter.searchMovieDetail(movieName);
+    }
+
+    private void setActorImages(MovieInfoResponseDto movieInfoResponseDto, MovieDetailResponseDto movieDetailResponseDto) {
+        String nationName = movieInfoResponseDto.getMovieInfoResult().getMovieInfo().getNations().get(0).getNationNm();
         List<MovieInfoResponseDto.Actor> actors = movieInfoResponseDto.getMovieInfoResult().getMovieInfo().getActors();
         for (MovieInfoResponseDto.Actor actor : actors) {
-            String actorImageUrl;
-
-            if ("한국".equals(movieInfoResponseDto.getMovieInfoResult().getMovieInfo().getNations().get(0).getNationNm())) {
-                actorImageUrl = personDetailAdapter.personImageUrl(actor.getPeopleNm());
-            } else {
-                actorImageUrl = personDetailAdapter.personImageUrl(actor.getPeopleNmEn());
-            }
-            actor.setPeopleImageUrl(actorImageUrl);
+            String actorName = "한국".equals(nationName) ? actor.getPeopleNm() : actor.getPeopleNmEn();
+            actor.setPeopleImageUrl(personDetailAdapter.personImageUrl(actorName));
         }
+    }
 
-        movieInfoResponseDto.getMovieInfoResult().getMovieInfo().
-                setPosterImageUrl(imageUrl + movieDetailResponseDto.getMovieDetailResultDto().getPosterPath());
-        movieInfoResponseDto.getMovieInfoResult().getMovieInfo().
-                setBackDropImageUrl(imageUrl2 + movieDetailResponseDto.getMovieDetailResultDto().getBackdropPath());
-        movieInfoResponseDto.getMovieInfoResult().getMovieInfo().
-                setOverview(movieDetailResponseDto.getMovieDetailResultDto().getOverview());
-        movieInfoResponseDto.getMovieInfoResult().getMovieInfo().
-                setPopularity(movieDetailResponseDto.getMovieDetailResultDto().getPopularity());
+    private void setAdditionalMovieInfo(MovieInfoResponseDto movieInfoResponseDto, MovieDetailResponseDto movieDetailResponseDto) {
+        String posterPath = movieDetailResponseDto.getMovieDetailResultDto().getPosterPath();
+        String backdropPath = movieDetailResponseDto.getMovieDetailResultDto().getBackdropPath();
+        String overview = movieDetailResponseDto.getMovieDetailResultDto().getOverview();
+        double popularity = movieDetailResponseDto.getMovieDetailResultDto().getPopularity();
 
-        return movieInfoResponseDto;
+        movieInfoResponseDto.getMovieInfoResult().getMovieInfo().setPosterImageUrl(imageUrl + posterPath);
+        movieInfoResponseDto.getMovieInfoResult().getMovieInfo().setBackDropImageUrl(imageUrl2 + backdropPath);
+        movieInfoResponseDto.getMovieInfoResult().getMovieInfo().setOverview(overview);
+        movieInfoResponseDto.getMovieInfoResult().getMovieInfo().setPopularity(popularity);
     }
 }

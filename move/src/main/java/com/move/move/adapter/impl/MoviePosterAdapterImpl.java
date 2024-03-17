@@ -2,6 +2,7 @@ package com.move.move.adapter.impl;
 
 import com.move.move.adapter.MoviePosterAdapter;
 import com.move.move.dto.MoviePosterResponseDto;
+import com.move.move.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -30,23 +31,27 @@ public class MoviePosterAdapterImpl implements MoviePosterAdapter {
 
     @Override
     public String searchMoviePoster(String movieTitle) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(apiUrl)
-                .queryParam("api_key", apiKey)
-                .queryParam("query", movieTitle);
-        ResponseEntity<MoviePosterResponseDto> responseEntity = restTemplate.exchange(
-                builder.toUriString(),
-                HttpMethod.GET,
-                null,
-                MoviePosterResponseDto.class
-        );
+        try {
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(apiUrl)
+                    .queryParam("api_key", apiKey)
+                    .queryParam("query", movieTitle);
+            ResponseEntity<MoviePosterResponseDto> responseEntity = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.GET,
+                    null,
+                    MoviePosterResponseDto.class
+            );
 
-        if (responseEntity.getStatusCode() == HttpStatus.OK) {
-            MoviePosterResponseDto moviePosterResponseDto = responseEntity.getBody();
-            if (moviePosterResponseDto != null && moviePosterResponseDto.getResults() != null && !moviePosterResponseDto.getResults().isEmpty()) {
-                String posterUrl = imageUrl + moviePosterResponseDto.getResults().get(0).getPoster();
-                return posterUrl;
+            if (responseEntity.getStatusCode() == HttpStatus.OK) {
+                MoviePosterResponseDto moviePosterResponseDto = responseEntity.getBody();
+                if (moviePosterResponseDto != null && moviePosterResponseDto.getResults() != null && !moviePosterResponseDto.getResults().isEmpty()) {
+                    String posterUrl = imageUrl + moviePosterResponseDto.getResults().get(0).getPoster();
+                    return posterUrl;
+                }
             }
+            return null;
+        } catch (Exception e) {
+            throw new ApiRequestException("영화 포스터 요청 오류", e);
         }
-        return null;
     }
 }

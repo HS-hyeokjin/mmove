@@ -3,9 +3,11 @@ package com.move.move.service.impl;
 import com.move.move.config.security.JwtTokenProvider;
 import com.move.move.dto.SignResponseDto;
 import com.move.move.entity.User;
+import com.move.move.exception.DuplicateIdException;
 import com.move.move.repository.UserRepository;
 import com.move.move.service.AccountService;
 import jakarta.servlet.http.Cookie;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
+@Slf4j
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -30,6 +33,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public SignResponseDto signUp(String id, String password, String name, String role) {
+        if (userRepository.existsByUid(id)) {
+            throw new DuplicateIdException("이미 가입된 아이디입니다.");
+        }
         User user;
         if (role.equalsIgnoreCase("admin")) {
             user = User.builder()
@@ -67,7 +73,8 @@ public class AccountServiceImpl implements AccountService {
         }
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new AuthenticationException("비밀번호가 일치하지 않습니다.") {};
+            throw new AuthenticationException("비밀번호가 일치하지 않습니다.") {
+            };
         }
 
         Cookie cookie = new Cookie("Authorization",
