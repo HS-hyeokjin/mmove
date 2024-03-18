@@ -49,30 +49,57 @@
             <hr>
 
             <div class="col-md-10">
+                <br>
+                <h1 th:text="'['+ ${weeklyBoxOfficeData.boxOfficeResult.showRange} + ' 박스 오피스]'"></h1>
+                <br>
                 <table class="table table-hover table-bordered">
                     <thead>
                     <tr>
-                        <th>포스터 이미지</th>
-                        <th>순위</th>
-                        <th>영화 제목</th>
-                        <th>개봉일</th>
+                        <th th:width="30">포스터</th>
+                        <th th:width="50">순위</th>
+                        <th th:width="400">영화 제목</th>
+                        <th th:width="110">개봉일</th>
                         <th>매출액</th>
                         <th>관객 수</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="boxOffice : ${weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList}">
+                    <tr th:each="boxOffice, iterStat : ${weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList}"
+                        th:class="${iterStat.odd}? odd-row : even-row"
+                        th:classappend="${iterStat.odd}? '' : table-active">
                         <td>
                             <a th:href="@{'/movie-info/' + ${boxOffice.movieCd}}">
-                                <img th:src="${boxOffice.imageUrl} ?: '/images/no_movie_image.jpg'" alt="포스터 이미지"
-                                     width="100">
+                                <div style="position: relative;">
+                                    <img th:src="${boxOffice.imageUrl} ?: '/images/no_movie_image.jpg'" alt="포스터 이미지"
+                                         width="100">
+                                </div>
                             </a>
                         </td>
-                        <td th:text="${boxOffice.rank}"></td>
-                        <td th:text="${boxOffice.movieNm}"></td>
+                        <td>
+                            <span th:text="${boxOffice.rank}"></span>
+                            <span th:if="${boxOffice.rankInten != null && boxOffice.rankInten != '' && boxOffice.rankInten.startsWith('-')}"
+                                  style="color: blue;" th:text="'(↓'+ ${boxOffice.rankInten.substring(1)} + ')'"></span>
+                            <span th:if="${boxOffice.rankInten != null && boxOffice.rankInten != '' && !boxOffice.rankInten.startsWith('-') && boxOffice.rankInten != '0'}"
+                                  style="color: red;" th:text="'(↑'+ ${boxOffice.rankInten} + ')'"></span>
+                        </td>
+                        <td>
+                            <span th:text="${boxOffice.movieNm}"></span>
+                            <span th:if="${boxOffice.rankOldAndNew == 'NEW'}" class="badge bg-warning">NEW</span>
+                        </td>
                         <td th:text="${boxOffice.openDt}"></td>
-                        <td th:text="${boxOffice.salesAmt}"></td>
-                        <td th:text="${boxOffice.audiCnt}"></td>
+                        <td>
+                            <div th:text="'일일 : '+ ${#numbers.formatInteger(boxOffice.salesAmt, 3, 'COMMA') + '원'}"></div>
+                            <div th:text="'누적 : '+ ${#numbers.formatInteger(boxOffice.salesAcc, 3, 'COMMA') +'원'}"></div>
+                            <div class="progress col-md-10">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                     aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
+                                     th:style="'width: ' + ${boxOffice.salesShare} + '%;'"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div th:text="'일일 : '+ ${#numbers.formatInteger(boxOffice.audiCnt, 3, 'COMMA') + '명'}"></div>
+                            <div th:text="'누적 : '+ ${#numbers.formatInteger(boxOffice.audiAcc, 3, 'COMMA') + '명'}"></div>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -122,7 +149,7 @@
                     },
                     title: {
                         display: true,
-                        text: '영화별 매출액 비율'
+                        text: '주간 매출액 비율'
                     }
                 }
             }
@@ -136,17 +163,17 @@
             format: 'yyyy-mm-dd',
             autoclose: true
         });
-        var movieNames = /*[[${#strings.arrayJoin(weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList.![rank],"")}]]*/ [];
-        var salesAmts = /*[[${weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList.![salesAmt]}]]*/ [];
+        var movieNames = /*[[${weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList.![movieNm]}]]*/ [];
+        var salesAmts = /*[[${weeklyBoxOfficeData.boxOfficeResult.weeklyBoxOfficeList.![audiCnt]}]]*/ [];
         var ctx = document.getElementById('boxOfficeChart').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: movieNames,
                 datasets: [{
-                    label: '매출액',
+                    label: '주간 영화별 관객수',
                     data: salesAmts,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    backgroundColor: 'rgba(85, 192, 192, 0.35)',
                     borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1
                 }]
