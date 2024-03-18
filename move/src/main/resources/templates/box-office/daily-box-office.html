@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <head th:include="~{fragments/header :: head}"></head>
-    <div th:replace="fragments/header :: nav" class="col-md-2"></div>
+    <head th:insert="~{fragments/header :: head}"></head>
+    <div th:replace="~{fragments/header :: nav}" class="col-md-2"></div>
 </head>
 <body>
 <div class="container-fluid">
     <div class="row">
-        <span th:replace="fragments/offcanvas :: offcanvas"></span>
+        <span th:replace="~{fragments/offcanvas :: offcanvas}"></span>
         <div class="col-md-10 offset-md-2">
             <div class="row">
                 <div class="col-md-8 ">
@@ -142,7 +142,7 @@
         </div>
     </div>
 </div>
-<div th:insert="fragments/footer :: footer"></div>
+<div th:insert="~{fragments/footer :: footer}"></div>
 <script src="js/auto-scroll-script.js"></script>
 <script src="js/datepicker-script.js"></script>
 </body>

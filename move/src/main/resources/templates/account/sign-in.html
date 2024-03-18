@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <head th:include="~{fragments/header :: head}"></head>
-    <div th:replace="fragments/header :: nav" class="col-md-2"></div>
+    <head th:insert="~{fragments/header :: head}"></head>
+    <div th:replace="~{fragments/header :: nav}" class="col-md-2"></div>
     <meta charset="UTF-8">
     <title>로그인</title>
 </head>
@@ -50,6 +50,6 @@
         </div>
     </div>
 </div>
-<div th:insert="fragments/footer :: footer"></div>
+<div th:insert="~{fragments/footer :: footer}"></div>
 </body>
 </html>

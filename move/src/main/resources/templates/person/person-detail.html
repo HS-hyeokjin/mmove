@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Movie Info</title>
-    <head th:include="fragments/header :: head"></head>
-    <div th:replace="fragments/header :: nav" class="col-md-2"></div>
-
+    <head th:include="~{fragments/header :: head}"></head>
+    <div th:replace="~{fragments/header :: nav}" class="col-md-2"></div>
 </head>
 <body>
 
 <div class="container-fluid">
     <div class="row">
-        <span th:replace="fragments/offcanvas :: offcanvas"></span>
+        <span th:replace="~{fragments/offcanvas :: offcanvas}"></span>
         <div class="col-md-10 offset-md-2">
             <br>
             <div class="row">
@@ -53,6 +52,6 @@
         </div>
     </div>
 </div>
-<div th:insert="fragments/footer :: footer"></div>
+<div th:insert="~{fragments/footer :: footer}"></div>
 </body>
 </html>

@@ -5,16 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Search List</title>
-    <head th:include="fragments/header :: head"></head>
-    <div th:replace="fragments/header :: nav" class="col-md-2"></div>
-
-
+    <head th:insert="~{fragments/header :: head}"></head>
+    <div th:replace="~{fragments/header :: nav}" class="col-md-2"></div>
 </head>
 
 <body>
 <div class="container-fluid">
     <div class="row">
-        <span th:replace="fragments/offcanvas :: offcanvas"></span>
+        <span th:replace="~{fragments/offcanvas :: offcanvas}"></span>
         <div class="col-md-9 offset-md-2 mt-5">
             <h2 class="text-center display-3">검색 결과</h2>
             <p class="mt-5">총 <span th:text="${movieSearchListResponseDto.movieListResult.totCnt}"></span>건</p>
@@ -71,6 +69,7 @@
         </div>
     </div>
 </div>
+<div th:insert="~{fragments/footer :: footer}"></div>
 </body>
 
 </html>
