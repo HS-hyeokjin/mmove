@@ -4,8 +4,8 @@ import com.move.move.adapter.DailyBoxOfficeAdapter;
 import com.move.move.adapter.MovieDetailAdapter;
 import com.move.move.dto.DailyBoxOfficeRequestDto;
 import com.move.move.dto.DailyBoxOfficeResponseDto;
-import com.move.move.exception.ApiRequestException;
 import com.move.move.service.DailyBoxOfficeService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -25,6 +25,7 @@ public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService {
         this.movieDetailAdapter = movieDetailAdapter;
     }
 
+    @Cacheable(value = "dailyBoxOfficeCache", key = "'daily' + #nationCd + #date")
     @Override
     public DailyBoxOfficeResponseDto getDailyBoxOffice(String nationCd, String date) {
         if (date == null) {
@@ -32,7 +33,8 @@ public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService {
         }
         DailyBoxOfficeRequestDto dailyBoxOfficeRequestDto = new DailyBoxOfficeRequestDto();
         dailyBoxOfficeRequestDto.setTargetDt(date);
-        dailyBoxOfficeRequestDto.setRepNationCd(nationCd);
+        if(!nationCd.equals("A")){
+        dailyBoxOfficeRequestDto.setRepNationCd(nationCd);}
         DailyBoxOfficeResponseDto dailyBoxOfficeData = dailyBoxOfficeAdapter.getDailyBoxOfficeData(dailyBoxOfficeRequestDto);
 
         List<DailyBoxOfficeResponseDto.DailyBoxOffice> dailyBoxOfficeList = dailyBoxOfficeData.getBoxOfficeResult().getDailyBoxOfficeList();

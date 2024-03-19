@@ -7,8 +7,8 @@ import com.move.move.dto.DailyBoxOfficeResponseDto;
 import com.move.move.exception.ApiRequestException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -32,6 +32,7 @@ public class DailyBoxOfficeAdapterImpl implements DailyBoxOfficeAdapter {
         this.restTemplate = restTemplate;
     }
 
+    @Cacheable(value = "dailyBoxOfficeCache", key = "#dailyBoxOfficeRequestDto.targetDt")
     @Override
     public DailyBoxOfficeResponseDto getDailyBoxOfficeData(DailyBoxOfficeRequestDto dailyBoxOfficeRequestDto) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)

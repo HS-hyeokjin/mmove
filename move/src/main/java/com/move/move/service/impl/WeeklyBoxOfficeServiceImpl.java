@@ -6,6 +6,7 @@ import com.move.move.dto.WeeklyBoxOfficeResponseDto;
 import com.move.move.exception.DateCalculationException;
 import com.move.move.service.WeeklyBoxOfficeService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.DateTimeException;
@@ -28,6 +29,7 @@ public class WeeklyBoxOfficeServiceImpl implements WeeklyBoxOfficeService {
         this.movieDetailAdapter = movieDetailAdapter;
     }
 
+    @Cacheable(value = "weeklyBoxOfficeCache", key = "'weekly' + #nationCd + #date")
     @Override
     public WeeklyBoxOfficeResponseDto getWeekBoxOffice(String date) {
         if(date == null){
@@ -75,9 +77,9 @@ public class WeeklyBoxOfficeServiceImpl implements WeeklyBoxOfficeService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
 
             return targetDate.format(formatter);
-        } catch (DateTimeException | NumberFormatException | StringIndexOutOfBoundsException e) {
+        } catch (DateTimeException | NumberFormatException | StringIndexOutOfBoundsException | NullPointerException e) {
             log.error("parseWeekData() 메서드 오류", e);
-            throw new DateCalculationException("주간date 파싱 실패", e);
+            throw new DateCalculationException("주간 date 파싱 실패", e);
         }
     }
 
