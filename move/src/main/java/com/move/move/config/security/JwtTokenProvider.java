@@ -30,11 +30,18 @@ public class JwtTokenProvider {
     private String secretKey;
     private final long tokenValidTime = 1000L * 60 * 30;
 
+    /**
+     * secretKey 인코딩 후 자동 초기화 메서드
+     */
     @PostConstruct
     protected void init(){
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
+    /**
+     * 토큰 생성 메서드
+     * payLoad : userId, Signature : HS256, Expiration : 1시간
+     */
     public String createToken(String userUid, List<String> roles){
         Claims claims = Jwts.claims().setSubject(userUid);
         claims.put("roles",roles);
@@ -48,16 +55,26 @@ public class JwtTokenProvider {
         return token;
     }
 
+    /**
+     * 사용자 인증 조회
+     */
     public Authentication getAuthentication(String token){
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUsername(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "",userDetails.getAuthorities());
     }
 
+    /**
+     * 토큰 디코딩 메서드
+     * userName 추출
+     */
     public String getUsername(String token){
         String info = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
         return info;
     }
 
+    /**
+     * 쿠키에서 토큰값 추출 메서드
+     */
     public String resolveToken(HttpServletRequest request){
         String tokenValue = request.getHeader("Authorization");
         if (tokenValue == null) {
@@ -75,6 +92,10 @@ public class JwtTokenProvider {
         return tokenValue;
     }
 
+    /**
+     * 토큰 유효기간 확인
+     * 유효기간 지났을 시 false
+     */
     public boolean validateToken(String token){
         try{
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);

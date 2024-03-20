@@ -33,8 +33,9 @@ public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService {
         }
         DailyBoxOfficeRequestDto dailyBoxOfficeRequestDto = new DailyBoxOfficeRequestDto();
         dailyBoxOfficeRequestDto.setTargetDt(date);
-        if(!nationCd.equals("A")){
-        dailyBoxOfficeRequestDto.setRepNationCd(nationCd);}
+        if (!nationCd.equals("A")) {
+            dailyBoxOfficeRequestDto.setRepNationCd(nationCd);
+        }
         DailyBoxOfficeResponseDto dailyBoxOfficeData = dailyBoxOfficeAdapter.getDailyBoxOfficeData(dailyBoxOfficeRequestDto);
 
         List<DailyBoxOfficeResponseDto.DailyBoxOffice> dailyBoxOfficeList = dailyBoxOfficeData.getBoxOfficeResult().getDailyBoxOfficeList();
