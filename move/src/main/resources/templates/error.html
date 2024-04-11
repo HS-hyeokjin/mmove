@@ -1,12 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Error</title>
+    <head th:insert="~{fragments/header :: head}"></head>
+    <div th:replace="~{fragments/header :: nav}" class="col-md-2"></div>
+    <title>Error</title>
+  <style>
+    .container {
+      margin-top: 100px;
+    }
+
+    h1 {
+      font-size: 60px;
+    }
+
+    p {
+      font-size: 24px;
+    }
+  </style>
 </head>
 <body>
-<h1>Error</h1>
-<p th:text="${errorMessage}"></p>
+<div class="container">
+  <h1>404</h1>
+  <p>죄송합니다. 페이지를 찾을 수 없습니다.</p>
+  <p th:text="${errorMessage}"></p>
+  <a href="#" onclick="history.back();" class="btn btn-primary">돌아가기</a>
+</div>
 </body>
 </html>
