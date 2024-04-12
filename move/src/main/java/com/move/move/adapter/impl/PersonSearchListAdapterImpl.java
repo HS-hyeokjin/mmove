@@ -18,10 +18,10 @@ import java.io.IOException;
 @Component
 public class PersonSearchListAdapterImpl implements PersonSearchListAdapter {
 
-    @Value("person-search-list.api.url")
+    @Value("${person-search-list.api.url}")
     private String url;
 
-    @Value("kofic.api.key")
+    @Value("${kofic.api.key}")
     private String apiKey;
 
     private final RestTemplate restTemplate;
@@ -32,13 +32,14 @@ public class PersonSearchListAdapterImpl implements PersonSearchListAdapter {
 
     @Override
     public PersonSearchListResponseDto getPersonSearchList(PersonSearchListRequestDto personSearchListRequestDto) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
-                .queryParam("key", apiKey)
-                .queryParam("peopleNm", personSearchListRequestDto.getPeopleNm())
-                .queryParam("filmoNames", personSearchListRequestDto.getFilmoNames());
+        String requestUrl = url +
+                "?key=" + apiKey +
+                "&peopleNm=" + personSearchListRequestDto.getPeopleNm() +
+                "&filmoNames=" + personSearchListRequestDto.getFilmoNames();
+
 
         ResponseEntity<String> responseEntity = restTemplate.exchange(
-                builder.toUriString(),
+                requestUrl,
                 HttpMethod.GET,
                 null,
                 String.class
@@ -49,6 +50,7 @@ public class PersonSearchListAdapterImpl implements PersonSearchListAdapter {
             try {
                 String responseBody = responseEntity.getBody();
                 PersonSearchListResponseDto personSearchListResponseDto = objectMapper.readValue(responseBody, PersonSearchListResponseDto.class);
+                System.out.println(personSearchListResponseDto.getPeopleListResult().getPeopleList().get(0).getPeopleNm());
                 return personSearchListResponseDto;
             } catch (IOException e) {
                 e.printStackTrace();
