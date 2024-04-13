@@ -10,34 +10,40 @@
 </head>
 
 <body>
-<h2>People Search</h2>
+<div class="container-fluid">
+    <div class="row">
+        <span th:replace="~{fragments/offcanvas :: offcanvas}"></span>
+        <div class="col-md-9 offset-md-2 mt-5">
+            <h2 class="text-center display-3">검색 결과</h2>
+            <p class="mt-5">총 <span th:text="${personSearchListResponseDto.peopleListResult.totCnt}"></span>건</p>
 
-<p>총 <span th:text="${personSearchListResponseDto.peopleListResult.totCnt}"></span> 건</p>
-
-<table border="1">
-    <thead>
-    <tr>
-        <th>People Code</th>
-        <th>People Name</th>
-        <th>English Name</th>
-        <th>Role</th>
-        <th>Filmo Names</th>
-        <th>Profile Image</th>
-    </tr>
-    </thead>
-    <tbody th:each="person : ${personSearchListResponseDto.peopleListResult.peopleList}">
-    <tr>
-        <td th:text="${person.peopleCd}"></td>
-        <td th:text="${person.peopleNm}"></td>
-        <td th:text="${person.peopleNmEn}"></td>
-        <td th:text="${person.repRoleNm}"></td>
-        <td th:text="${person.filmoNames}"></td>
-        <td>
-            <img th:if="${person.profileImg}" th:src="${person.profileImg}" alt="Profile Image" style="max-width: 50px; max-height: 50px;">
-        </td>
-    </tr>
-    </tbody>
-</table>
+                <table class="table table-striped table-bordered">
+                    <thead class="text-center table-active">
+                    <tr>
+                        <th th:width="75">프로필</th>
+                        <th th:width="75">이름</th>
+                        <th th:width="75">영문</th>
+                        <th th:width="75">직업</th>
+                        <th th:width="300">필모그래피</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="person : ${personSearchListResponseDto.peopleListResult.peopleList}">
+                    <tr>
+                        <td>
+                            <img th:if="${person.profileImg}"
+                                 th:src="${@environment.getProperty('tmdb.image.url.w780') + person.profileImg}"
+                                 class="img-fluid" style="max-width: 200px; max-height: 200px;">
+                        </td>
+                        <td th:text="${person.peopleNm}"></td>
+                        <td th:text="${person.peopleNmEn}"></td>
+                        <td th:text="${person.repRoleNm}"></td>
+                        <td th:text="${person.filmoNames}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>
