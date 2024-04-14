@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DailyBoxOfficeResponseDto {
+public class DailyBoxOfficeResponse {
 
     @JsonProperty("boxOfficeResult")
     private BoxOfficeResult boxOfficeResult;

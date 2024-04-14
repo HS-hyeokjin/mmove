@@ -2,8 +2,8 @@ package com.move.move.dailyboxoffice.adapter.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.move.move.dailyboxoffice.adapter.DailyBoxOfficeAdapter;
-import com.move.move.dailyboxoffice.dto.DailyBoxOfficeRequestDto;
-import com.move.move.dailyboxoffice.dto.DailyBoxOfficeResponseDto;
+import com.move.move.dailyboxoffice.dto.DailyBoxOfficeRequest;
+import com.move.move.dailyboxoffice.dto.DailyBoxOfficeResponse;
 import com.move.move.exception.ApiRequestException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,13 +32,13 @@ public class DailyBoxOfficeAdapterImpl implements DailyBoxOfficeAdapter {
         this.restTemplate = restTemplate;
     }
 
-    @Cacheable(value = "dailyBoxOfficeCache", key = "#dailyBoxOfficeRequestDto.targetDt")
+    @Cacheable(value = "dailyBoxOfficeCache", key = "#dailyBoxOfficeRequest.targetDt")
     @Override
-    public DailyBoxOfficeResponseDto getDailyBoxOfficeData(DailyBoxOfficeRequestDto dailyBoxOfficeRequestDto) {
+    public DailyBoxOfficeResponse getDailyBoxOfficeData(DailyBoxOfficeRequest dailyBoxOfficeRequest) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("key", apiKey)
-                .queryParam("targetDt", dailyBoxOfficeRequestDto.getTargetDt())
-                .queryParam("repNationCd", dailyBoxOfficeRequestDto.getRepNationCd());
+                .queryParam("targetDt", dailyBoxOfficeRequest.getTargetDt())
+                .queryParam("repNationCd", dailyBoxOfficeRequest.getRepNationCd());
         ResponseEntity<String> responseEntity = restTemplate.exchange(
                 builder.toUriString(),
                 HttpMethod.GET,
@@ -50,8 +50,8 @@ public class DailyBoxOfficeAdapterImpl implements DailyBoxOfficeAdapter {
             ObjectMapper objectMapper = new ObjectMapper();
             try {
                 String responseBody = responseEntity.getBody();
-                DailyBoxOfficeResponseDto dailyBoxOfficeResponseDto = objectMapper.readValue(responseBody, DailyBoxOfficeResponseDto.class);
-                return dailyBoxOfficeResponseDto;
+                DailyBoxOfficeResponse dailyBoxOfficeResponse = objectMapper.readValue(responseBody, DailyBoxOfficeResponse.class);
+                return dailyBoxOfficeResponse;
             } catch (IOException e) {
                 String errorMessage = "API 응답 매핑 실패: " + e.getMessage();
                 throw new ApiRequestException(errorMessage, e);

@@ -1,10 +1,10 @@
 package com.move.move.dailyboxoffice.adapter;
 
-import com.move.move.dailyboxoffice.dto.DailyBoxOfficeRequestDto;
-import com.move.move.dailyboxoffice.dto.DailyBoxOfficeResponseDto;
+import com.move.move.dailyboxoffice.dto.DailyBoxOfficeRequest;
+import com.move.move.dailyboxoffice.dto.DailyBoxOfficeResponse;
 
 public interface DailyBoxOfficeAdapter {
 
-    DailyBoxOfficeResponseDto getDailyBoxOfficeData(DailyBoxOfficeRequestDto dailyBoxOfficeRequestDto);
+    DailyBoxOfficeResponse getDailyBoxOfficeData(DailyBoxOfficeRequest dailyBoxOfficeRequest);
 
 }
