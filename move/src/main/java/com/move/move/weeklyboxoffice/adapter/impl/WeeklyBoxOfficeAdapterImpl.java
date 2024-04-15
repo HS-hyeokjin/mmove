@@ -6,7 +6,6 @@ import com.move.move.weeklyboxoffice.dto.WeeklyBoxOfficeResponse;
 import com.move.move.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -64,7 +63,7 @@ public class WeeklyBoxOfficeAdapterImpl implements WeeklyBoxOfficeAdapter {
      * @return WeeklyBoxOfficeResponseDto 객체
      */
     private WeeklyBoxOfficeResponse mapResponse(ResponseEntity<String> responseEntity) {
-        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
             ObjectMapper objectMapper = new ObjectMapper();
             try {
                 String responseBody = responseEntity.getBody();
