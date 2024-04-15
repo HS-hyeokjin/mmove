@@ -5,7 +5,6 @@ import com.move.move.dailyboxoffice.adapter.DailyBoxOfficeAdapter;
 import com.move.move.dailyboxoffice.dto.DailyBoxOfficeRequest;
 import com.move.move.dailyboxoffice.dto.DailyBoxOfficeResponse;
 import com.move.move.exception.ApiRequestException;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpMethod;
@@ -16,7 +15,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 
-@Slf4j
+/**
+ * kofic으로 일일 박스 오피스 데이터를 요청하기 위한 아답터
+ *
+ */
 @Component
 public class DailyBoxOfficeAdapterImpl implements DailyBoxOfficeAdapter {
 
@@ -32,6 +34,12 @@ public class DailyBoxOfficeAdapterImpl implements DailyBoxOfficeAdapter {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * 일일 박스 오피스 데이터를 요청하는 메서드
+     *
+     * @param dailyBoxOfficeRequest DailyBoxOfficeRequest 객체
+     * @return DailyBoxOfficeResponse 객체
+     */
     @Cacheable(value = "dailyBoxOfficeCache", key = "#dailyBoxOfficeRequest.targetDt")
     @Override
     public DailyBoxOfficeResponse getDailyBoxOfficeData(DailyBoxOfficeRequest dailyBoxOfficeRequest) {
@@ -39,6 +47,7 @@ public class DailyBoxOfficeAdapterImpl implements DailyBoxOfficeAdapter {
                 .queryParam("key", apiKey)
                 .queryParam("targetDt", dailyBoxOfficeRequest.getTargetDt())
                 .queryParam("repNationCd", dailyBoxOfficeRequest.getRepNationCd());
+
         ResponseEntity<String> responseEntity = restTemplate.exchange(
                 builder.toUriString(),
                 HttpMethod.GET,
@@ -46,12 +55,21 @@ public class DailyBoxOfficeAdapterImpl implements DailyBoxOfficeAdapter {
                 String.class
         );
 
+        return mapResponse(responseEntity);
+    }
+
+    /**
+     * HTTP 응답을 DailyBoxOfficeResponse 으로 매핑
+     *
+     * @param responseEntity ResponseEntity 객체
+     * @return DailyBoxOfficeResponse 객체
+     */
+    private DailyBoxOfficeResponse mapResponse(ResponseEntity<String> responseEntity) {
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
             ObjectMapper objectMapper = new ObjectMapper();
             try {
                 String responseBody = responseEntity.getBody();
-                DailyBoxOfficeResponse dailyBoxOfficeResponse = objectMapper.readValue(responseBody, DailyBoxOfficeResponse.class);
-                return dailyBoxOfficeResponse;
+                return objectMapper.readValue(responseBody, DailyBoxOfficeResponse.class);
             } catch (IOException e) {
                 String errorMessage = "API 응답 매핑 실패: " + e.getMessage();
                 throw new ApiRequestException(errorMessage, e);

@@ -5,14 +5,11 @@ import com.move.move.movieinfo.adapter.MovieDetailAdapter;
 import com.move.move.dailyboxoffice.dto.DailyBoxOfficeRequest;
 import com.move.move.dailyboxoffice.dto.DailyBoxOfficeResponse;
 import com.move.move.dailyboxoffice.service.DailyBoxOfficeService;
+import com.move.move.utill.DateUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService {
@@ -28,16 +25,21 @@ public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService {
     @Cacheable(value = "dailyBoxOfficeCache", key = "'daily' + #nationCd + #date")
     @Override
     public DailyBoxOfficeResponse getDailyBoxOffice(String nationCd, String date) {
+
+        DateUtils.validDate(date);
+
         if (date == null) {
-            date = yesterdayStringDate();
+            date = DateUtils.yesterdayStringDate();
         }
+
         DailyBoxOfficeRequest dailyBoxOfficeRequest = new DailyBoxOfficeRequest();
         dailyBoxOfficeRequest.setTargetDt(date);
+
         if (!nationCd.equals("A")) {
             dailyBoxOfficeRequest.setRepNationCd(nationCd);
         }
-        DailyBoxOfficeResponse dailyBoxOfficeData = dailyBoxOfficeAdapter.getDailyBoxOfficeData(dailyBoxOfficeRequest);
 
+        DailyBoxOfficeResponse dailyBoxOfficeData = dailyBoxOfficeAdapter.getDailyBoxOfficeData(dailyBoxOfficeRequest);
         updateMoviePosters(dailyBoxOfficeData);
 
         return dailyBoxOfficeData;
@@ -51,12 +53,5 @@ public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService {
             dailyBoxOffice.setImageUrl(posterUrl);
         }
     }
-
-    private String yesterdayStringDate() {
-        LocalDate date = LocalDate.now().minusDays(1);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        String formattedDate = date.format(formatter);
-        return Stream.of(formattedDate)
-                .collect(Collectors.joining());
-    }
 }
+
