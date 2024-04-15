@@ -1,8 +1,9 @@
 package com.move.move.weeklyboxoffice.service.impl;
 
 import com.move.move.movieinfo.adapter.MovieDetailAdapter;
+import com.move.move.utill.DateUtils;
 import com.move.move.weeklyboxoffice.adapter.WeeklyBoxOfficeAdapter;
-import com.move.move.weeklyboxoffice.dto.WeeklyBoxOfficeResponseDto;
+import com.move.move.weeklyboxoffice.dto.WeeklyBoxOfficeResponse;
 import com.move.move.exception.DateCalculationException;
 import com.move.move.weeklyboxoffice.service.WeeklyBoxOfficeService;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +15,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-@Slf4j
+/**
+ * 주간 박스 오피스 서비스를 구현하는 클래스
+ */
 @Service
 public class WeeklyBoxOfficeServiceImpl implements WeeklyBoxOfficeService {
 
@@ -27,58 +30,44 @@ public class WeeklyBoxOfficeServiceImpl implements WeeklyBoxOfficeService {
         this.movieDetailAdapter = movieDetailAdapter;
     }
 
+    /**
+     * 주간 박스 오피스 데이터를 가져오는 메서드
+     * @param date 조회하려는 날짜를 나타내는 문자열
+     * @return WeeklyBoxOfficeResponse 객체
+     */
     @Cacheable(value = "weeklyBoxOfficeCache", key = "'weekly' + #nationCd + #date")
     @Override
-    public WeeklyBoxOfficeResponseDto getWeekBoxOffice(String date) {
-        if(date == null){
-            date = before7days();
+    public WeeklyBoxOfficeResponse getWeekBoxOffice(String date) {
+        if (date == null) {
+            date = DateUtils.lastWeekStringDate();
         }
 
-        WeeklyBoxOfficeResponseDto weeklyBoxOfficeData = weeklyBoxOfficeAdapter.getWeekBoxOffice(date);
-
-        List<WeeklyBoxOfficeResponseDto.WeeklyBoxOffice> weeklyBoxOfficeList = weeklyBoxOfficeData.getBoxOfficeResult().getWeeklyBoxOfficeList();
-        for (WeeklyBoxOfficeResponseDto.WeeklyBoxOffice weeklyBoxOffice : weeklyBoxOfficeList) {
-            String movieTitle = weeklyBoxOffice.getMovieNm();
-
-            String posterUrl = movieDetailAdapter.searchMoviePoster(movieTitle);
-            weeklyBoxOffice.setImageUrl(posterUrl);
-        }
-
-        String parsedWeekDate= parseWeekData(weeklyBoxOfficeData.getBoxOfficeResult().getYearWeekTime());
-        weeklyBoxOfficeData.getBoxOfficeResult().setYearWeekTime(parsedWeekDate);
+        WeeklyBoxOfficeResponse weeklyBoxOfficeData = weeklyBoxOfficeAdapter.getWeekBoxOffice(date);
+        updateMoviePosters(weeklyBoxOfficeData);
+        parseWeekDate(weeklyBoxOfficeData);
 
         return weeklyBoxOfficeData;
     }
 
-    private String before7days() {
-        try {
-            LocalDate date = LocalDate.now().minusDays(7);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-            return date.format(formatter);
-        } catch (DateTimeException e) {
-            log.error("before7days() 메서드 오류", e);
-            throw new DateCalculationException("7일 전 데이터 오류", e);
+    /**
+     * 주간 박스 오피스 응답에서 영화 포스터 URL을 업데이트하는 메서드
+     * @param weeklyBoxOfficeData WeeklyBoxOfficeResponse 객체
+     */
+    private void updateMoviePosters(WeeklyBoxOfficeResponse weeklyBoxOfficeData) {
+        List<WeeklyBoxOfficeResponse.WeeklyBoxOffice> weeklyBoxOfficeList = weeklyBoxOfficeData.getBoxOfficeResult().getWeeklyBoxOfficeList();
+        for (WeeklyBoxOfficeResponse.WeeklyBoxOffice weeklyBoxOffice : weeklyBoxOfficeList) {
+            String movieTitle = weeklyBoxOffice.getMovieNm();
+            String posterUrl = movieDetailAdapter.searchMoviePoster(movieTitle);
+            weeklyBoxOffice.setImageUrl(posterUrl);
         }
     }
 
-    private String parseWeekData(String weekData) {
-        try {
-            String yearStr = weekData.substring(0, 4);
-            String weekNumberStr = weekData.substring(4);
-
-            int year = Integer.parseInt(yearStr);
-            int weekNumber = Integer.parseInt(weekNumberStr);
-
-            LocalDate januaryFirst = LocalDate.of(year, 1, 1);
-            LocalDate targetDate = januaryFirst.plusWeeks(weekNumber - 1);
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
-
-            return targetDate.format(formatter);
-        } catch (DateTimeException | NumberFormatException | StringIndexOutOfBoundsException | NullPointerException e) {
-            log.error("parseWeekData() 메서드 오류", e);
-            throw new DateCalculationException("주간 date 파싱 실패", e);
-        }
+    /**
+     * 주간 박스 오피스 주간 날짜를 파싱하는 메서드
+     * @param weeklyBoxOfficeData WeeklyBoxOfficeResponse 객체
+     */
+    private void parseWeekDate(WeeklyBoxOfficeResponse weeklyBoxOfficeData) {
+        String parsedWeekDate = DateUtils.parseWeekDate(weeklyBoxOfficeData.getBoxOfficeResult().getYearWeekTime());
+        weeklyBoxOfficeData.getBoxOfficeResult().setYearWeekTime(parsedWeekDate);
     }
-
 }

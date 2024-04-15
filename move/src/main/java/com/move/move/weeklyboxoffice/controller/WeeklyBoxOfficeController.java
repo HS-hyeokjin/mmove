@@ -1,6 +1,6 @@
 package com.move.move.weeklyboxoffice.controller;
 
-import com.move.move.weeklyboxoffice.dto.WeeklyBoxOfficeResponseDto;
+import com.move.move.weeklyboxoffice.dto.WeeklyBoxOfficeResponse;
 import com.move.move.weeklyboxoffice.service.WeeklyBoxOfficeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +18,7 @@ public class WeeklyBoxOfficeController {
 
     @GetMapping("/weekly-box-office")
     public String getWeeklyBoxOffice(Model model, @RequestParam(required = false) String date) {
-        WeeklyBoxOfficeResponseDto weeklyBoxOfficeData = weeklyBoxOfficeService.getWeekBoxOffice(date);
+        WeeklyBoxOfficeResponse weeklyBoxOfficeData = weeklyBoxOfficeService.getWeekBoxOffice(date);
         model.addAttribute("weeklyBoxOfficeData", weeklyBoxOfficeData);
         return "box-office/weekly-box-office";
     }

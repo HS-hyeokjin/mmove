@@ -1,9 +1,9 @@
 package com.move.move.weeklyboxoffice.adapter;
 
-import com.move.move.weeklyboxoffice.dto.WeeklyBoxOfficeResponseDto;
+import com.move.move.weeklyboxoffice.dto.WeeklyBoxOfficeResponse;
 
 public interface WeeklyBoxOfficeAdapter {
 
-    WeeklyBoxOfficeResponseDto getWeekBoxOffice(String date);
+    WeeklyBoxOfficeResponse getWeekBoxOffice(String date);
 
 }
