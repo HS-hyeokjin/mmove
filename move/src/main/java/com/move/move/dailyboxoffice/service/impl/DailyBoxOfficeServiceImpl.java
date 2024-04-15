@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * 일일 박스 오피스 서비스
+ */
 @Service
 public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService {
 
@@ -22,19 +25,23 @@ public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService {
         this.movieDetailAdapter = movieDetailAdapter;
     }
 
+    /**
+     * 일일 박스 오피스 데이터를 가져오는 메서드
+     *
+     * @param nationCd 국가 코드
+     * @param date     조회할 날짜
+     * @return DailyBoxOfficeResponse 객체
+     */
     @Cacheable(value = "dailyBoxOfficeCache", key = "'daily' + #nationCd + #date")
     @Override
     public DailyBoxOfficeResponse getDailyBoxOffice(String nationCd, String date) {
 
         DateUtils.validDate(date);
 
-        if (date == null) {
-            date = DateUtils.yesterdayStringDate();
-        }
+        if (date == null) {date = DateUtils.yesterdayStringDate();}
 
         DailyBoxOfficeRequest dailyBoxOfficeRequest = new DailyBoxOfficeRequest();
         dailyBoxOfficeRequest.setTargetDt(date);
-
         if (!nationCd.equals("A")) {
             dailyBoxOfficeRequest.setRepNationCd(nationCd);
         }
@@ -45,6 +52,11 @@ public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService {
         return dailyBoxOfficeData;
     }
 
+    /**
+     * 영화 포스터 URL을 업데이트하는 메서드
+     *
+     * @param dailyBoxOfficeData DailyBoxOfficeResponse 객체
+     */
     private void updateMoviePosters(DailyBoxOfficeResponse dailyBoxOfficeData) {
         List<DailyBoxOfficeResponse.DailyBoxOffice> dailyBoxOfficeList = dailyBoxOfficeData.getBoxOfficeResult().getDailyBoxOfficeList();
         for (DailyBoxOfficeResponse.DailyBoxOffice dailyBoxOffice : dailyBoxOfficeList) {
