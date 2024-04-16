@@ -1,7 +1,7 @@
 package com.move.move.movieinfo.controller;
 
 import com.move.move.movieinfo.dto.MovieInfoResponseDto;
-import com.move.move.review.dto.ReviewResponseDto;
+import com.move.move.review.dto.ReviewResponse;
 import com.move.move.movieinfo.service.MovieInfoService;
 import com.move.move.review.service.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +28,7 @@ public class MovieInfoController {
     @GetMapping("/movie-info/{movieCode}")
     public String getMovieInfo(@PathVariable String movieCode, Model model) {
         MovieInfoResponseDto movieInfo = movieInfoService.getMovieInfo(movieCode);
-        List<ReviewResponseDto> reviews = reviewService.getReview(movieCode);
+        List<ReviewResponse> reviews = reviewService.getReview(movieCode);
         model.addAttribute("movieInfoData", movieInfo);
         model.addAttribute("reviews",reviews);
         return "movie/movie-info";
