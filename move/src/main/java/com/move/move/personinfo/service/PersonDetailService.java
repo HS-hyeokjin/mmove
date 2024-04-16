@@ -1,10 +1,10 @@
 package com.move.move.personinfo.service;
 
-import com.move.move.personinfo.dto.PersonDetailResponseDto;
+import com.move.move.personinfo.dto.PersonDetailResponse;
 
 public interface PersonDetailService {
 
-    PersonDetailResponseDto getPersonDetail(String personCode);
+    PersonDetailResponse getPersonDetail(String personCode);
 
 
 }

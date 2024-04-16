@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PersonDetailRequestDto {
+public class PersonDetailRequest {
     String personEnNm;
 }

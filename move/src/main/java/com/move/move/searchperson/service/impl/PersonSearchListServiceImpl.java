@@ -2,8 +2,8 @@ package com.move.move.searchperson.service.impl;
 
 import com.move.move.personinfo.adapter.PersonDetailAdapter;
 import com.move.move.searchperson.adapter.PersonSearchListAdapter;
-import com.move.move.personinfo.dto.PersonDetailRequestDto;
-import com.move.move.personinfo.dto.PersonDetailResponseDto;
+import com.move.move.personinfo.dto.PersonDetailRequest;
+import com.move.move.personinfo.dto.PersonDetailResponse;
 import com.move.move.searchperson.dto.PersonSearchListRequestDto;
 import com.move.move.searchperson.dto.PersonSearchListResponseDto;
 import com.move.move.searchperson.service.PersonSearchListService;
@@ -28,12 +28,12 @@ public class PersonSearchListServiceImpl implements PersonSearchListService {
         PersonSearchListResponseDto personSearchListResponseDto = personSearchListAdapter.getPersonSearchList(personSearchListRequestDto);
 
         for (PersonSearchListResponseDto.PeopleDto person : personSearchListResponseDto.getPeopleListResult().getPeopleList()) {
-            PersonDetailRequestDto personDetailRequestDto = new PersonDetailRequestDto();
-            personDetailRequestDto.setPersonEnNm(person.getPeopleNmEn());
-            PersonDetailResponseDto personDetailResponseDto = personDetailAdapter.getPersonDetail(personDetailRequestDto);
+            PersonDetailRequest personDetailRequest = new PersonDetailRequest();
+            personDetailRequest.setPersonEnNm(person.getPeopleNmEn());
+            PersonDetailResponse personDetailResponse = personDetailAdapter.getPersonDetail(personDetailRequest);
 
-            if (personDetailResponseDto != null) {
-                person.setProfileImg(personDetailResponseDto.getPersonDetailResultDto().getProfilePath());
+            if (personDetailResponse != null) {
+                person.setProfileImg(personDetailResponse.getPersonDetailResult().getProfilePath());
             }
         }
         return personSearchListResponseDto;

@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PersonDetailResponseDto {
+public class PersonDetailResponse {
 
-    private PersonDetailResultDto personDetailResultDto;
+    private PersonDetailResult personDetailResult;
 }

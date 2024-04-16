@@ -1,6 +1,6 @@
 package com.move.move.personinfo.controller;
 
-import com.move.move.personinfo.dto.PersonDetailResponseDto;
+import com.move.move.personinfo.dto.PersonDetailResponse;
 import com.move.move.personinfo.service.PersonDetailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +18,8 @@ public class PersonDetailController {
 
     @GetMapping("/person-detail/{personName}")
     public String personDetail(@PathVariable String personName, Model model){
-        PersonDetailResponseDto personDetailResponseDto = personDetailService.getPersonDetail(personName);
-        model.addAttribute("personDetailData", personDetailResponseDto);
+        PersonDetailResponse personDetailResponse = personDetailService.getPersonDetail(personName);
+        model.addAttribute("personDetailData", personDetailResponse);
         return "person/person-detail";
     }
 

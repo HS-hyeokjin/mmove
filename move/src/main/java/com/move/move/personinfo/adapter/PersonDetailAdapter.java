@@ -1,11 +1,11 @@
 package com.move.move.personinfo.adapter;
 
-import com.move.move.personinfo.dto.PersonDetailRequestDto;
-import com.move.move.personinfo.dto.PersonDetailResponseDto;
+import com.move.move.personinfo.dto.PersonDetailRequest;
+import com.move.move.personinfo.dto.PersonDetailResponse;
 
 public interface PersonDetailAdapter {
 
-    PersonDetailResponseDto getPersonDetail(PersonDetailRequestDto personDetailRequestDto);
+    PersonDetailResponse getPersonDetail(PersonDetailRequest personDetailRequest);
 
     String personImageUrl(String personName);
 

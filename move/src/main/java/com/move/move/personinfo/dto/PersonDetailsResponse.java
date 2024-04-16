@@ -6,10 +6,10 @@ import java.util.List;
 
 @Getter
 @Setter
-public class PersonDetailsResponseDto {
+public class PersonDetailsResponse {
 
 
-    private List<PersonDetailResultDto> results;
+    private List<PersonDetailResult> results;
 
 
 }
