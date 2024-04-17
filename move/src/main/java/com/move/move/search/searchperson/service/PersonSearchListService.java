@@ -1,6 +1,6 @@
-package com.move.move.searchperson.service;
+package com.move.move.search.searchperson.service;
 
-import com.move.move.searchperson.dto.PersonSearchListResponseDto;
+import com.move.move.search.searchperson.dto.PersonSearchListResponseDto;
 
 public interface PersonSearchListService {
 

@@ -1,9 +1,9 @@
-package com.move.move.searchperson.adapter.impl;
+package com.move.move.search.searchperson.adapter.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.move.move.searchperson.adapter.PersonSearchListAdapter;
-import com.move.move.searchperson.dto.PersonSearchListRequestDto;
-import com.move.move.searchperson.dto.PersonSearchListResponseDto;
+import com.move.move.search.searchperson.adapter.PersonSearchListAdapter;
+import com.move.move.search.searchperson.dto.PersonSearchListRequest;
+import com.move.move.search.searchperson.dto.PersonSearchListResponseDto;
 import com.move.move.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -14,6 +14,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 
+/**
+ * 영화인 검색을 위한 어댑터
+ */
 @Component
 public class PersonSearchListAdapterImpl implements PersonSearchListAdapter {
 
@@ -30,11 +33,11 @@ public class PersonSearchListAdapterImpl implements PersonSearchListAdapter {
     }
 
     @Override
-    public PersonSearchListResponseDto getPersonSearchList(PersonSearchListRequestDto personSearchListRequestDto) {
+    public PersonSearchListResponseDto getPersonSearchList(PersonSearchListRequest personSearchListRequest) {
         String requestUrl = url +
                 "?key=" + apiKey +
-                "&peopleNm=" + personSearchListRequestDto.getPeopleNm() +
-                "&filmoNames=" + personSearchListRequestDto.getFilmoNames();
+                "&peopleNm=" + personSearchListRequest.getPeopleNm() +
+                "&filmoNames=" + personSearchListRequest.getFilmoNames();
 
 
         ResponseEntity<String> responseEntity = restTemplate.exchange(

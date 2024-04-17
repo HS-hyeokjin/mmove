@@ -1,7 +1,6 @@
-package com.move.move.searchmovie.dto;
+package com.move.move.search.searchmovie.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MovieSearchListResponseDto {
+public class MovieSearchListResponse {
 
     private MovieListResult movieListResult;
 

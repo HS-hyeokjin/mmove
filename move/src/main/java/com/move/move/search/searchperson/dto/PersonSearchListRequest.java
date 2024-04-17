@@ -1,11 +1,11 @@
-package com.move.move.searchperson.dto;
+package com.move.move.search.searchperson.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class PersonSearchListRequestDto {
+public class PersonSearchListRequest {
 
     private String key;
 

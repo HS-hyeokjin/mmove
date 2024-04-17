@@ -1,7 +1,7 @@
-package com.move.move.searchperson.controller;
+package com.move.move.search.searchperson.controller;
 
-import com.move.move.searchperson.dto.PersonSearchListResponseDto;
-import com.move.move.searchperson.service.PersonSearchListService;
+import com.move.move.search.searchperson.dto.PersonSearchListResponseDto;
+import com.move.move.search.searchperson.service.PersonSearchListService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
