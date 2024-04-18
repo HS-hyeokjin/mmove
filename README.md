@@ -7,7 +7,7 @@
 
 대한민국 박스 오피스 일별 데이터 통계 및 최신 영화 순위를 확인 할 수 있는 MMOVE 웹사이트 프로젝트입니다.
 <p align="center">
-    <img width="500" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/37c62a20-5f33-4611-b5a8-c3bacb6c4ccd"/>
+    <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/37c62a20-5f33-4611-b5a8-c3bacb6c4ccd"/>
 </p>
 
 
@@ -51,7 +51,11 @@ kofic(영화진흥위원회)와 TMDB(The Movie Database)에서 제공하는 API�
 
 ## 주요 기능(설계)
 
-### 일간 박스오피스 설계
+### 일간 박스오피스
+
+<p align="center">
+    <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/36b282b5-cece-4e59-b61a-ec333b818492"/>
+</p>
 
 ```java
     public DailyBoxOfficeResponseDto getDailyBoxOffice(String nationCd, String date) {
