@@ -32,10 +32,9 @@ public class DailyBoxOfficeServiceImpl implements DailyBoxOfficeService {
      * @param date     조회할 날짜
      * @return DailyBoxOfficeResponse 객체
      */
-    @Cacheable(value = "dailyBoxOfficeCache", key = "'daily' + #nationCd + #date")
+    @Cacheable(value = "dailyBoxOfficeServiceCache", key = "'daily' + #nationCd + #date")
     @Override
     public DailyBoxOfficeResponse getDailyBoxOffice(String nationCd, String date) {
-
         DateUtils.validDate(date);
 
         if (date == null) {date = DateUtils.yesterdayStringDate();}

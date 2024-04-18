@@ -15,7 +15,7 @@ public class CacheConfig {
     @Bean
     public CacheManager cacheManager() {
         ConcurrentMapCacheManager cacheManager = new ConcurrentMapCacheManager();
-        cacheManager.setCacheNames(List.of("dailyBoxOfficeCache", "weeklyBoxOfficeCache"));
+        cacheManager.setCacheNames(List.of("dailyBoxOfficeServiceCache","weeklyBoxOfficeCache"));
         return cacheManager;
     }
 }

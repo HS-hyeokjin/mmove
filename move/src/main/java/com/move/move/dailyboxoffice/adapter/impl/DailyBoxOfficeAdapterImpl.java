@@ -40,7 +40,6 @@ public class DailyBoxOfficeAdapterImpl implements DailyBoxOfficeAdapter {
      * @param dailyBoxOfficeRequest DailyBoxOfficeRequest 객체
      * @return DailyBoxOfficeResponse 객체
      */
-    @Cacheable(value = "dailyBoxOfficeCache", key = "#dailyBoxOfficeRequest.targetDt")
     @Override
     public DailyBoxOfficeResponse getDailyBoxOfficeData(DailyBoxOfficeRequest dailyBoxOfficeRequest) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
