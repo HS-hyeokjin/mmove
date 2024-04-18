@@ -6,8 +6,10 @@
 ## 프로젝트 - MMOVE
 
 대한민국 박스 오피스 일별 데이터 통계 및 최신 영화 순위를 확인 할 수 있는 MMOVE 웹사이트 프로젝트입니다.
+<p align="center">
+    <img width="500" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/37c62a20-5f33-4611-b5a8-c3bacb6c4ccd"/>
+</p>
 
-![캡처.JPG](0%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3%20%E1%84%80%E1%85%A2%E1%84%8B%E1%85%AD%200a46d35f009e439fb5ad81caedb0d5ae/%25EC%25BA%25A1%25EC%25B2%2598.jpg)
 
 ### 프로젝트 개요
 
