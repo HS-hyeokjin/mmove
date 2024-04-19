@@ -1,10 +1,10 @@
 package com.move.move.account.service;
 
-import com.move.move.account.dto.SignResponseDto;
+import com.move.move.account.dto.SignResponse;
 
 public interface AccountService {
 
-    SignResponseDto signUp(String id, String password, String name, String role);
+    SignResponse signUp(String id, String password, String name, String role);
 
-    SignResponseDto signIn(String id, String password) throws RuntimeException;
+    SignResponse signIn(String id, String password) throws RuntimeException;
 }

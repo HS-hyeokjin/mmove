@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SignResponseDto {
+public class SignResponse {
 
     private boolean success;
 
@@ -18,7 +18,7 @@ public class SignResponseDto {
     private Cookie cookie;
 
     @Builder
-    public SignResponseDto(boolean success,Cookie cookie ,String msg){
+    public SignResponse(boolean success, Cookie cookie , String msg){
         this.success = success;
         this.cookie = cookie;
         this.msg = msg;

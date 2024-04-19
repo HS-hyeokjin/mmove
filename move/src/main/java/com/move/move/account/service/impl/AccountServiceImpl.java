@@ -1,12 +1,13 @@
 package com.move.move.account.service.impl;
 
 import com.move.move.config.security.JwtTokenProvider;
-import com.move.move.account.dto.SignResponseDto;
+import com.move.move.account.dto.SignResponse;
 import com.move.move.account.entity.User;
 import com.move.move.exception.DuplicateIdException;
 import com.move.move.account.repository.UserRepository;
 import com.move.move.account.service.AccountService;
 import jakarta.servlet.http.Cookie;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +17,9 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 계정 인증 서비스 구현체
+ */
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -30,14 +34,42 @@ public class AccountServiceImpl implements AccountService {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
+    /**
+     * 사용자 등록 메서드
+     *
+     * @param id       사용자 아이디
+     * @param password 사용자 비밀번호
+     * @param name     사용자 이름
+     * @param role     사용자 권한
+     * @return 가입 응답 객체
+     */
     @Override
-    public SignResponseDto signUp(String id, String password, String name, String role) {
+    @Transactional
+    public SignResponse signUp(String id, String password, String name, String role) {
         validateUniqueUserId(id);
 
         User user = createUser(id, password, name, role);
         User savedUser = userRepository.save(user);
 
         return buildSignUpResponse(savedUser);
+    }
+
+    /**
+     * 사용자 로그인 메서드
+     *
+     * @param id       사용자 아이디
+     * @param password 사용자 비밀번호
+     * @return 로그인 응답 객체
+     * @throws RuntimeException 인증 예외 발생 시
+     */
+    @Override
+    @Transactional
+    public SignResponse signIn(String id, String password) throws RuntimeException {
+        User user = findUserById(id);
+        validateUserPassword(user, password);
+        Cookie cookie = createAuthorizationCookie(user);
+
+        return buildSignInResponse(cookie);
     }
 
     private void validateUniqueUserId(String id) {
@@ -57,19 +89,10 @@ public class AccountServiceImpl implements AccountService {
                 .build();
     }
 
-    private SignResponseDto buildSignUpResponse(User savedUser) {
-        SignResponseDto signResponseDto = new SignResponseDto();
-        signResponseDto.setSuccess(!savedUser.getName().isEmpty());
-        return signResponseDto;
-    }
-
-    @Override
-    public SignResponseDto signIn(String id, String password) throws RuntimeException {
-        User user = findUserById(id);
-        validateUserPassword(user, password);
-        Cookie cookie = createAuthorizationCookie(user);
-
-        return buildSignInResponse(cookie);
+    private SignResponse buildSignUpResponse(User savedUser) {
+        SignResponse signResponse = new SignResponse();
+        signResponse.setSuccess(!savedUser.getName().isEmpty());
+        return signResponse;
     }
 
     private User findUserById(String id) {
@@ -97,8 +120,8 @@ public class AccountServiceImpl implements AccountService {
         return cookie;
     }
 
-    private SignResponseDto buildSignInResponse(Cookie cookie) {
-        return SignResponseDto.builder()
+    private SignResponse buildSignInResponse(Cookie cookie) {
+        return SignResponse.builder()
                 .success(true)
                 .cookie(cookie)
                 .build();
