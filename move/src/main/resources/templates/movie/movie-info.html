@@ -95,11 +95,11 @@
                             <div class="form-group">
                                 <label>평점</label>
                                 <div class="rating">
-                                    <span class="star" data-value="1">&#9733;</span>
-                                    <span class="star" data-value="2">&#9733;</span>
-                                    <span class="star" data-value="3">&#9733;</span>
-                                    <span class="star" data-value="4">&#9733;</span>
                                     <span class="star" data-value="5">&#9733;</span>
+                                    <span class="star" data-value="4">&#9733;</span>
+                                    <span class="star" data-value="3">&#9733;</span>
+                                    <span class="star" data-value="2">&#9733;</span>
+                                    <span class="star" data-value="1">&#9733;</span>
                                 </div>
                                 <input type="hidden" id="rating" name="rating" value="0">
                             </div>
@@ -124,7 +124,7 @@
                 const value = parseInt(this.getAttribute("data-value"));
                 ratingInput.value = value;
                 stars.forEach(function (s) {
-                    if (parseInt(s.getAttribute("data-value")) >= value) {
+                    if (parseInt(s.getAttribute("data-value")) <= value) {
                         s.classList.add("selected");
                     } else {
                         s.classList.remove("selected");
