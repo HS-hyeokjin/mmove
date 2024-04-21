@@ -2,6 +2,8 @@ package com.move.move.account.contoller;
 
 import com.move.move.account.dto.SignResponse;
 import com.move.move.account.service.AccountService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,4 +36,18 @@ public class SignInController {
             return "account/sign-in";
         }
     }
+
+    @GetMapping("/sign-out")
+    public String signOut(HttpServletRequest request, HttpServletResponse response) {
+        request.getSession().invalidate();
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+            }
+        }
+        return "redirect:/account/sign-in";
+    }
 }
+
