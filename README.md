@@ -1,13 +1,13 @@
 # 0. 프로젝트 개요
 
-생성자: 혁진 김
-생성 일시: 2024년 2월 27일 오후 4:26
-
 ## 프로젝트 - MMOVE
 
 대한민국 박스 오피스 일별 데이터 통계 및 최신 영화 순위를 확인 할 수 있는 MMOVE 웹사이트 프로젝트입니다.
 
-![캡처.JPG](0%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3%20%E1%84%80%E1%85%A2%E1%84%8B%E1%85%AD%200a46d35f009e439fb5ad81caedb0d5ae/%25EC%25BA%25A1%25EC%25B2%2598.jpg)
+<p align="center">
+    <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/37c62a20-5f33-4611-b5a8-c3bacb6c4ccd"/>
+</p>
+
 
 ### 프로젝트 개요
 
@@ -49,36 +49,55 @@ kofic(영화진흥위원회)와 TMDB(The Movie Database)에서 제공하는 API�
 
 ## 주요 기능(설계)
 
-### 일간 박스오피스 설계
+### 일간 박스오피스
 
-```java
-    public DailyBoxOfficeResponseDto getDailyBoxOffice(String nationCd, String date) {
-        if (date == null) {
-            date = yesterdayStringDate();
-        }
-        DailyBoxOfficeRequestDto dailyBoxOfficeRequestDto = new DailyBoxOfficeRequestDto();
-        dailyBoxOfficeRequestDto.setTargetDt(date);
-        if (!nationCd.equals("A")) {
-            dailyBoxOfficeRequestDto.setRepNationCd(nationCd);
-        }
-        DailyBoxOfficeResponseDto dailyBoxOfficeData = dailyBoxOfficeAdapter.getDailyBoxOfficeData(dailyBoxOfficeRequestDto);
+<p align="center">
+    <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/36b282b5-cece-4e59-b61a-ec333b818492"/>
+</p>
 
-        List<DailyBoxOfficeResponseDto.DailyBoxOffice> dailyBoxOfficeList = dailyBoxOfficeData.getBoxOfficeResult().getDailyBoxOfficeList();
-        for (DailyBoxOfficeResponseDto.DailyBoxOffice dailyBoxOffice : dailyBoxOfficeList) {
-            String movieTitle = dailyBoxOffice.getMovieNm();
-            String posterUrl = movieDetailAdapter.searchMoviePoster(movieTitle);
-            dailyBoxOffice.setImageUrl(posterUrl);
-        }
-        return dailyBoxOfficeData;
-    }
-```
 
-일간 박스 오피스 서비스는 국가코드와 날짜 정보를 받습니다.. 세번의 실행으로 각 각 전체, 한국, 외국 순으로 선택된 날짜에 박스오피스 정보를  kofic.api 서버에서 가져옵니다. 가져온 데이터 정보와 tmdb에서 가져온 데이터 정보를 각 각 매핑해주고 리턴해주는 서비스를 구현합니다.
+일간 박스 오피스 서비스는 국가코드와 날짜 정보를 이용해서 세번의 실행으로 각 각 전체, 한국, 외국 순으로 선택된 날짜에 박스오피스 정보를  kofic.api 서버에서 가져옵니다. 가져온 데이터 정보와 tmdb에서 가져온 데이터 정보를 각 각 매핑해주고 클라이언트에게 보여주는 서비스를 구현합니다.
 
-클라이언트에서 날짜별 요청을 위해 날짜 api를 활용하여 날짜 데이터를 넘겨준다.
+[날짜별 조회 gif]
 
-많은 고민을 했다 상단 네브바로 만들지 사이드바로 만들지 offcanvas 로 만들지
+여기서 일별 조회를 위해 캘린더 기능을 사용했으며, 클라이언트에서 날짜별 요청을 위해 날짜 api를 활용하여 날짜 데이터를 넘겨준다.
 
-기능적으로는 위에 설명을 추가 할 수 있으며 디자인적으로는 비교적 깔끔한 offcanvas로 결정했다.
+### 네비게이션설계
 
-카테고리/ 날짜선택 / 일간 박스오피스/ 테이블
+[네비게이션 gif]
+
+
+상단 네브바로 만들지 사이드바로 만들지 최종적으로 클릭하면 사이드바가 나오는 형식으로 만들었습니다. 이유는 기능적 위에 설명을 추가 할 수 있으며 디자인적으로는 비교적 깔끔한 offcanvas로 결정했습니다.
+
+### 주간 박스 오피스 설계
+
+<p align="center">
+    <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/d1994f70-3d72-4716-9953-c8cb65915629"/>
+</p>
+
+주간 박스오피스는 kofic 에 주간 박스오피스 정보와 tmdb에 이미지 그리고 영화 상세정보로 데이터를 표시했습니다. 데이터 시각화를 위해 char.js 를 사용했으며, 주간별 관객 수와 매출액 등의 정보를 표기하여 수치를 한눈에 볼 수 있도록 하였습니다.
+
+### 영화 상세 정보
+
+[영화 상세 정보 gif]
+
+### 리뷰
+
+[리뷰 작성 gif]
+
+### 인물 상세 정보
+
+[인물 상세 정보 gif]
+
+### 영화 검색 / 영화인 검색
+
+<p align="center">
+    <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/5fdad233-7c90-413a-a9ba-c935aa828962"/>
+</p>
+
+### 회원가입 로그인 쿠키 토큰
+
+<p align="center">
+    <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/ca8655b6-6648-41ef-8b56-9aa56ecec835"/>
+</p>
+
