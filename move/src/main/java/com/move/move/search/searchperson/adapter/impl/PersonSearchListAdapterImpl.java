@@ -52,7 +52,6 @@ public class PersonSearchListAdapterImpl implements PersonSearchListAdapter {
             try {
                 String responseBody = responseEntity.getBody();
                 PersonSearchListResponseDto personSearchListResponseDto = objectMapper.readValue(responseBody, PersonSearchListResponseDto.class);
-                System.out.println(personSearchListResponseDto.getPeopleListResult().getPeopleList().get(0).getPeopleNm());
                 return personSearchListResponseDto;
             } catch (IOException e) {
                 e.printStackTrace();
