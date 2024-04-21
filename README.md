@@ -58,13 +58,13 @@ kofic(영화진흥위원회)와 TMDB(The Movie Database)에서 제공하는 API�
 
 일간 박스 오피스 서비스는 국가코드와 날짜 정보를 이용해서 세번의 실행으로 각 각 전체, 한국, 외국 순으로 선택된 날짜에 박스오피스 정보를  kofic.api 서버에서 가져옵니다. 가져온 데이터 정보와 tmdb에서 가져온 데이터 정보를 각 각 매핑해주고 클라이언트에게 보여주는 서비스를 구현합니다.
 
-[날짜별 조회 gif]
-
 여기서 일별 조회를 위해 캘린더 기능을 사용했으며, 클라이언트에서 날짜별 요청을 위해 날짜 api를 활용하여 날짜 데이터를 넘겨준다.
 
 ### 네비게이션설계
 
-[네비게이션 gif]
+<p align="center">
+    <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/63b2a4b3-afab-44dd-a5b1-0e232d4a17ee"/>
+</p>
 
 
 상단 네브바로 만들지 사이드바로 만들지 최종적으로 클릭하면 사이드바가 나오는 형식으로 만들었습니다. 이유는 기능적 위에 설명을 추가 할 수 있으며 디자인적으로는 비교적 깔끔한 offcanvas로 결정했습니다.
@@ -79,15 +79,21 @@ kofic(영화진흥위원회)와 TMDB(The Movie Database)에서 제공하는 API�
 
 ### 영화 상세 정보
 
-[영화 상세 정보 gif]
+<p align="center">
+    <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/aa588cc9-7a85-45b0-9faa-5c18678b0e61"/>
+</p>
 
 ### 리뷰
 
-[리뷰 작성 gif]
+<p align="center">
+    <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/8fa6f71e-ef5b-4431-8769-bd7076519f66"/>
+</p>
 
 ### 인물 상세 정보
 
-[인물 상세 정보 gif]
+<p align="center">
+    <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/b6e8f2cf-7ded-420f-aa35-61ea2264d133"/>
+</p>
 
 ### 영화 검색 / 영화인 검색
 
