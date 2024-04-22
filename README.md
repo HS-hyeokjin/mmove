@@ -1,4 +1,4 @@
-# 0. 프로젝트 개요
+# M. M. O. V.E
 
 ## 프로젝트 - MMOVE
 
@@ -11,7 +11,8 @@
 
 ### 프로젝트 개요
 
-kofic(영화진흥위원회)와 TMDB(The Movie Database)에서 제공하는 API를 활용하여 사용자에게 영화에 대한 다양한 정보와 국내 박스오피스 정보를 제공하고 있습니다. 또한, 개인 사용자의 취향에 맞는 영화를 추천하고 리뷰 서비스를 제공하여 영화 관련 커뮤니티를 서비스를 제공합니다!
+kofic(영화진흥위원회)와 TMDB(The Movie Database)에서 제공하는 API를 활용하여 사용자에게 영화에 대한 다양한 정보와 국내 박스오피스 정보를 제공하고 있습니다. 
+또한, 개인 사용자의 취향에 맞는 영화를 추천하고 리뷰 서비스를 제공하여 영화 관련 커뮤니티를 서비스를 제공합니다!
 
 ### 특징
 
@@ -56,7 +57,9 @@ kofic(영화진흥위원회)와 TMDB(The Movie Database)에서 제공하는 API�
 </p>
 
 
-일간 박스 오피스 서비스는 국가코드와 날짜 정보를 이용해서 세번의 실행으로 각 각 전체, 한국, 외국 순으로 선택된 날짜에 박스오피스 정보를  kofic.api 서버에서 가져옵니다. 가져온 데이터 정보와 tmdb에서 가져온 데이터 정보를 각 각 매핑해주고 클라이언트에게 보여주는 서비스를 구현합니다.
+일간 박스 오피스 서비스는 국가코드와 날짜 정보를 이용해서 세번의 실행으로 각 각 전체, 한국, 외국 순으로 선택된 날짜에 박스오피스 정보를  kofic.api 서버에서 가져옵니다. 
+
+가져온 데이터 정보와 tmdb에서 가져온 데이터 정보를 각 각 매핑해주고 클라이언트에게 보여주는 서비스를 구현합니다.
 
 여기서 일별 조회를 위해 캘린더 기능을 사용했으며, 클라이언트에서 날짜별 요청을 위해 날짜 api를 활용하여 날짜 데이터를 넘겨준다.
 
@@ -66,8 +69,9 @@ kofic(영화진흥위원회)와 TMDB(The Movie Database)에서 제공하는 API�
     <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/63b2a4b3-afab-44dd-a5b1-0e232d4a17ee"/>
 </p>
 
+초기에는 상단 네비바로 만들었으나, 디자인 문제가 생겨 동적인 사이드바가 나오는 형식으로 바꾸었습니다. 
 
-상단 네브바로 만들지 사이드바로 만들지 최종적으로 클릭하면 사이드바가 나오는 형식으로 만들었습니다. 이유는 기능적 위에 설명을 추가 할 수 있으며 디자인적으로는 비교적 깔끔한 offcanvas로 결정했습니다.
+기능적으로 위에 설명을 추가 할 수 있으며, 디자인적으로는 비교적 깔끔한 offcanvas로 결정했습니다.
 
 ### 주간 박스 오피스 설계
 
@@ -98,12 +102,12 @@ kofic(영화진흥위원회)와 TMDB(The Movie Database)에서 제공하는 API�
 ### 영화 검색 / 영화인 검색
 
 <p align="center">
-    <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/5fdad233-7c90-413a-a9ba-c935aa828962"/>
+    <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/d7983161-bea9-462a-8547-111aaaac2bc9"/>
 </p>
 
 ### 회원가입 로그인 쿠키 토큰
 
 <p align="center">
-    <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/ca8655b6-6648-41ef-8b56-9aa56ecec835"/>
+    <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/a4151b9b-316c-4a06-bdcf-611401da0f1f"/>
 </p>
 
