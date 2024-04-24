@@ -56,12 +56,11 @@ kofic(영화진흥위원회)와 TMDB(The Movie Database)에서 제공하는 API�
     <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/36b282b5-cece-4e59-b61a-ec333b818492"/>
 </p>
 
-
 일간 박스 오피스 서비스는 국가코드와 날짜 정보를 이용해서 세번의 실행으로 각 각 전체, 한국, 외국 순으로 선택된 날짜에 박스오피스 정보를  kofic.api 서버에서 가져옵니다. 
 
-가져온 데이터 정보와 tmdb에서 가져온 데이터 정보를 각 각 매핑해주고 클라이언트에게 보여주는 서비스를 구현합니다.
+가져온 박스오피스 영화 데이터 정보와 tmdb에서 가져온 데이터 정보를 서비스 단계에서 매핑해주고 클라이언트에게 보여주는 서비스를 구현합니다.
 
-여기서 일별 조회를 위해 캘린더 기능을 사용했으며, 클라이언트에서 날짜별 요청을 위해 날짜 api를 활용하여 날짜 데이터를 넘겨준다.
+여기서 일별 조회를 위해 캘린더 기능을 사용했으며, 클라이언트에서 날짜별 요청을 위해 날짜 api를 활용하여 날짜 데이터를 넘겨줍니다.
 
 ### 네비게이션설계
 
@@ -79,7 +78,9 @@ kofic(영화진흥위원회)와 TMDB(The Movie Database)에서 제공하는 API�
     <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/d1994f70-3d72-4716-9953-c8cb65915629"/>
 </p>
 
-주간 박스오피스는 kofic 에 주간 박스오피스 정보와 tmdb에 이미지 그리고 영화 상세정보로 데이터를 표시했습니다. 데이터 시각화를 위해 char.js 를 사용했으며, 주간별 관객 수와 매출액 등의 정보를 표기하여 수치를 한눈에 볼 수 있도록 하였습니다.
+주간 박스오피스는 kofic 에 주간 박스오피스 정보와 tmdb에 이미지 그리고 영화 상세정보로 데이터를 표시했습니다. 
+
+또한, 데이터 시각화를 위해 char.js 를 사용하여 주간별 관객 수와 매출액 등의 정보를 표기하여 수치를 한눈에 볼 수 있도록 하였습니다.
 
 ### 영화 상세 정보
 
@@ -87,11 +88,19 @@ kofic(영화진흥위원회)와 TMDB(The Movie Database)에서 제공하는 API�
     <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/aa588cc9-7a85-45b0-9faa-5c18678b0e61"/>
 </p>
 
+영화 상세 정보는 kofic에서 가져온 데이터와 tmdb에서 가져온 데이터를 혼합하여 작성하였습니다.
+
+영화 관계자의 사진 및 이름을 링크로 걸어 사진을 클릭하면 바로 볼 수 있도록 정리 하였습니다.
+
 ### 리뷰
 
 <p align="center">
     <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/8fa6f71e-ef5b-4431-8769-bd7076519f66"/>
 </p>
+
+리뷰는 로그인한 사용자만 작성 가능하며, 별점을 쓸 수 있도록 하였습니다.
+
+리뷰 기능을 통해 해당 영화에 대한 평가를 확인 할 수 있습니다.
 
 ### 인물 상세 정보
 
@@ -99,11 +108,17 @@ kofic(영화진흥위원회)와 TMDB(The Movie Database)에서 제공하는 API�
     <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/b6e8f2cf-7ded-420f-aa35-61ea2264d133"/>
 </p>
 
+인물 상세정보는 필모그래피를 보여주는 식으로 작성했습니다.
+
 ### 영화 검색 / 영화인 검색
 
 <p align="center">
     <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/d7983161-bea9-462a-8547-111aaaac2bc9"/>
 </p>
+
+영화 검색은 영화이름으로 검색과 감독으로 검색으로 나눠져 있으며 kofic 에 검색기능을 가져왔습니다.
+
+마찬가지로 영화인 검색 또한 이름과 필모그래피로 나눴으며 kofic에 기능을 사용하였습니다.
 
 ### 회원가입 로그인 쿠키 토큰
 
@@ -111,3 +126,5 @@ kofic(영화진흥위원회)와 TMDB(The Movie Database)에서 제공하는 API�
     <img width="1000" src="https://github.com/HS-hyeokjin/mmove/assets/90303458/a4151b9b-316c-4a06-bdcf-611401da0f1f"/>
 </p>
 
+
+## 후기
