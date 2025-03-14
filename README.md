@@ -38,15 +38,17 @@ kofic(영화진흥위원회)와 TMDB(The Movie Database)에서 제공하는 API�
 
 ### 개발 환경 및 스택
 
-주요 기술 스택 : 스프링부트, 타임리프, mysql
-
-운영체제 : windows 10
-
-개발 도구 : chrome, intellij
-
-주요 기술 : jwt, RestTemplate, bootStrap
-
-스프링부트, 타임리프, 스프링 시큐리티, mysql , RestTemplate, 
+OS: Windows 10 (개발 환경), Ubuntu (배포 환경)
+JDK: OpenJDK 17
+IDE: IntelliJ IDEA
+빌드 도구: Gradle
+프레임워크: Spring Boot
+ORM: JPA, Hibernate
+데이터베이스: MySQL
+API 통신: RestTemplate, WebClient
+보안: Spring Security, JWT (JSON Web Token)
+UI 라이브러리: Bootstrap
+문서화: Swagger (SpringDoc OpenAPI)
 
 ## 주요 기능(설계)
 
