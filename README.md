@@ -39,15 +39,25 @@ kofic(영화진흥위원회)와 TMDB(The Movie Database)에서 제공하는 API�
 ### 개발 환경 및 스택
 
 OS: Windows 10 (개발 환경), Ubuntu (배포 환경)
+
 JDK: OpenJDK 17
+
 IDE: IntelliJ IDEA
+
 빌드 도구: Gradle
+
 프레임워크: Spring Boot
+
 ORM: JPA, Hibernate
+
 데이터베이스: MySQL
+
 API 통신: RestTemplate, WebClient
+
 보안: Spring Security, JWT (JSON Web Token)
+
 UI 라이브러리: Bootstrap
+
 문서화: Swagger (SpringDoc OpenAPI)
 
 ## 주요 기능(설계)
