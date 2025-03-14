@@ -127,4 +127,3 @@ kofic(영화진흥위원회)와 TMDB(The Movie Database)에서 제공하는 API�
 </p>
 
 
-## 후기
